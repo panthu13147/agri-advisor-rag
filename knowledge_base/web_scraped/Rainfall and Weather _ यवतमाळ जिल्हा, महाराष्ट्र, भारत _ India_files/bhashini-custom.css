@@ -1,0 +1,93 @@
+/* .bhashini-dropdown  .bhashini-dropdown-btn{
+    width: auto;
+}
+.bhashini-dropdown .bhashini-dropdown-btn-text{
+    max-width: 200px;
+}
+
+div#bhashini-translation {
+    left: inherit !important;
+    right: 15px !important;
+}
+div#bhashiniLanguageDropdown {
+    width: 100%;
+}
+li.bhashiniLangDropdown div#bhashiniLanguageDropdown {
+    width: auto;
+} */
+.bhashiniLangDropdown .bhashini-dropdown-btn {
+    padding: 2px 8px;
+}
+
+.bhashiniLangDropdown .bhashini-dropdown-btn:focus,
+.bhashiniLangDropdown .bhashini-dropdown-btn:active {
+    outline: none;
+}
+
+.bhashiniLangDropdown .bhashini-dropdown-btn .bhashini-dropdown-btn-icon svg {
+    width: 30px;
+    height: 30px;
+    filter: grayscale(1) brightness(0);
+}
+
+/* .bhashiniLangDropdown .bhashini-dropdown-content{
+    background-color: #000;
+}
+.bhashiniLangDropdown .bhashini-dropdown-content div:hover {
+    background-color: #444;
+} */
+
+/***************Voice search css********/
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; }
+#voice-fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(33,33,33,0.95);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: sans-serif;
+    flex-direction: column;
+    text-align: center;
+}
+.voice-overlay-inner {
+    position: relative;
+}
+#voice-fullscreen-overlay .voice-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    color: #f44336;
+}
+
+.voice-message {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.voice-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+#mic-button{
+    margin-left: 5px;
+    position: absolute;
+    top: 0;
+    right: 40px;
+    color: #333333 !important;
+}
+.voice_search_mic_button{color: #333333 !important;}
+button.fa.fa-times.voice-close {
+    color: #333333;
+}
+
+.contrast button.mic-button{
+    background-color: #ff0 !important;
+}

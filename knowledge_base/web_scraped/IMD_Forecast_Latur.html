@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<!-- saved from url=(0088)https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+   <link href="./indiadistrictforecast.php_files/select2.min.css" rel="stylesheet">
+      <script src="./indiadistrictforecast.php_files/jquery.js.download"></script>
+      <script src="./indiadistrictforecast.php_files/select2.min.js.download"></script>
+       <link rel="stylesheet" href="./indiadistrictforecast.php_files/all.css">
+     
+    
+      <link rel="stylesheet" href="./indiadistrictforecast.php_files/home.css" type="text/css">
+      <link rel="stylesheet" href="./indiadistrictforecast.php_files/hover.css" type="text/css">
+     
+      <link rel="shortcut icon" href="https://mausam.imd.gov.in/imd_latest/contents/ico/favicon.png">
+    
+      <link type="text/css" rel="stylesheet" href="./indiadistrictforecast.php_files/materialize.css" media="screen,projection">
+<script>
+function showUser(str) {
+  
+  if (str=="") {
+    document.getElementById("txtHint1").innerHTML="";
+    return;
+  } 
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else { // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("txtHint1").innerHTML=this.responseText;
+    }
+  }
+  xmlhttp.open("GET","getdistrict.php?r="+str,true);
+  xmlhttp.send();
+}
+</script>
+<script>
+function showUser1(str) {
+  if (str=="") {
+    document.getElementById("txtHint").innerHTML="";
+    return;
+  }
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else { // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("txtHint").innerHTML=this.responseText;
+    }
+  }
+  xmlhttp.open("GET","districtforecasttable.php?q="+str,true);
+  xmlhttp.send();
+ }
+
+</script>
+
+<style type="text/css" media="screen">
+         
+           .right-box-equal{
+               height: 38px;
+               margin-bottom: 5px;
+           }
+
+           #middle h2{
+            font-size: 16px;
+            padding-bottom: 0px;
+           }
+           #middle .middle_content .anc{
+                color:#000; 
+                font-weight: 600; 
+                text-decoration: underline;
+           }
+
+           #left_menu ul{
+            margin-top: 1px;
+           }
+           #left_menu ul li{
+            background-color: #000242;
+            margin-left: 0px;
+            list-style: none;
+            text-align: justify;
+            margin-bottom: 4px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            padding-left: 11px;
+            margin-right: 10px;
+           }
+
+           #left_menu ul li a{
+            color: #fff !important;
+           }
+
+           #left_menu ul li ul li{
+                background-color: #000242;
+                margin-left: 0px;
+                list-style: none;
+                text-align: justify;
+                margin-bottom: 4px;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                padding-left: 15px;
+                margin-right: 0px;
+            }
+         
+      </style>
+</head>
+<body>
+
+<!--This cover the whole page -->
+      <div id="pageheight">
+      <!--This cover the website page -->
+         <div id="pagewrap">
+           
+         
+
+       <script async="" src="./indiadistrictforecast.php_files/js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-143177612-1');
+</script>
+<header id="header">
+   <div class="l_content">
+      <div id="header-logo"><a id="logo" href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php#."><img src="./indiadistrictforecast.php_files/logo-india-big.png" alt="India Meteorological Department" width="80" height="110" style="z-index: 1;"></a>
+      
+     <div style="width:600px">
+<h1 style="color:#FFF; text-align:center; font-size:19px; padding-top:0px; padding-left:0px; font-weight:300"> INDIA METEOROLOGICAL DEPARTMENT</h1>
+
+<h1 style="color:#FFF; text-align:center; font-size:16px; padding-top:0px; padding-left:0px; font-weight:300"> Ministry of Earth Sciences</h1>
+
+<h1 style="color:#FFF; text-align:center; font-size:14px; padding-top:0px; padding-left:0px; font-weight:300"> Government of India</h1>
+
+</div>
+      
+      
+      </div>
+      <div id="header-main">
+         <div class="l_top">
+          
+            <div id="header-search">
+
+         <form action="https://mausam.imd.gov.in/search_RV/index.php" method="post">
+         <input type="text" name="sr" maxlength="45">
+          <input type="submit" value="Search">
+            </form>
+
+<!--               <form action="#." method="get" class="searchform" enctype="application/x-www-form-urlencoded">
+                  <label for="query">Search</label><input type="text" id="query" name="query" size="40" placeholder="Enter search terms" value="" />
+                  <input type="hidden" name="collection" value="imd" />
+                  <input type="submit" value="Search" name="Submit" title="Search" class="search" />
+               </form> -->
+            </div>
+         </div>
+         
+         
+         <div class="l_bottom">
+            <ul class="sf-menu">
+               <li class="no-menu"><a href="https://mausam.imd.gov.in/" title="Home">Home</a></li>
+              
+               <li>
+               </li><li class="no-menu"><a href="https://mausam.imd.gov.in/imd_latest/contents/departmentalweb.php" title="Departmental Website">Departmental Website</a></li>
+              
+               <li>
+                  <abbr><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php#.">About IMD</a></abbr>
+                  <ul>
+                     <li class="accessible">
+                        <h2 class="accessible">About IMD</h2>
+                     </li>
+
+                   
+
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/history.php">History</a></li>
+
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/mandate.php">Mandate</a></li>
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/organisational-structure.php">Organizational Structure</a></li>
+                     
+                    <!-- <li><a href="#">IMD Directory</a></li>-->
+
+                     
+                    
+                  </ul>
+                  <div class="sf-menu-pointer"></div>
+               </li>
+               <li id="sf-menu-vic">
+                  <abbr><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php#.">People</a></abbr>
+                  <ul>
+                     <li class="accessible">
+                        <h2 class="accessible">People</h2>
+                     </li>
+                   
+
+
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/honable_minister.php">Hon’ble Minister</a></li>
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/secretory_moes.php">Secretary MoES</a></li>
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/dgm.php">DGM IMD</a></li>
+                     
+                    <!-- <li><a href="#." >Ex-DGM's of IMD</a></li>-->
+                     
+                  </ul>
+                  <div class="sf-menu-pointer"></div>
+               </li>
+
+
+               
+               <li id="sf-menu-vic">
+                <abbr><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php#.">Publications</a></abbr>
+                  <ul>
+                     <li class="accessible">
+                        <h2 class="accessible">Publications</h2>
+                     </li>
+                   
+
+
+                    <li class="heading"><a href="https://mausam.imd.gov.in/imd_latest/contents/rashtriy_panchang.php">Rashtriya Panchang</a></li>
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/indian_astronomical_ephemeris.php">The Indian Astronomical Ephemeris</a></li>
+                     
+                     
+                     
+                  </ul>
+                  <div class="sf-menu-pointer"></div>
+               
+               
+               
+               </li>
+               
+               <li>
+               
+               <abbr><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php#.">Services</a></abbr>
+                  <ul>
+                     <li class="accessible">
+                        <h2 class="accessible">Services</h2>
+                     </li>
+                   
+
+
+                     <li class="services"><a href="https://mausam.imd.gov.in/imd_latest/contents/hydrological-services.php">Hydrometeorological Services in IMD</a></li>
+                     <li class="services"><a href="https://mausam.imd.gov.in/imd_latest/contents/meteorological-agriculture-services.php">Meteorological Services for Agriculture in India</a></li>
+                     <li class="services"><a href="https://mausam.imd.gov.in/imd_latest/contents/meteorological-services-civil-aviation.php">Meteorological Services for Civil Aviation in India</a></li>
+                     <li class="services"><a href="https://mausam.imd.gov.in/imd_latest/contents/satmet.php">SATMET Services</a></li>
+                     <li class="services"><a href="https://mausam.imd.gov.in/imd_latest/contents/imd-dwr-network.php">IMD DWR Network</a></li>
+                     <li class="services"><a href="https://mausam.imd.gov.in/imd_latest/contents/surface-met.php">Surface Meteorological Instrumentataion</a></li>
+                    
+                    <li class="services"><a href="https://mausam.imd.gov.in/imd_latest/contents/upper-air.php">Upper Air Meteorological Instrumentataion</a></li>
+                    
+                     <li class="services"><a href="https://mausam.imd.gov.in/imd_latest/contents/meteorological-telecommunication-services.php">Meteorological Telecommunication Services in IMD</a></li>
+                      <li class="services"><a href="https://mausam.imd.gov.in/imd_latest/contents/environmental-monitoring-services.php">Environmental monitoring and service
+</a></li>
+                     <li class="services"><a href="https://mausam.imd.gov.in/imd_latest/contents/positional-astronomy.php">Positional Astronomy</a></li>
+                     
+                     
+                  </ul>
+                  <div class="sf-menu-pointer"></div>
+               
+               
+               
+               </li>
+               <li class="no-menu"><a href="https://mausam.imd.gov.in/imd_latest/contents/press_release.php">Press Release</a></li>
+               
+            </ul>
+         </div>
+      </div>
+      <div id="second_logo">
+      <a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php#."><img src="./indiadistrictforecast.php_files/imd_logo_enamble.png" alt="India Meteorological Department"></a>
+      </div>
+   </div>
+</header>
+           
+            <div id="columns">
+              <section id="content">
+   <div id="current">
+      <div id="warning_content">
+         <h2>Warnings current</h2>
+         <ul>
+            <li><a href="https://mausam.imd.gov.in/imd_latest/contents/subdivisionwise-warning.php" title="Subdivision wise" class="tip">Subdivision wise</a></li>
+            <li><a href="https://mausam.imd.gov.in/imd_latest/contents/districtwise-warning.php" title="District wise" class="tip">District wise</a></li>
+           
+         </ul>
+      </div>
+      <div id="nowcast_content">
+         <h2>Nowcast</h2>
+         <ul>
+             <li><a href="https://mausam.imd.gov.in/imd_latest/contents/districtwisewarnings.php" title="District wise Nowcast Warnings" class="tip">District wise</a></li>
+            <li><a href="https://mausam.imd.gov.in/imd_latest/contents/stationwise-nowcast-warning.php" title="Station wise" class="tip">Station wise</a></li>
+         </ul>
+      </div>
+   </div>
+   
+    <div>
+   <div class="other">
+      <ul class="sf-menu">
+         <li class="closed">
+            <a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php#" class="noclick">Specialized forecasts</a>
+            <ul>
+               <li class="mar"><a href="https://mausam.imd.gov.in/imd_latest/contents/index_fisherman.php">Marine forecast</a></li>
+               <!--<li class="pil"><a href="#.">Pilgrimage forecast</a></li>-->
+               <li class="cyc"><a href="http://safar.tropmet.res.in/">Air Quality</a></li>
+               <li class="cyc"><a href="http://safar.tropmet.res.in/">Air Pollution</a></li>
+               <li class="mar"><a href="http://amssdelhi.gov.in/NRLDC/index.html">Power Sector</a></li>
+               <li class="tou"><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/tourist_weather.php">Tourism Forecast</a></li>
+               <li class="pil"><a href="http://nwp.imd.gov.in/gfs_fog_stability_index.php">Fog</a></li>
+              
+               
+            </ul>
+         </li>
+      </ul>
+      
+   </div>
+   
+ 
+            
+ 
+</div></section>
+           <section id="middle">
+                <div class="middle_content">
+                  
+                  <hr>
+  
+<div style="width: 30%; float: left" id="left_menu">
+                        <ul class="collapsible">
+                            <li class="active">
+
+                                <div onclick="toggleFn(&#39;fld1&#39;);" class="collapsible-header" tabindex="0">Block Bulletins <i id="fld1" class="fa fa-plus" style="font-size: 13px; float: right"></i> </div>
+
+                                <!-- <a class="hvr-forward" href="#." id="Infrared-1">Daily monsoon activity</a> -->
+                                <div class="collapsible-body" style="display: block;">
+                                    <ul>
+									
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/block_current_en.php" class="hvr-forward" id="a4">Current English</a></li>
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/block_current_lo.php" class="hvr-forward" id="a4">Current Local</a></li>
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/block_past_en.php" class="hvr-forward" id="a4">Past English</a></li>
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/block_past_lo.php" class="hvr-forward" id="a4">Past Local</a></li>
+                                                                          
+                                    </ul>
+                                </div>
+                            </li>
+                         
+                            <li class="active">
+
+                                <div onclick="toggleFn(&#39;fld1&#39;);" class="collapsible-header" tabindex="0">District Bulletins <i id="fld1" class="fa fa-plus" style="font-size: 13px; float: right"></i> </div>
+
+                                <!-- <a class="hvr-forward" href="#." id="Infrared-1">Daily monsoon activity</a> -->
+                                <div class="collapsible-body">
+                                    <ul>
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/benglishmain.php" class="hvr-forward" id="a3">Current English</a></li>
+                                         <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/blocalmain.php" class="hvr-forward" id="a3">Current Local</a></li>
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/district_past_en.php" class="hvr-forward" id="a4">Past English</a></li>
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/district_past_lo.php" class="hvr-forward" id="a4">Past Local</a></li>
+                                       
+                                      
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><a class="hvr-forward" href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php" id="a15">District level weather forecast</a></li>
+
+                             <li>
+
+                                <div onclick="toggleFn(&#39;fld2&#39;);" class="collapsible-header" tabindex="0">State Bulletins<i id="fld1" class="fa fa-plus" style="font-size: 13px; float: right"></i> </div>
+
+                                <div class="collapsible-body">
+                                    <ul>
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/englishstate_current.php" class="hvr-forward" id="a5">Current English</a></li>
+                                       <!-- <li><a href="localstate_current.php" class="hvr-forward" id="a5">Current Local</a></li> -->
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/state_past_en.php" class="hvr-forward" id="a6">Past English</a></li>
+										<li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/state_past_lo.php" class="hvr-forward" id="a6">Past Local</a></li>
+                                      
+                                    </ul>
+                                </div>
+                            </li>
+                             <li>
+
+                                <div onclick="toggleFn(&#39;fld3&#39;);" class="collapsible-header" tabindex="0">National Bulletins<i id="fld1" class="fa fa-plus" style="font-size: 13px; float: right"></i> </div>
+
+                               <div class="collapsible-body">
+                                    <ul>
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/national_english_current.php" class="hvr-forward" id="a7">Current</a></li>
+                                        <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/national_past_en.php" class="hvr-forward" id="a8">Past</a></li>
+                                       <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/national_english_ERFS.php" class="hvr-forward" id="a9">National Bulletin based on ERFS</a></li>
+                                      
+                                    </ul>
+                                </div> 
+                            </li>
+<li><a class="hvr-forward" href="http://103.215.208.107/agrogis/index.php/Main/rainfall" id="a10">Interactive Map for Agromet Information</a></li>
+
+                            
+                           
+                            
+                        </ul>
+
+                        
+                        
+                    </div>
+ <div style="width:68%; float:left; min-height:500px;margin:0px auto;margin-top:30px;">
+
+
+ <h4><b>District Level Weather Forecast</b></h4>
+<form>
+<select class="myselect select2-hidden-accessible" style="width:500px;" onchange="showUser(this.value);" tabindex="-1" aria-hidden="true"><option>Search state name here ...</option><option value="Andaman &amp; Nicobar Island"> Andaman &amp; Nicobar Island </option><option value="Andhra Pradesh"> Andhra Pradesh </option><option value="Arunanchal Pradesh"> Arunanchal Pradesh </option><option value="ASSAM"> ASSAM </option><option value="Bihar"> Bihar </option><option value="Chhattisgarh"> Chhattisgarh </option><option value="DELHI"> DELHI </option><option value="GUJARAT"> GUJARAT </option><option value="HARYANA"> HARYANA </option><option value="Himachal Pradesh"> Himachal Pradesh </option><option value="Jammu &amp; Kashmir"> Jammu &amp; Kashmir </option><option value="Jharkhand"> Jharkhand </option><option value="Karnataka"> Karnataka </option><option value="Kerala"> Kerala </option><option value="Lakshadweep"> Lakshadweep </option><option value="Madhya Pradesh"> Madhya Pradesh </option><option value="Maharashtra"> Maharashtra </option><option value="MANIPUR"> MANIPUR </option><option value="MEGHALAYA"> MEGHALAYA </option><option value="Mizoram"> Mizoram </option><option value="Nagaland"> Nagaland </option><option value="NCT of Delhi"> NCT of Delhi </option><option value="Odisha"> Odisha </option><option value="Puducherry"> Puducherry </option><option value="PUNJAB"> PUNJAB </option><option value="Rajasthan"> Rajasthan </option><option value="Sikkim"> Sikkim </option><option value="Tamil Nadu"> Tamil Nadu </option><option value="Telangana"> Telangana </option><option value="TRIPURA"> TRIPURA </option><option value="UTTAR PRADESH"> UTTAR PRADESH </option><option value="Uttarakhand"> Uttarakhand </option><option value="WEST BENGAL"> WEST BENGAL </option></select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 500px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-z49i-container"><span class="select2-selection__rendered" id="select2-z49i-container" title=" Maharashtra "> Maharashtra </span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></form>
+<br>
+<div id="txtHint1" style="margin-top:20px">
+
+
+<style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+th {text-align: left;}
+</style>
+
+    <script src="./indiadistrictforecast.php_files/jquery.js.download"></script>
+        <link href="./indiadistrictforecast.php_files/select2.min.css" rel="stylesheet">
+        <script src="./indiadistrictforecast.php_files/select2.min.js.download"></script>
+
+<script>
+function showUser1(str) {
+  if (str=="") {
+    document.getElementById("txtHint").innerHTML="";
+    return;
+  }
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else { // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("txtHint").innerHTML=this.responseText;
+    }
+  }
+  xmlhttp.open("GET","districtforecasttable.php?q="+str,true);
+  xmlhttp.send();
+}
+</script>
+
+
+
+<select class="myselect1" style="width:500px;" onchange="showUser1(this.value)"><option>Select district name here ...</option>id: AHMEDNAGAR<br><option value="AHMEDNAGAR"> AHMEDNAGAR </option>id: AKOLA<br><option value="AKOLA"> AKOLA </option>id: AMRAVATI<br><option value="AMRAVATI"> AMRAVATI </option>id: AURANGABAD<br><option value="AURANGABAD"> AURANGABAD </option>id: BEED<br><option value="BEED"> BEED </option>id: BHANDARA<br><option value="BHANDARA"> BHANDARA </option>id: BULDHANA<br><option value="BULDHANA"> BULDHANA </option>id: CHANDRAPUR<br><option value="CHANDRAPUR"> CHANDRAPUR </option>id: DHULE<br><option value="DHULE"> DHULE </option>id: GADCHIROLI<br><option value="GADCHIROLI"> GADCHIROLI </option>id: GONDIA<br><option value="GONDIA"> GONDIA </option>id: HINGOLI<br><option value="HINGOLI"> HINGOLI </option>id: JALGAON<br><option value="JALGAON"> JALGAON </option>id: JALNA<br><option value="JALNA"> JALNA </option>id: KOLHAPUR<br><option value="KOLHAPUR"> KOLHAPUR </option>id: LATUR<br><option value="LATUR"> LATUR </option>id: MUMBAI<br><option value="MUMBAI"> MUMBAI </option>id: NAGPUR<br><option value="NAGPUR"> NAGPUR </option>id: NANDED<br><option value="NANDED"> NANDED </option>id: NANDURBAR<br><option value="NANDURBAR"> NANDURBAR </option>id: NASHIK<br><option value="NASHIK"> NASHIK </option>id: OSMANABAD<br><option value="OSMANABAD"> OSMANABAD </option>id: PALHGAR<br><option value="PALHGAR"> PALHGAR </option>id: PARBHANI<br><option value="PARBHANI"> PARBHANI </option>id: PUNE<br><option value="PUNE"> PUNE </option>id: RAIGAD<br><option value="RAIGAD"> RAIGAD </option>id: RATNAGIRI<br><option value="RATNAGIRI"> RATNAGIRI </option>id: SANGLI<br><option value="SANGLI"> SANGLI </option>id: SATARA<br><option value="SATARA"> SATARA </option>id: SINDHUDURG<br><option value="SINDHUDURG"> SINDHUDURG </option>id: SOLAPUR<br><option value="SOLAPUR"> SOLAPUR </option>id: THANE<br><option value="THANE"> THANE </option>id: WARDHA<br><option value="WARDHA"> WARDHA </option>id: WASHIM<br><option value="WASHIM"> WASHIM </option>id: YAVATMAL<br><option value="YAVATMAL"> YAVATMAL </option></select><script type="text/javascript">
+      $(".myselect1").select2();
+</script>
+
+
+
+</div>
+<div id="txtHint">
+
+
+<style>
+table {
+    width: 100%;
+    border:1px solid #CCC;
+	margin-top:20px;
+}
+th, td{
+	font-size:10px;
+	
+	
+	}
+
+</style>
+
+
+
+<table><tbody><tr>
+ 
+ 
+ <th>Forecast<br> Date</th>
+ <th>Forecast<br> Validity</th>
+<th>Rainfall<br>(mm)</th>
+<th>TempMax<br>(deg C)</th>
+<th>TempMin<br>(deg C)</th>
+<th>HumidityI<br>(%)</th>
+<th>HumidityII<br>(%)</th>
+<th>WindSpeed<br>(m/s)</th>
+<th>WindDirection<br>(deg)</th>
+<th>CloudCover<br>(octa)</th>
+<th>Warning<br>(If Any)</th></tr><tr><td>2025-10-08</td><td>Valid From 08:30 AM OF 2025-10-07 TO 08:30AM OF 2025-10-08</td><td>4</td><td>30</td><td>21</td><td>84</td><td>76</td><td>10</td><td>326</td><td>4</td><td></td></tr><tr><td>2025-10-09</td><td>Valid From 08:30 AM OF 2025-10-08 TO 08:30AM OF 2025-10-09</td><td>11</td><td>31</td><td>22</td><td>84</td><td>72</td><td>7</td><td>352</td><td>2</td><td></td></tr><tr><td>2025-10-10</td><td>Valid From 08:30 AM OF 2025-10-09 TO 08:30AM OF 2025-10-10</td><td>6</td><td>32</td><td>21</td><td>80</td><td>65</td><td>8</td><td>22</td><td>2</td><td></td></tr><tr><td>2025-10-11</td><td>Valid From 08:30 AM OF 2025-10-10 TO 08:30AM OF 2025-10-11</td><td>4</td><td>32</td><td>19</td><td>77</td><td>64</td><td>7</td><td>25</td><td>2</td><td></td></tr><tr><td>2025-10-12</td><td>Valid From 08:30 AM OF 2025-10-11 TO 08:30AM OF 2025-10-12</td><td>5</td><td>31</td><td>19</td><td>76</td><td>60</td><td>7</td><td>29</td><td>1</td><td></td></tr><tr><td>2026-05-06</td><td>Valid From 08:30 AM OF 2026-05-05 TO 08:30AM OF 2026-05-06</td><td>0</td><td>40</td><td>27</td><td>42</td><td>14</td><td>9</td><td>295</td><td>1</td><td></td></tr><tr><td>2026-05-07</td><td>Valid From 08:30 AM OF 2026-05-06 TO 08:30AM OF 2026-05-07</td><td>6</td><td>39</td><td>28</td><td>48</td><td>18</td><td>18</td><td>346</td><td>4</td><td></td></tr><tr><td>2026-05-08</td><td>Valid From 08:30 AM OF 2026-05-07 TO 08:30AM OF 2026-05-08</td><td>10</td><td>39</td><td>27</td><td>56</td><td>22</td><td>12</td><td>166</td><td>4</td><td></td></tr><tr><td>2026-05-09</td><td>Valid From 08:30 AM OF 2026-05-08 TO 08:30AM OF 2026-05-09</td><td>8</td><td>40</td><td>26</td><td>56</td><td>20</td><td>7</td><td>186</td><td>3</td><td></td></tr><tr><td>2026-05-10</td><td>Valid From 08:30 AM OF 2026-05-09 TO 08:30AM OF 2026-05-10</td><td>0</td><td>41</td><td>25</td><td>46</td><td>19</td><td>11</td><td>207</td><td>3</td><td></td></tr><tr><td>2026-05-06</td><td>Valid From 08:30 AM OF 2026-05-05 TO 08:30AM OF 2026-05-06</td><td>0</td><td>40</td><td>27</td><td>42</td><td>14</td><td>9</td><td>295</td><td>1</td><td></td></tr><tr><td>2026-05-07</td><td>Valid From 08:30 AM OF 2026-05-06 TO 08:30AM OF 2026-05-07</td><td>6</td><td>39</td><td>28</td><td>48</td><td>18</td><td>18</td><td>346</td><td>4</td><td></td></tr><tr><td>2026-05-08</td><td>Valid From 08:30 AM OF 2026-05-07 TO 08:30AM OF 2026-05-08</td><td>10</td><td>39</td><td>27</td><td>56</td><td>22</td><td>12</td><td>166</td><td>4</td><td></td></tr><tr><td>2026-05-09</td><td>Valid From 08:30 AM OF 2026-05-08 TO 08:30AM OF 2026-05-09</td><td>8</td><td>40</td><td>26</td><td>56</td><td>20</td><td>7</td><td>186</td><td>3</td><td></td></tr><tr><td>2026-05-10</td><td>Valid From 08:30 AM OF 2026-05-09 TO 08:30AM OF 2026-05-10</td><td>0</td><td>41</td><td>25</td><td>46</td><td>19</td><td>11</td><td>207</td><td>3</td><td></td></tr><tr><td>2026-05-06</td><td>Valid From 08:30 AM OF 2026-05-05 TO 08:30AM OF 2026-05-06</td><td>0</td><td>40</td><td>27</td><td>42</td><td>14</td><td>9</td><td>295</td><td>1</td><td></td></tr><tr><td>2026-05-07</td><td>Valid From 08:30 AM OF 2026-05-06 TO 08:30AM OF 2026-05-07</td><td>6</td><td>39</td><td>28</td><td>48</td><td>18</td><td>18</td><td>346</td><td>4</td><td></td></tr><tr><td>2026-05-08</td><td>Valid From 08:30 AM OF 2026-05-07 TO 08:30AM OF 2026-05-08</td><td>10</td><td>39</td><td>27</td><td>56</td><td>22</td><td>12</td><td>166</td><td>4</td><td></td></tr><tr><td>2026-05-09</td><td>Valid From 08:30 AM OF 2026-05-08 TO 08:30AM OF 2026-05-09</td><td>8</td><td>40</td><td>26</td><td>56</td><td>20</td><td>7</td><td>186</td><td>3</td><td></td></tr><tr><td>2026-05-10</td><td>Valid From 08:30 AM OF 2026-05-09 TO 08:30AM OF 2026-05-10</td><td>0</td><td>41</td><td>25</td><td>46</td><td>19</td><td>11</td><td>207</td><td>3</td><td></td></tr><tr><td>2026-05-09</td><td>Valid From 08:30 AM OF 2026-05-08 TO 08:30AM OF 2026-05-09</td><td>8</td><td>39</td><td>24</td><td>66</td><td>42</td><td>10</td><td>145</td><td>3</td><td></td></tr><tr><td>2026-05-10</td><td>Valid From 08:30 AM OF 2026-05-09 TO 08:30AM OF 2026-05-10</td><td>6</td><td>40</td><td>23</td><td>66</td><td>41</td><td>12</td><td>194</td><td>3</td><td></td></tr><tr><td>2026-05-11</td><td>Valid From 08:30 AM OF 2026-05-10 TO 08:30AM OF 2026-05-11</td><td>0</td><td>41</td><td>23</td><td>66</td><td>36</td><td>15</td><td>187</td><td>2</td><td></td></tr><tr><td>2026-05-12</td><td>Valid From 08:30 AM OF 2026-05-11 TO 08:30AM OF 2026-05-12</td><td>0</td><td>41</td><td>24</td><td>63</td><td>37</td><td>20</td><td>198</td><td>2</td><td></td></tr><tr><td>2026-05-13</td><td>Valid From 08:30 AM OF 2026-05-12 TO 08:30AM OF 2026-05-13</td><td>0</td><td>41</td><td>24</td><td>64</td><td>38</td><td>18</td><td>194</td><td>2</td><td></td></tr><tr><td>2026-05-09</td><td>Valid From 08:30 AM OF 2026-05-08 TO 08:30AM OF 2026-05-09</td><td>8</td><td>39</td><td>24</td><td>66</td><td>42</td><td>10</td><td>145</td><td>3</td><td></td></tr><tr><td>2026-05-10</td><td>Valid From 08:30 AM OF 2026-05-09 TO 08:30AM OF 2026-05-10</td><td>6</td><td>40</td><td>23</td><td>66</td><td>41</td><td>12</td><td>194</td><td>3</td><td></td></tr><tr><td>2026-05-11</td><td>Valid From 08:30 AM OF 2026-05-10 TO 08:30AM OF 2026-05-11</td><td>0</td><td>41</td><td>23</td><td>66</td><td>36</td><td>15</td><td>187</td><td>2</td><td></td></tr><tr><td>2026-05-12</td><td>Valid From 08:30 AM OF 2026-05-11 TO 08:30AM OF 2026-05-12</td><td>0</td><td>41</td><td>24</td><td>63</td><td>37</td><td>20</td><td>198</td><td>2</td><td></td></tr><tr><td>2026-05-13</td><td>Valid From 08:30 AM OF 2026-05-12 TO 08:30AM OF 2026-05-13</td><td>0</td><td>41</td><td>24</td><td>64</td><td>38</td><td>18</td><td>194</td><td>2</td><td></td></tr><tr><td>2026-05-09</td><td>Valid From 08:30 AM OF 2026-05-08 TO 08:30AM OF 2026-05-09</td><td>8</td><td>39</td><td>24</td><td>66</td><td>42</td><td>10</td><td>145</td><td>3</td><td></td></tr><tr><td>2026-05-10</td><td>Valid From 08:30 AM OF 2026-05-09 TO 08:30AM OF 2026-05-10</td><td>6</td><td>40</td><td>23</td><td>66</td><td>41</td><td>12</td><td>194</td><td>3</td><td></td></tr><tr><td>2026-05-11</td><td>Valid From 08:30 AM OF 2026-05-10 TO 08:30AM OF 2026-05-11</td><td>0</td><td>41</td><td>23</td><td>66</td><td>36</td><td>15</td><td>187</td><td>2</td><td></td></tr><tr><td>2026-05-12</td><td>Valid From 08:30 AM OF 2026-05-11 TO 08:30AM OF 2026-05-12</td><td>0</td><td>41</td><td>24</td><td>63</td><td>37</td><td>20</td><td>198</td><td>2</td><td></td></tr><tr><td>2026-05-13</td><td>Valid From 08:30 AM OF 2026-05-12 TO 08:30AM OF 2026-05-13</td><td>0</td><td>41</td><td>24</td><td>64</td><td>38</td><td>18</td><td>194</td><td>2</td><td></td></tr><tr><td>2026-05-09</td><td>Valid From 08:30 AM OF 2026-05-08 TO 08:30AM OF 2026-05-09</td><td>8</td><td>39</td><td>24</td><td>66</td><td>42</td><td>10</td><td>145</td><td>3</td><td></td></tr><tr><td>2026-05-10</td><td>Valid From 08:30 AM OF 2026-05-09 TO 08:30AM OF 2026-05-10</td><td>6</td><td>40</td><td>23</td><td>66</td><td>41</td><td>12</td><td>194</td><td>3</td><td></td></tr><tr><td>2026-05-11</td><td>Valid From 08:30 AM OF 2026-05-10 TO 08:30AM OF 2026-05-11</td><td>0</td><td>41</td><td>23</td><td>66</td><td>36</td><td>15</td><td>187</td><td>2</td><td></td></tr><tr><td>2026-05-12</td><td>Valid From 08:30 AM OF 2026-05-11 TO 08:30AM OF 2026-05-12</td><td>0</td><td>41</td><td>24</td><td>63</td><td>37</td><td>20</td><td>198</td><td>2</td><td></td></tr><tr><td>2026-05-13</td><td>Valid From 08:30 AM OF 2026-05-12 TO 08:30AM OF 2026-05-13</td><td>0</td><td>41</td><td>24</td><td>64</td><td>38</td><td>18</td><td>194</td><td>2</td><td></td></tr><tr><td>2026-05-09</td><td>Valid From 08:30 AM OF 2026-05-08 TO 08:30AM OF 2026-05-09</td><td>8</td><td>39</td><td>24</td><td>66</td><td>42</td><td>10</td><td>145</td><td>3</td><td></td></tr><tr><td>2026-05-10</td><td>Valid From 08:30 AM OF 2026-05-09 TO 08:30AM OF 2026-05-10</td><td>6</td><td>40</td><td>23</td><td>66</td><td>41</td><td>12</td><td>194</td><td>3</td><td></td></tr><tr><td>2026-05-11</td><td>Valid From 08:30 AM OF 2026-05-10 TO 08:30AM OF 2026-05-11</td><td>0</td><td>41</td><td>23</td><td>66</td><td>36</td><td>15</td><td>187</td><td>2</td><td></td></tr><tr><td>2026-05-12</td><td>Valid From 08:30 AM OF 2026-05-11 TO 08:30AM OF 2026-05-12</td><td>0</td><td>41</td><td>24</td><td>63</td><td>37</td><td>20</td><td>198</td><td>2</td><td></td></tr><tr><td>2026-05-13</td><td>Valid From 08:30 AM OF 2026-05-12 TO 08:30AM OF 2026-05-13</td><td>0</td><td>41</td><td>24</td><td>64</td><td>38</td><td>18</td><td>194</td><td>2</td><td></td></tr><tr><td>2026-05-13</td><td>Valid From 08:30 AM OF 2026-05-12 TO 08:30AM OF 2026-05-13</td><td>0</td><td>40</td><td>27</td><td>43</td><td>21</td><td>19</td><td>195</td><td>4</td><td></td></tr><tr><td>2026-05-14</td><td>Valid From 08:30 AM OF 2026-05-13 TO 08:30AM OF 2026-05-14</td><td>0</td><td>41</td><td>26</td><td>44</td><td>20</td><td>17</td><td>200</td><td>5</td><td></td></tr><tr><td>2026-05-15</td><td>Valid From 08:30 AM OF 2026-05-14 TO 08:30AM OF 2026-05-15</td><td>0</td><td>41</td><td>25</td><td>36</td><td>19</td><td>10</td><td>278</td><td>4</td><td></td></tr><tr><td>2026-05-16</td><td>Valid From 08:30 AM OF 2026-05-15 TO 08:30AM OF 2026-05-16</td><td>0</td><td>40</td><td>26</td><td>44</td><td>21</td><td>7</td><td>297</td><td>5</td><td></td></tr><tr><td>2026-05-17</td><td>Valid From 08:30 AM OF 2026-05-16 TO 08:30AM OF 2026-05-17</td><td>0</td><td>39</td><td>26</td><td>44</td><td>20</td><td>8</td><td>302</td><td>6</td><td></td></tr><tr><td>2026-05-13</td><td>Valid From 08:30 AM OF 2026-05-12 TO 08:30AM OF 2026-05-13</td><td>0</td><td>40</td><td>27</td><td>43</td><td>21</td><td>19</td><td>195</td><td>4</td><td></td></tr><tr><td>2026-05-14</td><td>Valid From 08:30 AM OF 2026-05-13 TO 08:30AM OF 2026-05-14</td><td>0</td><td>41</td><td>26</td><td>44</td><td>20</td><td>17</td><td>200</td><td>5</td><td></td></tr><tr><td>2026-05-15</td><td>Valid From 08:30 AM OF 2026-05-14 TO 08:30AM OF 2026-05-15</td><td>0</td><td>41</td><td>25</td><td>36</td><td>19</td><td>10</td><td>278</td><td>4</td><td></td></tr><tr><td>2026-05-16</td><td>Valid From 08:30 AM OF 2026-05-15 TO 08:30AM OF 2026-05-16</td><td>0</td><td>40</td><td>26</td><td>44</td><td>21</td><td>7</td><td>297</td><td>5</td><td></td></tr><tr><td>2026-05-17</td><td>Valid From 08:30 AM OF 2026-05-16 TO 08:30AM OF 2026-05-17</td><td>0</td><td>39</td><td>26</td><td>44</td><td>20</td><td>8</td><td>302</td><td>6</td><td></td></tr><tr><td>2026-05-13</td><td>Valid From 08:30 AM OF 2026-05-12 TO 08:30AM OF 2026-05-13</td><td>0</td><td>40</td><td>27</td><td>43</td><td>21</td><td>19</td><td>195</td><td>4</td><td></td></tr><tr><td>2026-05-14</td><td>Valid From 08:30 AM OF 2026-05-13 TO 08:30AM OF 2026-05-14</td><td>0</td><td>41</td><td>26</td><td>44</td><td>20</td><td>17</td><td>200</td><td>5</td><td></td></tr><tr><td>2026-05-15</td><td>Valid From 08:30 AM OF 2026-05-14 TO 08:30AM OF 2026-05-15</td><td>0</td><td>41</td><td>25</td><td>36</td><td>19</td><td>10</td><td>278</td><td>4</td><td></td></tr><tr><td>2026-05-16</td><td>Valid From 08:30 AM OF 2026-05-15 TO 08:30AM OF 2026-05-16</td><td>0</td><td>40</td><td>26</td><td>44</td><td>21</td><td>7</td><td>297</td><td>5</td><td></td></tr><tr><td>2026-05-17</td><td>Valid From 08:30 AM OF 2026-05-16 TO 08:30AM OF 2026-05-17</td><td>0</td><td>39</td><td>26</td><td>44</td><td>20</td><td>8</td><td>302</td><td>6</td><td></td></tr><tr><td>2026-05-16</td><td>Valid From 08:30 AM OF 2026-05-15 TO 08:30AM OF 2026-05-16</td><td>9</td><td>39</td><td>23</td><td>65</td><td>30</td><td>12</td><td>279</td><td>5</td><td></td></tr><tr><td>2026-05-17</td><td>Valid From 08:30 AM OF 2026-05-16 TO 08:30AM OF 2026-05-17</td><td>8</td><td>39</td><td>23</td><td>67</td><td>29</td><td>8</td><td>336</td><td>5</td><td></td></tr><tr><td>2026-05-18</td><td>Valid From 08:30 AM OF 2026-05-17 TO 08:30AM OF 2026-05-18</td><td>9</td><td>38</td><td>23</td><td>64</td><td>26</td><td>7</td><td>307</td><td>5</td><td></td></tr><tr><td>2026-05-19</td><td>Valid From 08:30 AM OF 2026-05-18 TO 08:30AM OF 2026-05-19</td><td>5</td><td>38</td><td>22</td><td>62</td><td>25</td><td>5</td><td>299</td><td>4</td><td></td></tr><tr><td>2026-05-20</td><td>Valid From 08:30 AM OF 2026-05-19 TO 08:30AM OF 2026-05-20</td><td>4</td><td>38</td><td>22</td><td>63</td><td>29</td><td>17</td><td>315</td><td>2</td><td></td></tr><tr><td>2026-05-16</td><td>Valid From 08:30 AM OF 2026-05-15 TO 08:30AM OF 2026-05-16</td><td>9</td><td>39</td><td>23</td><td>65</td><td>30</td><td>12</td><td>279</td><td>5</td><td></td></tr><tr><td>2026-05-17</td><td>Valid From 08:30 AM OF 2026-05-16 TO 08:30AM OF 2026-05-17</td><td>8</td><td>39</td><td>23</td><td>67</td><td>29</td><td>8</td><td>336</td><td>5</td><td></td></tr><tr><td>2026-05-18</td><td>Valid From 08:30 AM OF 2026-05-17 TO 08:30AM OF 2026-05-18</td><td>9</td><td>38</td><td>23</td><td>64</td><td>26</td><td>7</td><td>307</td><td>5</td><td></td></tr><tr><td>2026-05-19</td><td>Valid From 08:30 AM OF 2026-05-18 TO 08:30AM OF 2026-05-19</td><td>5</td><td>38</td><td>22</td><td>62</td><td>25</td><td>5</td><td>299</td><td>4</td><td></td></tr><tr><td>2026-05-20</td><td>Valid From 08:30 AM OF 2026-05-19 TO 08:30AM OF 2026-05-20</td><td>4</td><td>38</td><td>22</td><td>63</td><td>29</td><td>17</td><td>315</td><td>2</td><td></td></tr><tr><td>2026-05-16</td><td>Valid From 08:30 AM OF 2026-05-15 TO 08:30AM OF 2026-05-16</td><td>9</td><td>39</td><td>23</td><td>65</td><td>30</td><td>12</td><td>279</td><td>5</td><td></td></tr><tr><td>2026-05-17</td><td>Valid From 08:30 AM OF 2026-05-16 TO 08:30AM OF 2026-05-17</td><td>8</td><td>39</td><td>23</td><td>67</td><td>29</td><td>8</td><td>336</td><td>5</td><td></td></tr><tr><td>2026-05-18</td><td>Valid From 08:30 AM OF 2026-05-17 TO 08:30AM OF 2026-05-18</td><td>9</td><td>38</td><td>23</td><td>64</td><td>26</td><td>7</td><td>307</td><td>5</td><td></td></tr><tr><td>2026-05-19</td><td>Valid From 08:30 AM OF 2026-05-18 TO 08:30AM OF 2026-05-19</td><td>5</td><td>38</td><td>22</td><td>62</td><td>25</td><td>5</td><td>299</td><td>4</td><td></td></tr><tr><td>2026-05-20</td><td>Valid From 08:30 AM OF 2026-05-19 TO 08:30AM OF 2026-05-20</td><td>4</td><td>38</td><td>22</td><td>63</td><td>29</td><td>17</td><td>315</td><td>2</td><td></td></tr><tr><td>2026-05-16</td><td>Valid From 08:30 AM OF 2026-05-15 TO 08:30AM OF 2026-05-16</td><td>9</td><td>39</td><td>23</td><td>65</td><td>30</td><td>12</td><td>279</td><td>5</td><td></td></tr><tr><td>2026-05-17</td><td>Valid From 08:30 AM OF 2026-05-16 TO 08:30AM OF 2026-05-17</td><td>8</td><td>39</td><td>23</td><td>67</td><td>29</td><td>8</td><td>336</td><td>5</td><td></td></tr><tr><td>2026-05-18</td><td>Valid From 08:30 AM OF 2026-05-17 TO 08:30AM OF 2026-05-18</td><td>9</td><td>38</td><td>23</td><td>64</td><td>26</td><td>7</td><td>307</td><td>5</td><td></td></tr><tr><td>2026-05-19</td><td>Valid From 08:30 AM OF 2026-05-18 TO 08:30AM OF 2026-05-19</td><td>5</td><td>38</td><td>22</td><td>62</td><td>25</td><td>5</td><td>299</td><td>4</td><td></td></tr><tr><td>2026-05-20</td><td>Valid From 08:30 AM OF 2026-05-19 TO 08:30AM OF 2026-05-20</td><td>4</td><td>38</td><td>22</td><td>63</td><td>29</td><td>17</td><td>315</td><td>2</td><td></td></tr><tr><td>2026-05-20</td><td>Valid From 08:30 AM OF 2026-05-19 TO 08:30AM OF 2026-05-20</td><td>0</td><td>41</td><td>30</td><td>49</td><td>15</td><td>13</td><td>253</td><td>4</td><td></td></tr><tr><td>2026-05-21</td><td>Valid From 08:30 AM OF 2026-05-20 TO 08:30AM OF 2026-05-21</td><td>0</td><td>41</td><td>30</td><td>45</td><td>17</td><td>17</td><td>295</td><td>3</td><td></td></tr><tr><td>2026-05-22</td><td>Valid From 08:30 AM OF 2026-05-21 TO 08:30AM OF 2026-05-22</td><td>0</td><td>41</td><td>30</td><td>51</td><td>20</td><td>20</td><td>302</td><td>3</td><td></td></tr><tr><td>2026-05-23</td><td>Valid From 08:30 AM OF 2026-05-22 TO 08:30AM OF 2026-05-23</td><td>1</td><td>41</td><td>29</td><td>52</td><td>22</td><td>19</td><td>299</td><td>2</td><td></td></tr><tr><td>2026-05-24</td><td>Valid From 08:30 AM OF 2026-05-23 TO 08:30AM OF 2026-05-24</td><td>0</td><td>41</td><td>29</td><td>53</td><td>19</td><td>22</td><td>291</td><td>2</td><td></td></tr><tr><td>2026-05-20</td><td>Valid From 08:30 AM OF 2026-05-19 TO 08:30AM OF 2026-05-20</td><td>0</td><td>41</td><td>30</td><td>49</td><td>15</td><td>13</td><td>253</td><td>4</td><td></td></tr><tr><td>2026-05-21</td><td>Valid From 08:30 AM OF 2026-05-20 TO 08:30AM OF 2026-05-21</td><td>0</td><td>41</td><td>30</td><td>45</td><td>17</td><td>17</td><td>295</td><td>3</td><td></td></tr><tr><td>2026-05-22</td><td>Valid From 08:30 AM OF 2026-05-21 TO 08:30AM OF 2026-05-22</td><td>0</td><td>41</td><td>30</td><td>51</td><td>20</td><td>20</td><td>302</td><td>3</td><td></td></tr><tr><td>2026-05-23</td><td>Valid From 08:30 AM OF 2026-05-22 TO 08:30AM OF 2026-05-23</td><td>1</td><td>41</td><td>29</td><td>52</td><td>22</td><td>19</td><td>299</td><td>2</td><td></td></tr><tr><td>2026-05-24</td><td>Valid From 08:30 AM OF 2026-05-23 TO 08:30AM OF 2026-05-24</td><td>0</td><td>41</td><td>29</td><td>53</td><td>19</td><td>22</td><td>291</td><td>2</td><td></td></tr><tr><td>2026-05-20</td><td>Valid From 08:30 AM OF 2026-05-19 TO 08:30AM OF 2026-05-20</td><td>0</td><td>41</td><td>30</td><td>49</td><td>15</td><td>13</td><td>253</td><td>4</td><td></td></tr><tr><td>2026-05-21</td><td>Valid From 08:30 AM OF 2026-05-20 TO 08:30AM OF 2026-05-21</td><td>0</td><td>41</td><td>30</td><td>45</td><td>17</td><td>17</td><td>295</td><td>3</td><td></td></tr><tr><td>2026-05-22</td><td>Valid From 08:30 AM OF 2026-05-21 TO 08:30AM OF 2026-05-22</td><td>0</td><td>41</td><td>30</td><td>51</td><td>20</td><td>20</td><td>302</td><td>3</td><td></td></tr><tr><td>2026-05-23</td><td>Valid From 08:30 AM OF 2026-05-22 TO 08:30AM OF 2026-05-23</td><td>1</td><td>41</td><td>29</td><td>52</td><td>22</td><td>19</td><td>299</td><td>2</td><td></td></tr><tr><td>2026-05-24</td><td>Valid From 08:30 AM OF 2026-05-23 TO 08:30AM OF 2026-05-24</td><td>0</td><td>41</td><td>29</td><td>53</td><td>19</td><td>22</td><td>291</td><td>2</td><td></td></tr><tr><td>2026-05-23</td><td>Valid From 08:30 AM OF 2026-05-22 TO 08:30AM OF 2026-05-23</td><td>6</td><td>40</td><td>26</td><td>46</td><td>25</td><td>22</td><td>296</td><td>5</td><td></td></tr><tr><td>2026-05-24</td><td>Valid From 08:30 AM OF 2026-05-23 TO 08:30AM OF 2026-05-24</td><td>7</td><td>39</td><td>27</td><td>49</td><td>25</td><td>21</td><td>286</td><td>5</td><td></td></tr><tr><td>2026-05-25</td><td>Valid From 08:30 AM OF 2026-05-24 TO 08:30AM OF 2026-05-25</td><td>2</td><td>39</td><td>27</td><td>43</td><td>20</td><td>23</td><td>295</td><td>3</td><td></td></tr><tr><td>2026-05-26</td><td>Valid From 08:30 AM OF 2026-05-25 TO 08:30AM OF 2026-05-26</td><td>0</td><td>40</td><td>27</td><td>41</td><td>22</td><td>22</td><td>292</td><td>3</td><td></td></tr><tr><td>2026-05-27</td><td>Valid From 08:30 AM OF 2026-05-26 TO 08:30AM OF 2026-05-27</td><td>0</td><td>40</td><td>26</td><td>37</td><td>24</td><td>23</td><td>297</td><td>3</td><td></td></tr><tr><td>2026-05-23</td><td>Valid From 08:30 AM OF 2026-05-22 TO 08:30AM OF 2026-05-23</td><td>6</td><td>40</td><td>26</td><td>46</td><td>25</td><td>22</td><td>296</td><td>5</td><td></td></tr><tr><td>2026-05-24</td><td>Valid From 08:30 AM OF 2026-05-23 TO 08:30AM OF 2026-05-24</td><td>7</td><td>39</td><td>27</td><td>49</td><td>25</td><td>21</td><td>286</td><td>5</td><td></td></tr><tr><td>2026-05-25</td><td>Valid From 08:30 AM OF 2026-05-24 TO 08:30AM OF 2026-05-25</td><td>2</td><td>39</td><td>27</td><td>43</td><td>20</td><td>23</td><td>295</td><td>3</td><td></td></tr><tr><td>2026-05-26</td><td>Valid From 08:30 AM OF 2026-05-25 TO 08:30AM OF 2026-05-26</td><td>0</td><td>40</td><td>27</td><td>41</td><td>22</td><td>22</td><td>292</td><td>3</td><td></td></tr><tr><td>2026-05-27</td><td>Valid From 08:30 AM OF 2026-05-26 TO 08:30AM OF 2026-05-27</td><td>0</td><td>40</td><td>26</td><td>37</td><td>24</td><td>23</td><td>297</td><td>3</td><td></td></tr><tr><td>2026-05-23</td><td>Valid From 08:30 AM OF 2026-05-22 TO 08:30AM OF 2026-05-23</td><td>6</td><td>40</td><td>26</td><td>46</td><td>25</td><td>22</td><td>296</td><td>5</td><td></td></tr><tr><td>2026-05-24</td><td>Valid From 08:30 AM OF 2026-05-23 TO 08:30AM OF 2026-05-24</td><td>7</td><td>39</td><td>27</td><td>49</td><td>25</td><td>21</td><td>286</td><td>5</td><td></td></tr><tr><td>2026-05-25</td><td>Valid From 08:30 AM OF 2026-05-24 TO 08:30AM OF 2026-05-25</td><td>2</td><td>39</td><td>27</td><td>43</td><td>20</td><td>23</td><td>295</td><td>3</td><td></td></tr><tr><td>2026-05-26</td><td>Valid From 08:30 AM OF 2026-05-25 TO 08:30AM OF 2026-05-26</td><td>0</td><td>40</td><td>27</td><td>41</td><td>22</td><td>22</td><td>292</td><td>3</td><td></td></tr><tr><td>2026-05-27</td><td>Valid From 08:30 AM OF 2026-05-26 TO 08:30AM OF 2026-05-27</td><td>0</td><td>40</td><td>26</td><td>37</td><td>24</td><td>23</td><td>297</td><td>3</td><td></td></tr><tr><td>2026-05-23</td><td>Valid From 08:30 AM OF 2026-05-22 TO 08:30AM OF 2026-05-23</td><td>6</td><td>40</td><td>26</td><td>46</td><td>25</td><td>22</td><td>296</td><td>5</td><td></td></tr><tr><td>2026-05-24</td><td>Valid From 08:30 AM OF 2026-05-23 TO 08:30AM OF 2026-05-24</td><td>7</td><td>39</td><td>27</td><td>49</td><td>25</td><td>21</td><td>286</td><td>5</td><td></td></tr><tr><td>2026-05-25</td><td>Valid From 08:30 AM OF 2026-05-24 TO 08:30AM OF 2026-05-25</td><td>2</td><td>39</td><td>27</td><td>43</td><td>20</td><td>23</td><td>295</td><td>3</td><td></td></tr><tr><td>2026-05-26</td><td>Valid From 08:30 AM OF 2026-05-25 TO 08:30AM OF 2026-05-26</td><td>0</td><td>40</td><td>27</td><td>41</td><td>22</td><td>22</td><td>292</td><td>3</td><td></td></tr><tr><td>2026-05-27</td><td>Valid From 08:30 AM OF 2026-05-26 TO 08:30AM OF 2026-05-27</td><td>0</td><td>40</td><td>26</td><td>37</td><td>24</td><td>23</td><td>297</td><td>3</td><td></td></tr><tr><td>2026-05-27</td><td>Valid From 08:30 AM OF 2026-05-26 TO 08:30AM OF 2026-05-27</td><td>14</td><td>40</td><td>23</td><td>57</td><td>29</td><td>19</td><td>285</td><td>4</td><td></td></tr><tr><td>2026-05-28</td><td>Valid From 08:30 AM OF 2026-05-27 TO 08:30AM OF 2026-05-28</td><td>10</td><td>40</td><td>23</td><td>54</td><td>26</td><td>21</td><td>290</td><td>2</td><td></td></tr><tr><td>2026-05-29</td><td>Valid From 08:30 AM OF 2026-05-28 TO 08:30AM OF 2026-05-29</td><td>9</td><td>40</td><td>23</td><td>51</td><td>24</td><td>22</td><td>283</td><td>2</td><td></td></tr><tr><td>2026-05-30</td><td>Valid From 08:30 AM OF 2026-05-29 TO 08:30AM OF 2026-05-30</td><td>6</td><td>39</td><td>24</td><td>52</td><td>23</td><td>24</td><td>283</td><td>1</td><td></td></tr><tr><td>2026-05-31</td><td>Valid From 08:30 AM OF 2026-05-30 TO 08:30AM OF 2026-05-31</td><td>0</td><td>40</td><td>23</td><td>55</td><td>23</td><td>21</td><td>286</td><td>1</td><td></td></tr><tr><td>2026-05-27</td><td>Valid From 08:30 AM OF 2026-05-26 TO 08:30AM OF 2026-05-27</td><td>14</td><td>40</td><td>23</td><td>57</td><td>29</td><td>19</td><td>285</td><td>4</td><td></td></tr><tr><td>2026-05-28</td><td>Valid From 08:30 AM OF 2026-05-27 TO 08:30AM OF 2026-05-28</td><td>10</td><td>40</td><td>23</td><td>54</td><td>26</td><td>21</td><td>290</td><td>2</td><td></td></tr><tr><td>2026-05-29</td><td>Valid From 08:30 AM OF 2026-05-28 TO 08:30AM OF 2026-05-29</td><td>9</td><td>40</td><td>23</td><td>51</td><td>24</td><td>22</td><td>283</td><td>2</td><td></td></tr><tr><td>2026-05-30</td><td>Valid From 08:30 AM OF 2026-05-29 TO 08:30AM OF 2026-05-30</td><td>6</td><td>39</td><td>24</td><td>52</td><td>23</td><td>24</td><td>283</td><td>1</td><td></td></tr><tr><td>2026-05-31</td><td>Valid From 08:30 AM OF 2026-05-30 TO 08:30AM OF 2026-05-31</td><td>0</td><td>40</td><td>23</td><td>55</td><td>23</td><td>21</td><td>286</td><td>1</td><td></td></tr><tr><td>2026-05-27</td><td>Valid From 08:30 AM OF 2026-05-26 TO 08:30AM OF 2026-05-27</td><td>14</td><td>40</td><td>23</td><td>57</td><td>29</td><td>19</td><td>285</td><td>4</td><td></td></tr><tr><td>2026-05-28</td><td>Valid From 08:30 AM OF 2026-05-27 TO 08:30AM OF 2026-05-28</td><td>10</td><td>40</td><td>23</td><td>54</td><td>26</td><td>21</td><td>290</td><td>2</td><td></td></tr><tr><td>2026-05-29</td><td>Valid From 08:30 AM OF 2026-05-28 TO 08:30AM OF 2026-05-29</td><td>9</td><td>40</td><td>23</td><td>51</td><td>24</td><td>22</td><td>283</td><td>2</td><td></td></tr><tr><td>2026-05-30</td><td>Valid From 08:30 AM OF 2026-05-29 TO 08:30AM OF 2026-05-30</td><td>6</td><td>39</td><td>24</td><td>52</td><td>23</td><td>24</td><td>283</td><td>1</td><td></td></tr><tr><td>2026-05-31</td><td>Valid From 08:30 AM OF 2026-05-30 TO 08:30AM OF 2026-05-31</td><td>0</td><td>40</td><td>23</td><td>55</td><td>23</td><td>21</td><td>286</td><td>1</td><td></td></tr><tr><td>2026-05-30</td><td>Valid From 08:30 AM OF 2026-05-29 TO 08:30AM OF 2026-05-30</td><td>3</td><td>41</td><td>26</td><td>52</td><td>27</td><td>21</td><td>272</td><td>1</td><td></td></tr><tr><td>2026-05-31</td><td>Valid From 08:30 AM OF 2026-05-30 TO 08:30AM OF 2026-05-31</td><td>0</td><td>40</td><td>26</td><td>52</td><td>25</td><td>17</td><td>287</td><td>1</td><td></td></tr><tr><td>2026-06-01</td><td>Valid From 08:30 AM OF 2026-05-31 TO 08:30AM OF 2026-06-01</td><td>4</td><td>40</td><td>27</td><td>53</td><td>26</td><td>20</td><td>290</td><td>1</td><td></td></tr><tr><td>2026-06-02</td><td>Valid From 08:30 AM OF 2026-06-01 TO 08:30AM OF 2026-06-02</td><td>6</td><td>39</td><td>27</td><td>55</td><td>31</td><td>21</td><td>298</td><td>3</td><td></td></tr><tr><td>2026-06-03</td><td>Valid From 08:30 AM OF 2026-06-02 TO 08:30AM OF 2026-06-03</td><td>8</td><td>39</td><td>26</td><td>59</td><td>33</td><td>19</td><td>289</td><td>3</td><td></td></tr><tr><td>2026-05-30</td><td>Valid From 08:30 AM OF 2026-05-29 TO 08:30AM OF 2026-05-30</td><td>3</td><td>41</td><td>26</td><td>52</td><td>27</td><td>21</td><td>272</td><td>1</td><td></td></tr><tr><td>2026-05-31</td><td>Valid From 08:30 AM OF 2026-05-30 TO 08:30AM OF 2026-05-31</td><td>0</td><td>40</td><td>26</td><td>52</td><td>25</td><td>17</td><td>287</td><td>1</td><td></td></tr><tr><td>2026-06-01</td><td>Valid From 08:30 AM OF 2026-05-31 TO 08:30AM OF 2026-06-01</td><td>4</td><td>40</td><td>27</td><td>53</td><td>26</td><td>20</td><td>290</td><td>1</td><td></td></tr><tr><td>2026-06-02</td><td>Valid From 08:30 AM OF 2026-06-01 TO 08:30AM OF 2026-06-02</td><td>6</td><td>39</td><td>27</td><td>55</td><td>31</td><td>21</td><td>298</td><td>3</td><td></td></tr><tr><td>2026-06-03</td><td>Valid From 08:30 AM OF 2026-06-02 TO 08:30AM OF 2026-06-03</td><td>8</td><td>39</td><td>26</td><td>59</td><td>33</td><td>19</td><td>289</td><td>3</td><td></td></tr><tr><td>2026-05-30</td><td>Valid From 08:30 AM OF 2026-05-29 TO 08:30AM OF 2026-05-30</td><td>3</td><td>41</td><td>26</td><td>52</td><td>27</td><td>21</td><td>272</td><td>1</td><td></td></tr><tr><td>2026-05-31</td><td>Valid From 08:30 AM OF 2026-05-30 TO 08:30AM OF 2026-05-31</td><td>0</td><td>40</td><td>26</td><td>52</td><td>25</td><td>17</td><td>287</td><td>1</td><td></td></tr><tr><td>2026-06-01</td><td>Valid From 08:30 AM OF 2026-05-31 TO 08:30AM OF 2026-06-01</td><td>4</td><td>40</td><td>27</td><td>53</td><td>26</td><td>20</td><td>290</td><td>1</td><td></td></tr><tr><td>2026-06-02</td><td>Valid From 08:30 AM OF 2026-06-01 TO 08:30AM OF 2026-06-02</td><td>6</td><td>39</td><td>27</td><td>55</td><td>31</td><td>21</td><td>298</td><td>3</td><td></td></tr><tr><td>2026-06-03</td><td>Valid From 08:30 AM OF 2026-06-02 TO 08:30AM OF 2026-06-03</td><td>8</td><td>39</td><td>26</td><td>59</td><td>33</td><td>19</td><td>289</td><td>3</td><td></td></tr><tr><td>2026-05-30</td><td>Valid From 08:30 AM OF 2026-05-29 TO 08:30AM OF 2026-05-30</td><td>3</td><td>41</td><td>26</td><td>52</td><td>27</td><td>21</td><td>272</td><td>1</td><td></td></tr><tr><td>2026-05-31</td><td>Valid From 08:30 AM OF 2026-05-30 TO 08:30AM OF 2026-05-31</td><td>0</td><td>40</td><td>26</td><td>52</td><td>25</td><td>17</td><td>287</td><td>1</td><td></td></tr><tr><td>2026-06-01</td><td>Valid From 08:30 AM OF 2026-05-31 TO 08:30AM OF 2026-06-01</td><td>4</td><td>40</td><td>27</td><td>53</td><td>26</td><td>20</td><td>290</td><td>1</td><td></td></tr><tr><td>2026-06-02</td><td>Valid From 08:30 AM OF 2026-06-01 TO 08:30AM OF 2026-06-02</td><td>6</td><td>39</td><td>27</td><td>55</td><td>31</td><td>21</td><td>298</td><td>3</td><td></td></tr><tr><td>2026-06-03</td><td>Valid From 08:30 AM OF 2026-06-02 TO 08:30AM OF 2026-06-03</td><td>8</td><td>39</td><td>26</td><td>59</td><td>33</td><td>19</td><td>289</td><td>3</td><td></td></tr><tr><td>2026-06-03</td><td>Valid From 08:30 AM OF 2026-06-02 TO 08:30AM OF 2026-06-03</td><td>10</td><td>39</td><td>24</td><td>75</td><td>27</td><td>17</td><td>324</td><td>3</td><td></td></tr><tr><td>2026-06-04</td><td>Valid From 08:30 AM OF 2026-06-03 TO 08:30AM OF 2026-06-04</td><td>8</td><td>38</td><td>23</td><td>77</td><td>30</td><td>15</td><td>298</td><td>5</td><td></td></tr><tr><td>2026-06-05</td><td>Valid From 08:30 AM OF 2026-06-04 TO 08:30AM OF 2026-06-05</td><td>9</td><td>38</td><td>23</td><td>81</td><td>31</td><td>17</td><td>283</td><td>4</td><td></td></tr><tr><td>2026-06-06</td><td>Valid From 08:30 AM OF 2026-06-05 TO 08:30AM OF 2026-06-06</td><td>5</td><td>36</td><td>23</td><td>84</td><td>33</td><td>18</td><td>278</td><td>5</td><td></td></tr><tr><td>2026-06-07</td><td>Valid From 08:30 AM OF 2026-06-06 TO 08:30AM OF 2026-06-07</td><td>6</td><td>37</td><td>23</td><td>87</td><td>37</td><td>15</td><td>278</td><td>4</td><td></td></tr><tr><td>2026-06-03</td><td>Valid From 08:30 AM OF 2026-06-02 TO 08:30AM OF 2026-06-03</td><td>10</td><td>39</td><td>24</td><td>75</td><td>27</td><td>17</td><td>324</td><td>3</td><td></td></tr><tr><td>2026-06-04</td><td>Valid From 08:30 AM OF 2026-06-03 TO 08:30AM OF 2026-06-04</td><td>8</td><td>38</td><td>23</td><td>77</td><td>30</td><td>15</td><td>298</td><td>5</td><td></td></tr><tr><td>2026-06-05</td><td>Valid From 08:30 AM OF 2026-06-04 TO 08:30AM OF 2026-06-05</td><td>9</td><td>38</td><td>23</td><td>81</td><td>31</td><td>17</td><td>283</td><td>4</td><td></td></tr><tr><td>2026-06-06</td><td>Valid From 08:30 AM OF 2026-06-05 TO 08:30AM OF 2026-06-06</td><td>5</td><td>36</td><td>23</td><td>84</td><td>33</td><td>18</td><td>278</td><td>5</td><td></td></tr><tr><td>2026-06-07</td><td>Valid From 08:30 AM OF 2026-06-06 TO 08:30AM OF 2026-06-07</td><td>6</td><td>37</td><td>23</td><td>87</td><td>37</td><td>15</td><td>278</td><td>4</td><td></td></tr><tr><td>2026-06-03</td><td>Valid From 08:30 AM OF 2026-06-02 TO 08:30AM OF 2026-06-03</td><td>10</td><td>39</td><td>24</td><td>75</td><td>27</td><td>17</td><td>324</td><td>3</td><td></td></tr><tr><td>2026-06-04</td><td>Valid From 08:30 AM OF 2026-06-03 TO 08:30AM OF 2026-06-04</td><td>8</td><td>38</td><td>23</td><td>77</td><td>30</td><td>15</td><td>298</td><td>5</td><td></td></tr><tr><td>2026-06-05</td><td>Valid From 08:30 AM OF 2026-06-04 TO 08:30AM OF 2026-06-05</td><td>9</td><td>38</td><td>23</td><td>81</td><td>31</td><td>17</td><td>283</td><td>4</td><td></td></tr><tr><td>2026-06-06</td><td>Valid From 08:30 AM OF 2026-06-05 TO 08:30AM OF 2026-06-06</td><td>5</td><td>36</td><td>23</td><td>84</td><td>33</td><td>18</td><td>278</td><td>5</td><td></td></tr><tr><td>2026-06-07</td><td>Valid From 08:30 AM OF 2026-06-06 TO 08:30AM OF 2026-06-07</td><td>6</td><td>37</td><td>23</td><td>87</td><td>37</td><td>15</td><td>278</td><td>4</td><td></td></tr><tr><td>2026-06-06</td><td>Valid From 08:30 AM OF 2026-06-05 TO 08:30AM OF 2026-06-06</td><td>10</td><td>36</td><td>23</td><td>66</td><td>30</td><td>19</td><td>277</td><td>5</td><td></td></tr><tr><td>2026-06-07</td><td>Valid From 08:30 AM OF 2026-06-06 TO 08:30AM OF 2026-06-07</td><td>6</td><td>37</td><td>23</td><td>68</td><td>38</td><td>13</td><td>311</td><td>6</td><td></td></tr><tr><td>2026-06-08</td><td>Valid From 08:30 AM OF 2026-06-07 TO 08:30AM OF 2026-06-08</td><td>10</td><td>38</td><td>23</td><td>72</td><td>36</td><td>18</td><td>285</td><td>6</td><td></td></tr><tr><td>2026-06-09</td><td>Valid From 08:30 AM OF 2026-06-08 TO 08:30AM OF 2026-06-09</td><td>9</td><td>38</td><td>22</td><td>73</td><td>40</td><td>19</td><td>291</td><td>5</td><td></td></tr><tr><td>2026-06-10</td><td>Valid From 08:30 AM OF 2026-06-09 TO 08:30AM OF 2026-06-10</td><td>4</td><td>38</td><td>22</td><td>71</td><td>42</td><td>20</td><td>274</td><td>6</td><td></td></tr><tr><td>2026-06-06</td><td>Valid From 08:30 AM OF 2026-06-05 TO 08:30AM OF 2026-06-06</td><td>10</td><td>36</td><td>23</td><td>66</td><td>30</td><td>19</td><td>277</td><td>5</td><td></td></tr><tr><td>2026-06-07</td><td>Valid From 08:30 AM OF 2026-06-06 TO 08:30AM OF 2026-06-07</td><td>6</td><td>37</td><td>23</td><td>68</td><td>38</td><td>13</td><td>311</td><td>6</td><td></td></tr><tr><td>2026-06-08</td><td>Valid From 08:30 AM OF 2026-06-07 TO 08:30AM OF 2026-06-08</td><td>10</td><td>38</td><td>23</td><td>72</td><td>36</td><td>18</td><td>285</td><td>6</td><td></td></tr><tr><td>2026-06-09</td><td>Valid From 08:30 AM OF 2026-06-08 TO 08:30AM OF 2026-06-09</td><td>9</td><td>38</td><td>22</td><td>73</td><td>40</td><td>19</td><td>291</td><td>5</td><td></td></tr><tr><td>2026-06-10</td><td>Valid From 08:30 AM OF 2026-06-09 TO 08:30AM OF 2026-06-10</td><td>4</td><td>38</td><td>22</td><td>71</td><td>42</td><td>20</td><td>274</td><td>6</td><td></td></tr><tr><td>2026-06-06</td><td>Valid From 08:30 AM OF 2026-06-05 TO 08:30AM OF 2026-06-06</td><td>10</td><td>36</td><td>23</td><td>66</td><td>30</td><td>19</td><td>277</td><td>5</td><td></td></tr><tr><td>2026-06-07</td><td>Valid From 08:30 AM OF 2026-06-06 TO 08:30AM OF 2026-06-07</td><td>6</td><td>37</td><td>23</td><td>68</td><td>38</td><td>13</td><td>311</td><td>6</td><td></td></tr><tr><td>2026-06-08</td><td>Valid From 08:30 AM OF 2026-06-07 TO 08:30AM OF 2026-06-08</td><td>10</td><td>38</td><td>23</td><td>72</td><td>36</td><td>18</td><td>285</td><td>6</td><td></td></tr><tr><td>2026-06-09</td><td>Valid From 08:30 AM OF 2026-06-08 TO 08:30AM OF 2026-06-09</td><td>9</td><td>38</td><td>22</td><td>73</td><td>40</td><td>19</td><td>291</td><td>5</td><td></td></tr><tr><td>2026-06-10</td><td>Valid From 08:30 AM OF 2026-06-09 TO 08:30AM OF 2026-06-10</td><td>4</td><td>38</td><td>22</td><td>71</td><td>42</td><td>20</td><td>274</td><td>6</td><td></td></tr><tr><td>2026-06-06</td><td>Valid From 08:30 AM OF 2026-06-05 TO 08:30AM OF 2026-06-06</td><td>10</td><td>36</td><td>23</td><td>66</td><td>30</td><td>19</td><td>277</td><td>5</td><td></td></tr><tr><td>2026-06-07</td><td>Valid From 08:30 AM OF 2026-06-06 TO 08:30AM OF 2026-06-07</td><td>6</td><td>37</td><td>23</td><td>68</td><td>38</td><td>13</td><td>311</td><td>6</td><td></td></tr><tr><td>2026-06-08</td><td>Valid From 08:30 AM OF 2026-06-07 TO 08:30AM OF 2026-06-08</td><td>10</td><td>38</td><td>23</td><td>72</td><td>36</td><td>18</td><td>285</td><td>6</td><td></td></tr><tr><td>2026-06-09</td><td>Valid From 08:30 AM OF 2026-06-08 TO 08:30AM OF 2026-06-09</td><td>9</td><td>38</td><td>22</td><td>73</td><td>40</td><td>19</td><td>291</td><td>5</td><td></td></tr><tr><td>2026-06-10</td><td>Valid From 08:30 AM OF 2026-06-09 TO 08:30AM OF 2026-06-10</td><td>4</td><td>38</td><td>22</td><td>71</td><td>42</td><td>20</td><td>274</td><td>6</td><td></td></tr><tr><td>2026-06-10</td><td>Valid From 08:30 AM OF 2026-06-09 TO 08:30AM OF 2026-06-10</td><td>11</td><td>35</td><td>23</td><td>90</td><td>51</td><td>21</td><td>284</td><td>5</td><td></td></tr><tr><td>2026-06-11</td><td>Valid From 08:30 AM OF 2026-06-10 TO 08:30AM OF 2026-06-11</td><td>9</td><td>36</td><td>24</td><td>89</td><td>46</td><td>22</td><td>279</td><td>4</td><td></td></tr><tr><td>2026-06-12</td><td>Valid From 08:30 AM OF 2026-06-11 TO 08:30AM OF 2026-06-12</td><td>3</td><td>39</td><td>24</td><td>87</td><td>47</td><td>20</td><td>286</td><td>4</td><td></td></tr><tr><td>2026-06-13</td><td>Valid From 08:30 AM OF 2026-06-12 TO 08:30AM OF 2026-06-13</td><td>10</td><td>39</td><td>24</td><td>88</td><td>48</td><td>19</td><td>277</td><td>5</td><td></td></tr><tr><td>2026-06-14</td><td>Valid From 08:30 AM OF 2026-06-13 TO 08:30AM OF 2026-06-14</td><td>3</td><td>39</td><td>24</td><td>88</td><td>45</td><td>18</td><td>266</td><td>4</td><td></td></tr><tr><td>2026-06-10</td><td>Valid From 08:30 AM OF 2026-06-09 TO 08:30AM OF 2026-06-10</td><td>11</td><td>35</td><td>23</td><td>90</td><td>51</td><td>21</td><td>284</td><td>5</td><td></td></tr><tr><td>2026-06-11</td><td>Valid From 08:30 AM OF 2026-06-10 TO 08:30AM OF 2026-06-11</td><td>9</td><td>36</td><td>24</td><td>89</td><td>46</td><td>22</td><td>279</td><td>4</td><td></td></tr><tr><td>2026-06-12</td><td>Valid From 08:30 AM OF 2026-06-11 TO 08:30AM OF 2026-06-12</td><td>3</td><td>39</td><td>24</td><td>87</td><td>47</td><td>20</td><td>286</td><td>4</td><td></td></tr><tr><td>2026-06-13</td><td>Valid From 08:30 AM OF 2026-06-12 TO 08:30AM OF 2026-06-13</td><td>10</td><td>39</td><td>24</td><td>88</td><td>48</td><td>19</td><td>277</td><td>5</td><td></td></tr><tr><td>2026-06-14</td><td>Valid From 08:30 AM OF 2026-06-13 TO 08:30AM OF 2026-06-14</td><td>3</td><td>39</td><td>24</td><td>88</td><td>45</td><td>18</td><td>266</td><td>4</td><td></td></tr><tr><td>2026-06-10</td><td>Valid From 08:30 AM OF 2026-06-09 TO 08:30AM OF 2026-06-10</td><td>11</td><td>35</td><td>23</td><td>90</td><td>51</td><td>21</td><td>284</td><td>5</td><td></td></tr><tr><td>2026-06-11</td><td>Valid From 08:30 AM OF 2026-06-10 TO 08:30AM OF 2026-06-11</td><td>9</td><td>36</td><td>24</td><td>89</td><td>46</td><td>22</td><td>279</td><td>4</td><td></td></tr><tr><td>2026-06-12</td><td>Valid From 08:30 AM OF 2026-06-11 TO 08:30AM OF 2026-06-12</td><td>3</td><td>39</td><td>24</td><td>87</td><td>47</td><td>20</td><td>286</td><td>4</td><td></td></tr><tr><td>2026-06-13</td><td>Valid From 08:30 AM OF 2026-06-12 TO 08:30AM OF 2026-06-13</td><td>10</td><td>39</td><td>24</td><td>88</td><td>48</td><td>19</td><td>277</td><td>5</td><td></td></tr><tr><td>2026-06-14</td><td>Valid From 08:30 AM OF 2026-06-13 TO 08:30AM OF 2026-06-14</td><td>3</td><td>39</td><td>24</td><td>88</td><td>45</td><td>18</td><td>266</td><td>4</td><td></td></tr><tr><td>2026-06-13</td><td>Valid From 08:30 AM OF 2026-06-12 TO 08:30AM OF 2026-06-13</td><td>4</td><td>37</td><td>24</td><td>60</td><td>32</td><td>21</td><td>274</td><td>4</td><td></td></tr><tr><td>2026-06-14</td><td>Valid From 08:30 AM OF 2026-06-13 TO 08:30AM OF 2026-06-14</td><td>3</td><td>38</td><td>24</td><td>58</td><td>33</td><td>17</td><td>274</td><td>6</td><td></td></tr><tr><td>2026-06-15</td><td>Valid From 08:30 AM OF 2026-06-14 TO 08:30AM OF 2026-06-15</td><td>2</td><td>39</td><td>24</td><td>59</td><td>32</td><td>24</td><td>283</td><td>4</td><td></td></tr><tr><td>2026-06-16</td><td>Valid From 08:30 AM OF 2026-06-15 TO 08:30AM OF 2026-06-16</td><td>3</td><td>38</td><td>24</td><td>54</td><td>28</td><td>23</td><td>305</td><td>2</td><td></td></tr><tr><td>2026-06-17</td><td>Valid From 08:30 AM OF 2026-06-16 TO 08:30AM OF 2026-06-17</td><td>2</td><td>38</td><td>24</td><td>54</td><td>30</td><td>25</td><td>305</td><td>3</td><td></td></tr><tr><td>2026-06-13</td><td>Valid From 08:30 AM OF 2026-06-12 TO 08:30AM OF 2026-06-13</td><td>4</td><td>37</td><td>24</td><td>60</td><td>32</td><td>21</td><td>274</td><td>4</td><td></td></tr><tr><td>2026-06-14</td><td>Valid From 08:30 AM OF 2026-06-13 TO 08:30AM OF 2026-06-14</td><td>3</td><td>38</td><td>24</td><td>58</td><td>33</td><td>17</td><td>274</td><td>6</td><td></td></tr><tr><td>2026-06-15</td><td>Valid From 08:30 AM OF 2026-06-14 TO 08:30AM OF 2026-06-15</td><td>2</td><td>39</td><td>24</td><td>59</td><td>32</td><td>24</td><td>283</td><td>4</td><td></td></tr><tr><td>2026-06-16</td><td>Valid From 08:30 AM OF 2026-06-15 TO 08:30AM OF 2026-06-16</td><td>3</td><td>38</td><td>24</td><td>54</td><td>28</td><td>23</td><td>305</td><td>2</td><td></td></tr><tr><td>2026-06-17</td><td>Valid From 08:30 AM OF 2026-06-16 TO 08:30AM OF 2026-06-17</td><td>2</td><td>38</td><td>24</td><td>54</td><td>30</td><td>25</td><td>305</td><td>3</td><td></td></tr><tr><td>2026-06-13</td><td>Valid From 08:30 AM OF 2026-06-12 TO 08:30AM OF 2026-06-13</td><td>4</td><td>37</td><td>24</td><td>60</td><td>32</td><td>21</td><td>274</td><td>4</td><td></td></tr><tr><td>2026-06-14</td><td>Valid From 08:30 AM OF 2026-06-13 TO 08:30AM OF 2026-06-14</td><td>3</td><td>38</td><td>24</td><td>58</td><td>33</td><td>17</td><td>274</td><td>6</td><td></td></tr><tr><td>2026-06-15</td><td>Valid From 08:30 AM OF 2026-06-14 TO 08:30AM OF 2026-06-15</td><td>2</td><td>39</td><td>24</td><td>59</td><td>32</td><td>24</td><td>283</td><td>4</td><td></td></tr><tr><td>2026-06-16</td><td>Valid From 08:30 AM OF 2026-06-15 TO 08:30AM OF 2026-06-16</td><td>3</td><td>38</td><td>24</td><td>54</td><td>28</td><td>23</td><td>305</td><td>2</td><td></td></tr><tr><td>2026-06-17</td><td>Valid From 08:30 AM OF 2026-06-16 TO 08:30AM OF 2026-06-17</td><td>2</td><td>38</td><td>24</td><td>54</td><td>30</td><td>25</td><td>305</td><td>3</td><td></td></tr><tr><td>2026-06-13</td><td>Valid From 08:30 AM OF 2026-06-12 TO 08:30AM OF 2026-06-13</td><td>4</td><td>37</td><td>24</td><td>60</td><td>32</td><td>21</td><td>274</td><td>4</td><td></td></tr><tr><td>2026-06-14</td><td>Valid From 08:30 AM OF 2026-06-13 TO 08:30AM OF 2026-06-14</td><td>3</td><td>38</td><td>24</td><td>58</td><td>33</td><td>17</td><td>274</td><td>6</td><td></td></tr><tr><td>2026-06-15</td><td>Valid From 08:30 AM OF 2026-06-14 TO 08:30AM OF 2026-06-15</td><td>2</td><td>39</td><td>24</td><td>59</td><td>32</td><td>24</td><td>283</td><td>4</td><td></td></tr><tr><td>2026-06-16</td><td>Valid From 08:30 AM OF 2026-06-15 TO 08:30AM OF 2026-06-16</td><td>3</td><td>38</td><td>24</td><td>54</td><td>28</td><td>23</td><td>305</td><td>2</td><td></td></tr><tr><td>2026-06-17</td><td>Valid From 08:30 AM OF 2026-06-16 TO 08:30AM OF 2026-06-17</td><td>2</td><td>38</td><td>24</td><td>54</td><td>30</td><td>25</td><td>305</td><td>3</td><td></td></tr><tr><td>2026-06-17</td><td>Valid From 08:30 AM OF 2026-06-16 TO 08:30AM OF 2026-06-17</td><td>5</td><td>39</td><td>24</td><td>57</td><td>29</td><td>23</td><td>310</td><td>3</td><td></td></tr><tr><td>2026-06-18</td><td>Valid From 08:30 AM OF 2026-06-17 TO 08:30AM OF 2026-06-18</td><td>4</td><td>38</td><td>23</td><td>58</td><td>32</td><td>21</td><td>326</td><td>3</td><td></td></tr><tr><td>2026-06-19</td><td>Valid From 08:30 AM OF 2026-06-18 TO 08:30AM OF 2026-06-19</td><td>6</td><td>37</td><td>21</td><td>54</td><td>30</td><td>21</td><td>330</td><td>5</td><td></td></tr><tr><td>2026-06-20</td><td>Valid From 08:30 AM OF 2026-06-19 TO 08:30AM OF 2026-06-20</td><td>4</td><td>35</td><td>23</td><td>53</td><td>29</td><td>23</td><td>318</td><td>5</td><td></td></tr><tr><td>2026-06-21</td><td>Valid From 08:30 AM OF 2026-06-20 TO 08:30AM OF 2026-06-21</td><td>3</td><td>36</td><td>23</td><td>53</td><td>31</td><td>25</td><td>317</td><td>4</td><td></td></tr><tr><td>2026-06-17</td><td>Valid From 08:30 AM OF 2026-06-16 TO 08:30AM OF 2026-06-17</td><td>5</td><td>39</td><td>24</td><td>57</td><td>29</td><td>23</td><td>310</td><td>3</td><td></td></tr><tr><td>2026-06-18</td><td>Valid From 08:30 AM OF 2026-06-17 TO 08:30AM OF 2026-06-18</td><td>4</td><td>38</td><td>23</td><td>58</td><td>32</td><td>21</td><td>326</td><td>3</td><td></td></tr><tr><td>2026-06-19</td><td>Valid From 08:30 AM OF 2026-06-18 TO 08:30AM OF 2026-06-19</td><td>6</td><td>37</td><td>21</td><td>54</td><td>30</td><td>21</td><td>330</td><td>5</td><td></td></tr><tr><td>2026-06-20</td><td>Valid From 08:30 AM OF 2026-06-19 TO 08:30AM OF 2026-06-20</td><td>4</td><td>35</td><td>23</td><td>53</td><td>29</td><td>23</td><td>318</td><td>5</td><td></td></tr><tr><td>2026-06-21</td><td>Valid From 08:30 AM OF 2026-06-20 TO 08:30AM OF 2026-06-21</td><td>3</td><td>36</td><td>23</td><td>53</td><td>31</td><td>25</td><td>317</td><td>4</td><td></td></tr><tr><td>2026-06-17</td><td>Valid From 08:30 AM OF 2026-06-16 TO 08:30AM OF 2026-06-17</td><td>5</td><td>39</td><td>24</td><td>57</td><td>29</td><td>23</td><td>310</td><td>3</td><td></td></tr><tr><td>2026-06-18</td><td>Valid From 08:30 AM OF 2026-06-17 TO 08:30AM OF 2026-06-18</td><td>4</td><td>38</td><td>23</td><td>58</td><td>32</td><td>21</td><td>326</td><td>3</td><td></td></tr><tr><td>2026-06-19</td><td>Valid From 08:30 AM OF 2026-06-18 TO 08:30AM OF 2026-06-19</td><td>6</td><td>37</td><td>21</td><td>54</td><td>30</td><td>21</td><td>330</td><td>5</td><td></td></tr><tr><td>2026-06-20</td><td>Valid From 08:30 AM OF 2026-06-19 TO 08:30AM OF 2026-06-20</td><td>4</td><td>35</td><td>23</td><td>53</td><td>29</td><td>23</td><td>318</td><td>5</td><td></td></tr><tr><td>2026-06-21</td><td>Valid From 08:30 AM OF 2026-06-20 TO 08:30AM OF 2026-06-21</td><td>3</td><td>36</td><td>23</td><td>53</td><td>31</td><td>25</td><td>317</td><td>4</td><td></td></tr><tr><td>2026-06-20</td><td>Valid From 08:30 AM OF 2026-06-19 TO 08:30AM OF 2026-06-20</td><td>4</td><td>37</td><td>25</td><td>47</td><td>32</td><td>20</td><td>315</td><td>4</td><td></td></tr><tr><td>2026-06-21</td><td>Valid From 08:30 AM OF 2026-06-20 TO 08:30AM OF 2026-06-21</td><td>2</td><td>37</td><td>25</td><td>44</td><td>32</td><td>19</td><td>310</td><td>4</td><td></td></tr><tr><td>2026-06-22</td><td>Valid From 08:30 AM OF 2026-06-21 TO 08:30AM OF 2026-06-22</td><td>6</td><td>37</td><td>25</td><td>48</td><td>33</td><td>17</td><td>295</td><td>4</td><td></td></tr><tr><td>2026-06-23</td><td>Valid From 08:30 AM OF 2026-06-22 TO 08:30AM OF 2026-06-23</td><td>9</td><td>36</td><td>24</td><td>62</td><td>39</td><td>17</td><td>295</td><td>5</td><td></td></tr><tr><td>2026-06-24</td><td>Valid From 08:30 AM OF 2026-06-23 TO 08:30AM OF 2026-06-24</td><td>5</td><td>36</td><td>25</td><td>59</td><td>45</td><td>18</td><td>267</td><td>5</td><td></td></tr><tr><td>2026-06-20</td><td>Valid From 08:30 AM OF 2026-06-19 TO 08:30AM OF 2026-06-20</td><td>4</td><td>37</td><td>25</td><td>47</td><td>32</td><td>20</td><td>315</td><td>4</td><td></td></tr><tr><td>2026-06-21</td><td>Valid From 08:30 AM OF 2026-06-20 TO 08:30AM OF 2026-06-21</td><td>2</td><td>37</td><td>25</td><td>44</td><td>32</td><td>19</td><td>310</td><td>4</td><td></td></tr><tr><td>2026-06-22</td><td>Valid From 08:30 AM OF 2026-06-21 TO 08:30AM OF 2026-06-22</td><td>6</td><td>37</td><td>25</td><td>48</td><td>33</td><td>17</td><td>295</td><td>4</td><td></td></tr><tr><td>2026-06-23</td><td>Valid From 08:30 AM OF 2026-06-22 TO 08:30AM OF 2026-06-23</td><td>9</td><td>36</td><td>24</td><td>62</td><td>39</td><td>17</td><td>295</td><td>5</td><td></td></tr><tr><td>2026-06-24</td><td>Valid From 08:30 AM OF 2026-06-23 TO 08:30AM OF 2026-06-24</td><td>5</td><td>36</td><td>25</td><td>59</td><td>45</td><td>18</td><td>267</td><td>5</td><td></td></tr><tr><td>2026-06-20</td><td>Valid From 08:30 AM OF 2026-06-19 TO 08:30AM OF 2026-06-20</td><td>4</td><td>37</td><td>25</td><td>47</td><td>32</td><td>20</td><td>315</td><td>4</td><td></td></tr><tr><td>2026-06-21</td><td>Valid From 08:30 AM OF 2026-06-20 TO 08:30AM OF 2026-06-21</td><td>2</td><td>37</td><td>25</td><td>44</td><td>32</td><td>19</td><td>310</td><td>4</td><td></td></tr><tr><td>2026-06-22</td><td>Valid From 08:30 AM OF 2026-06-21 TO 08:30AM OF 2026-06-22</td><td>6</td><td>37</td><td>25</td><td>48</td><td>33</td><td>17</td><td>295</td><td>4</td><td></td></tr><tr><td>2026-06-23</td><td>Valid From 08:30 AM OF 2026-06-22 TO 08:30AM OF 2026-06-23</td><td>9</td><td>36</td><td>24</td><td>62</td><td>39</td><td>17</td><td>295</td><td>5</td><td></td></tr><tr><td>2026-06-24</td><td>Valid From 08:30 AM OF 2026-06-23 TO 08:30AM OF 2026-06-24</td><td>5</td><td>36</td><td>25</td><td>59</td><td>45</td><td>18</td><td>267</td><td>5</td><td></td></tr><tr><td>2026-06-20</td><td>Valid From 08:30 AM OF 2026-06-19 TO 08:30AM OF 2026-06-20</td><td>4</td><td>37</td><td>25</td><td>47</td><td>32</td><td>20</td><td>315</td><td>4</td><td></td></tr><tr><td>2026-06-21</td><td>Valid From 08:30 AM OF 2026-06-20 TO 08:30AM OF 2026-06-21</td><td>2</td><td>37</td><td>25</td><td>44</td><td>32</td><td>19</td><td>310</td><td>4</td><td></td></tr><tr><td>2026-06-22</td><td>Valid From 08:30 AM OF 2026-06-21 TO 08:30AM OF 2026-06-22</td><td>6</td><td>37</td><td>25</td><td>48</td><td>33</td><td>17</td><td>295</td><td>4</td><td></td></tr><tr><td>2026-06-23</td><td>Valid From 08:30 AM OF 2026-06-22 TO 08:30AM OF 2026-06-23</td><td>9</td><td>36</td><td>24</td><td>62</td><td>39</td><td>17</td><td>295</td><td>5</td><td></td></tr><tr><td>2026-06-24</td><td>Valid From 08:30 AM OF 2026-06-23 TO 08:30AM OF 2026-06-24</td><td>5</td><td>36</td><td>25</td><td>59</td><td>45</td><td>18</td><td>267</td><td>5</td><td></td></tr><tr><td>2026-06-24</td><td>Valid From 08:30 AM OF 2026-06-23 TO 08:30AM OF 2026-06-24</td><td>9</td><td>37</td><td>22</td><td>77</td><td>36</td><td>18</td><td>254</td><td>7</td><td></td></tr><tr><td>2026-06-25</td><td>Valid From 08:30 AM OF 2026-06-24 TO 08:30AM OF 2026-06-25</td><td>10</td><td>36</td><td>22</td><td>77</td><td>37</td><td>17</td><td>259</td><td>6</td><td></td></tr><tr><td>2026-06-26</td><td>Valid From 08:30 AM OF 2026-06-25 TO 08:30AM OF 2026-06-26</td><td>12</td><td>35</td><td>21</td><td>79</td><td>48</td><td>18</td><td>276</td><td>6</td><td></td></tr><tr><td>2026-06-27</td><td>Valid From 08:30 AM OF 2026-06-26 TO 08:30AM OF 2026-06-27</td><td>18</td><td>35</td><td>21</td><td>81</td><td>47</td><td>15</td><td>284</td><td>6</td><td></td></tr><tr><td>2026-06-28</td><td>Valid From 08:30 AM OF 2026-06-27 TO 08:30AM OF 2026-06-28</td><td>9</td><td>35</td><td>21</td><td>82</td><td>42</td><td>14</td><td>360</td><td>6</td><td></td></tr><tr><td>2026-06-24</td><td>Valid From 08:30 AM OF 2026-06-23 TO 08:30AM OF 2026-06-24</td><td>9</td><td>37</td><td>22</td><td>77</td><td>36</td><td>18</td><td>254</td><td>7</td><td></td></tr><tr><td>2026-06-25</td><td>Valid From 08:30 AM OF 2026-06-24 TO 08:30AM OF 2026-06-25</td><td>10</td><td>36</td><td>22</td><td>77</td><td>37</td><td>17</td><td>259</td><td>6</td><td></td></tr><tr><td>2026-06-26</td><td>Valid From 08:30 AM OF 2026-06-25 TO 08:30AM OF 2026-06-26</td><td>12</td><td>35</td><td>21</td><td>79</td><td>48</td><td>18</td><td>276</td><td>6</td><td></td></tr><tr><td>2026-06-27</td><td>Valid From 08:30 AM OF 2026-06-26 TO 08:30AM OF 2026-06-27</td><td>18</td><td>35</td><td>21</td><td>81</td><td>47</td><td>15</td><td>284</td><td>6</td><td></td></tr><tr><td>2026-06-28</td><td>Valid From 08:30 AM OF 2026-06-27 TO 08:30AM OF 2026-06-28</td><td>9</td><td>35</td><td>21</td><td>82</td><td>42</td><td>14</td><td>360</td><td>6</td><td></td></tr><tr><td>2026-06-24</td><td>Valid From 08:30 AM OF 2026-06-23 TO 08:30AM OF 2026-06-24</td><td>9</td><td>37</td><td>22</td><td>77</td><td>36</td><td>18</td><td>254</td><td>7</td><td></td></tr><tr><td>2026-06-25</td><td>Valid From 08:30 AM OF 2026-06-24 TO 08:30AM OF 2026-06-25</td><td>10</td><td>36</td><td>22</td><td>77</td><td>37</td><td>17</td><td>259</td><td>6</td><td></td></tr><tr><td>2026-06-26</td><td>Valid From 08:30 AM OF 2026-06-25 TO 08:30AM OF 2026-06-26</td><td>12</td><td>35</td><td>21</td><td>79</td><td>48</td><td>18</td><td>276</td><td>6</td><td></td></tr><tr><td>2026-06-27</td><td>Valid From 08:30 AM OF 2026-06-26 TO 08:30AM OF 2026-06-27</td><td>18</td><td>35</td><td>21</td><td>81</td><td>47</td><td>15</td><td>284</td><td>6</td><td></td></tr><tr><td>2026-06-28</td><td>Valid From 08:30 AM OF 2026-06-27 TO 08:30AM OF 2026-06-28</td><td>9</td><td>35</td><td>21</td><td>82</td><td>42</td><td>14</td><td>360</td><td>6</td><td></td></tr><tr><td>2026-07-01</td><td>Valid From 08:30 AM OF 2026-06-30 TO 08:30AM OF 2026-07-01</td><td>9</td><td>31</td><td>22</td><td>89</td><td>82</td><td>20</td><td>263</td><td>8</td><td></td></tr><tr><td>2026-07-02</td><td>Valid From 08:30 AM OF 2026-07-01 TO 08:30AM OF 2026-07-02</td><td>14</td><td>30</td><td>21</td><td>89</td><td>82</td><td>20</td><td>271</td><td>8</td><td></td></tr><tr><td>2026-07-03</td><td>Valid From 08:30 AM OF 2026-07-02 TO 08:30AM OF 2026-07-03</td><td>10</td><td>30</td><td>20</td><td>89</td><td>82</td><td>21</td><td>266</td><td>8</td><td></td></tr><tr><td>2026-07-04</td><td>Valid From 08:30 AM OF 2026-07-03 TO 08:30AM OF 2026-07-04</td><td>5</td><td>28</td><td>20</td><td>98</td><td>81</td><td>24</td><td>266</td><td>8</td><td></td></tr><tr><td>2026-07-05</td><td>Valid From 08:30 AM OF 2026-07-04 TO 08:30AM OF 2026-07-05</td><td>8</td><td>28</td><td>20</td><td>98</td><td>81</td><td>24</td><td>256</td><td>8</td><td></td></tr><tr><td>2026-07-01</td><td>Valid From 08:30 AM OF 2026-06-30 TO 08:30AM OF 2026-07-01</td><td>9</td><td>31</td><td>22</td><td>89</td><td>82</td><td>20</td><td>263</td><td>8</td><td></td></tr><tr><td>2026-07-02</td><td>Valid From 08:30 AM OF 2026-07-01 TO 08:30AM OF 2026-07-02</td><td>14</td><td>30</td><td>21</td><td>89</td><td>82</td><td>20</td><td>271</td><td>8</td><td></td></tr><tr><td>2026-07-03</td><td>Valid From 08:30 AM OF 2026-07-02 TO 08:30AM OF 2026-07-03</td><td>10</td><td>30</td><td>20</td><td>89</td><td>82</td><td>21</td><td>266</td><td>8</td><td></td></tr><tr><td>2026-07-04</td><td>Valid From 08:30 AM OF 2026-07-03 TO 08:30AM OF 2026-07-04</td><td>5</td><td>28</td><td>20</td><td>98</td><td>81</td><td>24</td><td>266</td><td>8</td><td></td></tr><tr><td>2026-07-05</td><td>Valid From 08:30 AM OF 2026-07-04 TO 08:30AM OF 2026-07-05</td><td>8</td><td>28</td><td>20</td><td>98</td><td>81</td><td>24</td><td>256</td><td>8</td><td></td></tr><tr><td>2026-07-04</td><td>Valid From 08:30 AM OF 2026-07-03 TO 08:30AM OF 2026-07-04</td><td>7</td><td>29</td><td>22</td><td>84</td><td>56</td><td>23</td><td>254</td><td>8</td><td></td></tr><tr><td>2026-07-05</td><td>Valid From 08:30 AM OF 2026-07-04 TO 08:30AM OF 2026-07-05</td><td>14</td><td>29</td><td>22</td><td>81</td><td>57</td><td>25</td><td>254</td><td>8</td><td></td></tr><tr><td>2026-07-06</td><td>Valid From 08:30 AM OF 2026-07-05 TO 08:30AM OF 2026-07-06</td><td>6</td><td>28</td><td>21</td><td>78</td><td>49</td><td>27</td><td>242</td><td>8</td><td></td></tr><tr><td>2026-07-07</td><td>Valid From 08:30 AM OF 2026-07-06 TO 08:30AM OF 2026-07-07</td><td>2</td><td>28</td><td>21</td><td>76</td><td>47</td><td>30</td><td>238</td><td>8</td><td></td></tr><tr><td>2026-07-08</td><td>Valid From 08:30 AM OF 2026-07-07 TO 08:30AM OF 2026-07-08</td><td>4</td><td>28</td><td>20</td><td>75</td><td>40</td><td>26</td><td>238</td><td>7</td><td></td></tr><tr><td>2026-07-04</td><td>Valid From 08:30 AM OF 2026-07-03 TO 08:30AM OF 2026-07-04</td><td>7</td><td>29</td><td>22</td><td>84</td><td>56</td><td>23</td><td>254</td><td>8</td><td></td></tr><tr><td>2026-07-05</td><td>Valid From 08:30 AM OF 2026-07-04 TO 08:30AM OF 2026-07-05</td><td>14</td><td>29</td><td>22</td><td>81</td><td>57</td><td>25</td><td>254</td><td>8</td><td></td></tr><tr><td>2026-07-06</td><td>Valid From 08:30 AM OF 2026-07-05 TO 08:30AM OF 2026-07-06</td><td>6</td><td>28</td><td>21</td><td>78</td><td>49</td><td>27</td><td>242</td><td>8</td><td></td></tr><tr><td>2026-07-07</td><td>Valid From 08:30 AM OF 2026-07-06 TO 08:30AM OF 2026-07-07</td><td>2</td><td>28</td><td>21</td><td>76</td><td>47</td><td>30</td><td>238</td><td>8</td><td></td></tr><tr><td>2026-07-08</td><td>Valid From 08:30 AM OF 2026-07-07 TO 08:30AM OF 2026-07-08</td><td>4</td><td>28</td><td>20</td><td>75</td><td>40</td><td>26</td><td>238</td><td>7</td><td></td></tr><tr><td>2026-07-04</td><td>Valid From 08:30 AM OF 2026-07-03 TO 08:30AM OF 2026-07-04</td><td>7</td><td>29</td><td>22</td><td>84</td><td>56</td><td>23</td><td>254</td><td>8</td><td></td></tr><tr><td>2026-07-05</td><td>Valid From 08:30 AM OF 2026-07-04 TO 08:30AM OF 2026-07-05</td><td>14</td><td>29</td><td>22</td><td>81</td><td>57</td><td>25</td><td>254</td><td>8</td><td></td></tr><tr><td>2026-07-06</td><td>Valid From 08:30 AM OF 2026-07-05 TO 08:30AM OF 2026-07-06</td><td>6</td><td>28</td><td>21</td><td>78</td><td>49</td><td>27</td><td>242</td><td>8</td><td></td></tr><tr><td>2026-07-07</td><td>Valid From 08:30 AM OF 2026-07-06 TO 08:30AM OF 2026-07-07</td><td>2</td><td>28</td><td>21</td><td>76</td><td>47</td><td>30</td><td>238</td><td>8</td><td></td></tr><tr><td>2026-07-08</td><td>Valid From 08:30 AM OF 2026-07-07 TO 08:30AM OF 2026-07-08</td><td>4</td><td>28</td><td>20</td><td>75</td><td>40</td><td>26</td><td>238</td><td>7</td><td></td></tr><tr><td>2026-07-04</td><td>Valid From 08:30 AM OF 2026-07-03 TO 08:30AM OF 2026-07-04</td><td>7</td><td>29</td><td>22</td><td>84</td><td>56</td><td>23</td><td>254</td><td>8</td><td></td></tr><tr><td>2026-07-05</td><td>Valid From 08:30 AM OF 2026-07-04 TO 08:30AM OF 2026-07-05</td><td>14</td><td>29</td><td>22</td><td>81</td><td>57</td><td>25</td><td>254</td><td>8</td><td></td></tr><tr><td>2026-07-06</td><td>Valid From 08:30 AM OF 2026-07-05 TO 08:30AM OF 2026-07-06</td><td>6</td><td>28</td><td>21</td><td>78</td><td>49</td><td>27</td><td>242</td><td>8</td><td></td></tr><tr><td>2026-07-07</td><td>Valid From 08:30 AM OF 2026-07-06 TO 08:30AM OF 2026-07-07</td><td>2</td><td>28</td><td>21</td><td>76</td><td>47</td><td>30</td><td>238</td><td>8</td><td></td></tr><tr><td>2026-07-08</td><td>Valid From 08:30 AM OF 2026-07-07 TO 08:30AM OF 2026-07-08</td><td>4</td><td>28</td><td>20</td><td>75</td><td>40</td><td>26</td><td>238</td><td>7</td><td></td></tr><tr><td>2026-07-08</td><td>Valid From 08:30 AM OF 2026-07-07 TO 08:30AM OF 2026-07-08</td><td>3</td><td>31</td><td>23</td><td>90</td><td>64</td><td>32</td><td>240</td><td>8</td><td></td></tr><tr><td>2026-07-09</td><td>Valid From 08:30 AM OF 2026-07-08 TO 08:30AM OF 2026-07-09</td><td>2</td><td>32</td><td>22</td><td>87</td><td>57</td><td>26</td><td>230</td><td>7</td><td></td></tr><tr><td>2026-07-10</td><td>Valid From 08:30 AM OF 2026-07-09 TO 08:30AM OF 2026-07-10</td><td>2</td><td>33</td><td>23</td><td>88</td><td>57</td><td>24</td><td>244</td><td>7</td><td></td></tr><tr><td>2026-07-11</td><td>Valid From 08:30 AM OF 2026-07-10 TO 08:30AM OF 2026-07-11</td><td>2</td><td>33</td><td>23</td><td>85</td><td>52</td><td>23</td><td>256</td><td>6</td><td></td></tr><tr><td>2026-07-12</td><td>Valid From 08:30 AM OF 2026-07-11 TO 08:30AM OF 2026-07-12</td><td>2</td><td>34</td><td>22</td><td>87</td><td>50</td><td>23</td><td>258</td><td>7</td><td></td></tr><tr><td>2026-07-08</td><td>Valid From 08:30 AM OF 2026-07-07 TO 08:30AM OF 2026-07-08</td><td>3</td><td>31</td><td>23</td><td>90</td><td>64</td><td>32</td><td>240</td><td>8</td><td></td></tr><tr><td>2026-07-09</td><td>Valid From 08:30 AM OF 2026-07-08 TO 08:30AM OF 2026-07-09</td><td>2</td><td>32</td><td>22</td><td>87</td><td>57</td><td>26</td><td>230</td><td>7</td><td></td></tr><tr><td>2026-07-10</td><td>Valid From 08:30 AM OF 2026-07-09 TO 08:30AM OF 2026-07-10</td><td>2</td><td>33</td><td>23</td><td>88</td><td>57</td><td>24</td><td>244</td><td>7</td><td></td></tr><tr><td>2026-07-11</td><td>Valid From 08:30 AM OF 2026-07-10 TO 08:30AM OF 2026-07-11</td><td>2</td><td>33</td><td>23</td><td>85</td><td>52</td><td>23</td><td>256</td><td>6</td><td></td></tr><tr><td>2026-07-12</td><td>Valid From 08:30 AM OF 2026-07-11 TO 08:30AM OF 2026-07-12</td><td>2</td><td>34</td><td>22</td><td>87</td><td>50</td><td>23</td><td>258</td><td>7</td><td></td></tr><tr><td>2026-07-08</td><td>Valid From 08:30 AM OF 2026-07-07 TO 08:30AM OF 2026-07-08</td><td>3</td><td>31</td><td>23</td><td>90</td><td>64</td><td>32</td><td>240</td><td>8</td><td></td></tr><tr><td>2026-07-09</td><td>Valid From 08:30 AM OF 2026-07-08 TO 08:30AM OF 2026-07-09</td><td>2</td><td>32</td><td>22</td><td>87</td><td>57</td><td>26</td><td>230</td><td>7</td><td></td></tr><tr><td>2026-07-10</td><td>Valid From 08:30 AM OF 2026-07-09 TO 08:30AM OF 2026-07-10</td><td>2</td><td>33</td><td>23</td><td>88</td><td>57</td><td>24</td><td>244</td><td>7</td><td></td></tr><tr><td>2026-07-11</td><td>Valid From 08:30 AM OF 2026-07-10 TO 08:30AM OF 2026-07-11</td><td>2</td><td>33</td><td>23</td><td>85</td><td>52</td><td>23</td><td>256</td><td>6</td><td></td></tr><tr><td>2026-07-12</td><td>Valid From 08:30 AM OF 2026-07-11 TO 08:30AM OF 2026-07-12</td><td>2</td><td>34</td><td>22</td><td>87</td><td>50</td><td>23</td><td>258</td><td>7</td><td></td></tr><tr><td>2026-07-11</td><td>Valid From 08:30 AM OF 2026-07-10 TO 08:30AM OF 2026-07-11</td><td>0</td><td>32</td><td>23</td><td>77</td><td>58</td><td>20</td><td>264</td><td>7</td><td></td></tr><tr><td>2026-07-12</td><td>Valid From 08:30 AM OF 2026-07-11 TO 08:30AM OF 2026-07-12</td><td>0</td><td>33</td><td>22</td><td>75</td><td>57</td><td>22</td><td>266</td><td>8</td><td></td></tr><tr><td>2026-07-13</td><td>Valid From 08:30 AM OF 2026-07-12 TO 08:30AM OF 2026-07-13</td><td>0</td><td>34</td><td>22</td><td>73</td><td>49</td><td>21</td><td>265</td><td>5</td><td></td></tr><tr><td>2026-07-14</td><td>Valid From 08:30 AM OF 2026-07-13 TO 08:30AM OF 2026-07-14</td><td>2</td><td>34</td><td>22</td><td>72</td><td>45</td><td>23</td><td>360</td><td>7</td><td></td></tr><tr><td>2026-07-15</td><td>Valid From 08:30 AM OF 2026-07-14 TO 08:30AM OF 2026-07-15</td><td>2</td><td>34</td><td>23</td><td>71</td><td>49</td><td>23</td><td>277</td><td>8</td><td></td></tr><tr><td>2026-07-11</td><td>Valid From 08:30 AM OF 2026-07-10 TO 08:30AM OF 2026-07-11</td><td>0</td><td>32</td><td>23</td><td>77</td><td>58</td><td>20</td><td>264</td><td>7</td><td></td></tr><tr><td>2026-07-12</td><td>Valid From 08:30 AM OF 2026-07-11 TO 08:30AM OF 2026-07-12</td><td>0</td><td>33</td><td>22</td><td>75</td><td>57</td><td>22</td><td>266</td><td>8</td><td></td></tr><tr><td>2026-07-13</td><td>Valid From 08:30 AM OF 2026-07-12 TO 08:30AM OF 2026-07-13</td><td>0</td><td>34</td><td>22</td><td>73</td><td>49</td><td>21</td><td>265</td><td>5</td><td></td></tr><tr><td>2026-07-14</td><td>Valid From 08:30 AM OF 2026-07-13 TO 08:30AM OF 2026-07-14</td><td>2</td><td>34</td><td>22</td><td>72</td><td>45</td><td>23</td><td>360</td><td>7</td><td></td></tr><tr><td>2026-07-15</td><td>Valid From 08:30 AM OF 2026-07-14 TO 08:30AM OF 2026-07-15</td><td>2</td><td>34</td><td>23</td><td>71</td><td>49</td><td>23</td><td>277</td><td>8</td><td></td></tr><tr><td>2026-07-11</td><td>Valid From 08:30 AM OF 2026-07-10 TO 08:30AM OF 2026-07-11</td><td>0</td><td>32</td><td>23</td><td>77</td><td>58</td><td>20</td><td>264</td><td>7</td><td></td></tr><tr><td>2026-07-12</td><td>Valid From 08:30 AM OF 2026-07-11 TO 08:30AM OF 2026-07-12</td><td>0</td><td>33</td><td>22</td><td>75</td><td>57</td><td>22</td><td>266</td><td>8</td><td></td></tr><tr><td>2026-07-13</td><td>Valid From 08:30 AM OF 2026-07-12 TO 08:30AM OF 2026-07-13</td><td>0</td><td>34</td><td>22</td><td>73</td><td>49</td><td>21</td><td>265</td><td>5</td><td></td></tr><tr><td>2026-07-14</td><td>Valid From 08:30 AM OF 2026-07-13 TO 08:30AM OF 2026-07-14</td><td>2</td><td>34</td><td>22</td><td>72</td><td>45</td><td>23</td><td>360</td><td>7</td><td></td></tr><tr><td>2026-07-15</td><td>Valid From 08:30 AM OF 2026-07-14 TO 08:30AM OF 2026-07-15</td><td>2</td><td>34</td><td>23</td><td>71</td><td>49</td><td>23</td><td>277</td><td>8</td><td></td></tr><tr><td>2026-07-15</td><td>Valid From 08:30 AM OF 2026-07-14 TO 08:30AM OF 2026-07-15</td><td>0</td><td>34</td><td>22</td><td>72</td><td>37</td><td>22</td><td>284</td><td>6</td><td></td></tr><tr><td>2026-07-16</td><td>Valid From 08:30 AM OF 2026-07-15 TO 08:30AM OF 2026-07-16</td><td>1</td><td>34</td><td>23</td><td>71</td><td>33</td><td>20</td><td>283</td><td>3</td><td></td></tr><tr><td>2026-07-17</td><td>Valid From 08:30 AM OF 2026-07-16 TO 08:30AM OF 2026-07-17</td><td>3</td><td>35</td><td>23</td><td>70</td><td>39</td><td>21</td><td>286</td><td>6</td><td></td></tr><tr><td>2026-07-18</td><td>Valid From 08:30 AM OF 2026-07-17 TO 08:30AM OF 2026-07-18</td><td>2</td><td>35</td><td>23</td><td>74</td><td>42</td><td>20</td><td>284</td><td>7</td><td></td></tr><tr><td>2026-07-19</td><td>Valid From 08:30 AM OF 2026-07-18 TO 08:30AM OF 2026-07-19</td><td>1</td><td>34</td><td>23</td><td>73</td><td>46</td><td>17</td><td>277</td><td>7</td><td></td></tr><tr><td>2026-07-15</td><td>Valid From 08:30 AM OF 2026-07-14 TO 08:30AM OF 2026-07-15</td><td>0</td><td>34</td><td>22</td><td>72</td><td>37</td><td>22</td><td>284</td><td>6</td><td></td></tr><tr><td>2026-07-16</td><td>Valid From 08:30 AM OF 2026-07-15 TO 08:30AM OF 2026-07-16</td><td>1</td><td>34</td><td>23</td><td>71</td><td>33</td><td>20</td><td>283</td><td>3</td><td></td></tr><tr><td>2026-07-17</td><td>Valid From 08:30 AM OF 2026-07-16 TO 08:30AM OF 2026-07-17</td><td>3</td><td>35</td><td>23</td><td>70</td><td>39</td><td>21</td><td>286</td><td>6</td><td></td></tr><tr><td>2026-07-18</td><td>Valid From 08:30 AM OF 2026-07-17 TO 08:30AM OF 2026-07-18</td><td>2</td><td>35</td><td>23</td><td>74</td><td>42</td><td>20</td><td>284</td><td>7</td><td></td></tr><tr><td>2026-07-19</td><td>Valid From 08:30 AM OF 2026-07-18 TO 08:30AM OF 2026-07-19</td><td>1</td><td>34</td><td>23</td><td>73</td><td>46</td><td>17</td><td>277</td><td>7</td><td></td></tr><tr><td>2026-07-15</td><td>Valid From 08:30 AM OF 2026-07-14 TO 08:30AM OF 2026-07-15</td><td>0</td><td>34</td><td>22</td><td>72</td><td>37</td><td>22</td><td>284</td><td>6</td><td></td></tr><tr><td>2026-07-16</td><td>Valid From 08:30 AM OF 2026-07-15 TO 08:30AM OF 2026-07-16</td><td>1</td><td>34</td><td>23</td><td>71</td><td>33</td><td>20</td><td>283</td><td>3</td><td></td></tr><tr><td>2026-07-17</td><td>Valid From 08:30 AM OF 2026-07-16 TO 08:30AM OF 2026-07-17</td><td>3</td><td>35</td><td>23</td><td>70</td><td>39</td><td>21</td><td>286</td><td>6</td><td></td></tr><tr><td>2026-07-18</td><td>Valid From 08:30 AM OF 2026-07-17 TO 08:30AM OF 2026-07-18</td><td>2</td><td>35</td><td>23</td><td>74</td><td>42</td><td>20</td><td>284</td><td>7</td><td></td></tr><tr><td>2026-07-19</td><td>Valid From 08:30 AM OF 2026-07-18 TO 08:30AM OF 2026-07-19</td><td>1</td><td>34</td><td>23</td><td>73</td><td>46</td><td>17</td><td>277</td><td>7</td><td></td></tr><tr><td>2026-07-18</td><td>Valid From 08:30 AM OF 2026-07-17 TO 08:30AM OF 2026-07-18</td><td>6</td><td>33</td><td>22</td><td>74</td><td>49</td><td>20</td><td>283</td><td>8</td><td></td></tr><tr><td>2026-07-19</td><td>Valid From 08:30 AM OF 2026-07-18 TO 08:30AM OF 2026-07-19</td><td>10</td><td>33</td><td>22</td><td>72</td><td>56</td><td>19</td><td>287</td><td>8</td><td></td></tr><tr><td>2026-07-20</td><td>Valid From 08:30 AM OF 2026-07-19 TO 08:30AM OF 2026-07-20</td><td>3</td><td>34</td><td>23</td><td>74</td><td>50</td><td>19</td><td>271</td><td>8</td><td></td></tr><tr><td>2026-07-21</td><td>Valid From 08:30 AM OF 2026-07-20 TO 08:30AM OF 2026-07-21</td><td>1</td><td>34</td><td>23</td><td>74</td><td>51</td><td>22</td><td>261</td><td>8</td><td></td></tr><tr><td>2026-07-22</td><td>Valid From 08:30 AM OF 2026-07-21 TO 08:30AM OF 2026-07-22</td><td>1</td><td>34</td><td>23</td><td>72</td><td>49</td><td>24</td><td>260</td><td>8</td><td></td></tr><tr><td>2026-07-18</td><td>Valid From 08:30 AM OF 2026-07-17 TO 08:30AM OF 2026-07-18</td><td>6</td><td>33</td><td>22</td><td>74</td><td>49</td><td>20</td><td>283</td><td>8</td><td></td></tr><tr><td>2026-07-19</td><td>Valid From 08:30 AM OF 2026-07-18 TO 08:30AM OF 2026-07-19</td><td>10</td><td>33</td><td>22</td><td>72</td><td>56</td><td>19</td><td>287</td><td>8</td><td></td></tr><tr><td>2026-07-20</td><td>Valid From 08:30 AM OF 2026-07-19 TO 08:30AM OF 2026-07-20</td><td>3</td><td>34</td><td>23</td><td>74</td><td>50</td><td>19</td><td>271</td><td>8</td><td></td></tr><tr><td>2026-07-21</td><td>Valid From 08:30 AM OF 2026-07-20 TO 08:30AM OF 2026-07-21</td><td>1</td><td>34</td><td>23</td><td>74</td><td>51</td><td>22</td><td>261</td><td>8</td><td></td></tr><tr><td>2026-07-22</td><td>Valid From 08:30 AM OF 2026-07-21 TO 08:30AM OF 2026-07-22</td><td>1</td><td>34</td><td>23</td><td>72</td><td>49</td><td>24</td><td>260</td><td>8</td><td></td></tr><tr><td>2026-07-18</td><td>Valid From 08:30 AM OF 2026-07-17 TO 08:30AM OF 2026-07-18</td><td>6</td><td>33</td><td>22</td><td>74</td><td>49</td><td>20</td><td>283</td><td>8</td><td></td></tr><tr><td>2026-07-19</td><td>Valid From 08:30 AM OF 2026-07-18 TO 08:30AM OF 2026-07-19</td><td>10</td><td>33</td><td>22</td><td>72</td><td>56</td><td>19</td><td>287</td><td>8</td><td></td></tr><tr><td>2026-07-20</td><td>Valid From 08:30 AM OF 2026-07-19 TO 08:30AM OF 2026-07-20</td><td>3</td><td>34</td><td>23</td><td>74</td><td>50</td><td>19</td><td>271</td><td>8</td><td></td></tr><tr><td>2026-07-21</td><td>Valid From 08:30 AM OF 2026-07-20 TO 08:30AM OF 2026-07-21</td><td>1</td><td>34</td><td>23</td><td>74</td><td>51</td><td>22</td><td>261</td><td>8</td><td></td></tr><tr><td>2026-07-22</td><td>Valid From 08:30 AM OF 2026-07-21 TO 08:30AM OF 2026-07-22</td><td>1</td><td>34</td><td>23</td><td>72</td><td>49</td><td>24</td><td>260</td><td>8</td><td></td></tr><tr><td>2026-07-18</td><td>Valid From 08:30 AM OF 2026-07-17 TO 08:30AM OF 2026-07-18</td><td>6</td><td>33</td><td>22</td><td>74</td><td>49</td><td>20</td><td>283</td><td>8</td><td></td></tr><tr><td>2026-07-19</td><td>Valid From 08:30 AM OF 2026-07-18 TO 08:30AM OF 2026-07-19</td><td>10</td><td>33</td><td>22</td><td>72</td><td>56</td><td>19</td><td>287</td><td>8</td><td></td></tr><tr><td>2026-07-20</td><td>Valid From 08:30 AM OF 2026-07-19 TO 08:30AM OF 2026-07-20</td><td>3</td><td>34</td><td>23</td><td>74</td><td>50</td><td>19</td><td>271</td><td>8</td><td></td></tr><tr><td>2026-07-21</td><td>Valid From 08:30 AM OF 2026-07-20 TO 08:30AM OF 2026-07-21</td><td>1</td><td>34</td><td>23</td><td>74</td><td>51</td><td>22</td><td>261</td><td>8</td><td></td></tr><tr><td>2026-07-22</td><td>Valid From 08:30 AM OF 2026-07-21 TO 08:30AM OF 2026-07-22</td><td>1</td><td>34</td><td>23</td><td>72</td><td>49</td><td>24</td><td>260</td><td>8</td><td></td></tr><tr><td>2026-07-22</td><td>Valid From 08:30 AM OF 2026-07-21 TO 08:30AM OF 2026-07-22</td><td>6</td><td>32</td><td>22</td><td>86</td><td>58</td><td>21</td><td>261</td><td>8</td><td></td></tr><tr><td>2026-07-23</td><td>Valid From 08:30 AM OF 2026-07-22 TO 08:30AM OF 2026-07-23</td><td>6</td><td>33</td><td>22</td><td>85</td><td>58</td><td>21</td><td>247</td><td>8</td><td></td></tr><tr><td>2026-07-24</td><td>Valid From 08:30 AM OF 2026-07-23 TO 08:30AM OF 2026-07-24</td><td>3</td><td>33</td><td>23</td><td>82</td><td>48</td><td>23</td><td>243</td><td>7</td><td></td></tr><tr><td>2026-07-25</td><td>Valid From 08:30 AM OF 2026-07-24 TO 08:30AM OF 2026-07-25</td><td>2</td><td>34</td><td>23</td><td>83</td><td>50</td><td>21</td><td>242</td><td>6</td><td></td></tr><tr><td>2026-07-26</td><td>Valid From 08:30 AM OF 2026-07-25 TO 08:30AM OF 2026-07-26</td><td>2</td><td>34</td><td>24</td><td>83</td><td>46</td><td>19</td><td>249</td><td>5</td><td></td></tr><tr><td>2026-07-22</td><td>Valid From 08:30 AM OF 2026-07-21 TO 08:30AM OF 2026-07-22</td><td>6</td><td>32</td><td>22</td><td>86</td><td>58</td><td>21</td><td>261</td><td>8</td><td></td></tr><tr><td>2026-07-23</td><td>Valid From 08:30 AM OF 2026-07-22 TO 08:30AM OF 2026-07-23</td><td>6</td><td>33</td><td>22</td><td>85</td><td>58</td><td>21</td><td>247</td><td>8</td><td></td></tr><tr><td>2026-07-24</td><td>Valid From 08:30 AM OF 2026-07-23 TO 08:30AM OF 2026-07-24</td><td>3</td><td>33</td><td>23</td><td>82</td><td>48</td><td>23</td><td>243</td><td>7</td><td></td></tr><tr><td>2026-07-25</td><td>Valid From 08:30 AM OF 2026-07-24 TO 08:30AM OF 2026-07-25</td><td>2</td><td>34</td><td>23</td><td>83</td><td>50</td><td>21</td><td>242</td><td>6</td><td></td></tr><tr><td>2026-07-26</td><td>Valid From 08:30 AM OF 2026-07-25 TO 08:30AM OF 2026-07-26</td><td>2</td><td>34</td><td>24</td><td>83</td><td>46</td><td>19</td><td>249</td><td>5</td><td></td></tr><tr><td>2026-07-22</td><td>Valid From 08:30 AM OF 2026-07-21 TO 08:30AM OF 2026-07-22</td><td>6</td><td>32</td><td>22</td><td>86</td><td>58</td><td>21</td><td>261</td><td>8</td><td></td></tr><tr><td>2026-07-23</td><td>Valid From 08:30 AM OF 2026-07-22 TO 08:30AM OF 2026-07-23</td><td>6</td><td>33</td><td>22</td><td>85</td><td>58</td><td>21</td><td>247</td><td>8</td><td></td></tr><tr><td>2026-07-24</td><td>Valid From 08:30 AM OF 2026-07-23 TO 08:30AM OF 2026-07-24</td><td>3</td><td>33</td><td>23</td><td>82</td><td>48</td><td>23</td><td>243</td><td>7</td><td></td></tr><tr><td>2026-07-25</td><td>Valid From 08:30 AM OF 2026-07-24 TO 08:30AM OF 2026-07-25</td><td>2</td><td>34</td><td>23</td><td>83</td><td>50</td><td>21</td><td>242</td><td>6</td><td></td></tr><tr><td>2026-07-26</td><td>Valid From 08:30 AM OF 2026-07-25 TO 08:30AM OF 2026-07-26</td><td>2</td><td>34</td><td>24</td><td>83</td><td>46</td><td>19</td><td>249</td><td>5</td><td></td></tr><tr><td>2026-07-25</td><td>Valid From 08:30 AM OF 2026-07-24 TO 08:30AM OF 2026-07-25</td><td>3</td><td>29</td><td>22</td><td>81</td><td>71</td><td>28</td><td>236</td><td>7</td><td></td></tr><tr><td>2026-07-26</td><td>Valid From 08:30 AM OF 2026-07-25 TO 08:30AM OF 2026-07-26</td><td>2</td><td>29</td><td>23</td><td>82</td><td>65</td><td>23</td><td>241</td><td>7</td><td></td></tr><tr><td>2026-07-27</td><td>Valid From 08:30 AM OF 2026-07-26 TO 08:30AM OF 2026-07-27</td><td>1</td><td>30</td><td>23</td><td>81</td><td>66</td><td>21</td><td>242</td><td>6</td><td></td></tr><tr><td>2026-07-28</td><td>Valid From 08:30 AM OF 2026-07-27 TO 08:30AM OF 2026-07-28</td><td>2</td><td>30</td><td>23</td><td>80</td><td>67</td><td>21</td><td>254</td><td>7</td><td></td></tr><tr><td>2026-07-29</td><td>Valid From 08:30 AM OF 2026-07-28 TO 08:30AM OF 2026-07-29</td><td>4</td><td>30</td><td>23</td><td>80</td><td>72</td><td>22</td><td>247</td><td>7</td><td></td></tr></tbody></table>
+
+</div>
+<br>
+<br>
+</div>
+ </div>
+               </section>
+                
+            
+              
+            </div>
+           <div style="clear:both"></div>
+          <footer id="footer">
+            <div id="footer-columns">
+
+
+               <ul id="fc-one">
+                  <li class="icon-link border-bottom uppercase"><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php#."><span>Forecasts</span></a></li>
+                  
+                  <li><a href="http://mausam.imd.gov.in:8080/" target="_blank">Short to medium range forecast</a></li>
+                  <li><a href="https://mausam.imd.gov.in/imd_latest/contents/extendedrangeforecast.php">Extended range forecast</a></li> 
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/seasonal_forecast.php">Seasonal Forecast</a></li>
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/index_qpf.php">Quantitative Precipitation Forecast</a></li>
+                 
+                     
+                    
+               </ul>
+               <ul id="fc-two">
+                  <li class="icon-link border-bottom uppercase"><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php#."><span>Specialised products &amp; forecasts</span></a></li>
+                     
+                     
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/cyclone.php">Cyclones</a></li>
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/monsoon.php">Monsoon</a></li>
+                     <li><a href="https://mausam.imd.gov.in/imd_latest/contents/satellite.php">Satellite</a></li>
+                      <li><a href="https://mausam.imd.gov.in/imd_latest/contents/index_radar.php">Radar</a></li>
+                      <li><a href="https://mausam.imd.gov.in/imd_latest/contents/rainfallinformation.php">Rainfall</a></li>
+                       <li><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/englishstate_current.php">Agromet Advisories</a></li>
+                      
+                 <!-- <li><a href="https://www.tropmet.res.in/">IITM</a></li>
+                     <li><a href="https://www.niot.res.in/">NIOT</a></li>
+                     <li><a href="https://www.ncmrwf.gov.in/">NCMRWF</a></li>
+                      <li><a href="https://www.ncess.gov.in/
+
+">NCESS</a></li>
+                      <li><a href="https://incois.gov.in/
+
+">INCOIS</a></li>
+                      <li><a href="www.ncaor.gov.in/">NCAOR</a></li>-->
+               </ul>
+               <ul id="fc-three">
+                  <li class="icon-link border-bottom uppercase"><a href="https://mausam.imd.gov.in/imd_latest/contents/agromet/advisory/indiadistrictforecast.php#."><span>Miscellaneous</span></a></li>
+                  <li><a href="https://mausam.imd.gov.in/imd_latest/contents/current_weather.php">City Forecast</a></li>
+                   
+                    <li><a href="https://mausam.imd.gov.in/imd_latest/contents/citizen_charter.php">Citizen’s charter</a></li>
+                  <li><a href="https://rtionline.gov.in/request/request.php">RTI</a></li>
+                 <li><a href="https://mausam.imd.gov.in/imd_latest/weather_video/video.php">Weather Video</a></li>
+                     <li class="heading" style="width:120px"><a href="https://mausam.imd.gov.in/Forecast/login.php">Database Login</a></li>
+                     <li class="last"><a href="https://mausam.imd.gov.in/backend/auth/login" style="width:110px">Admin Login</a></li>
+                  <!--
+                   
+               <li><a href="../example/example.php">Weather Video</a></li>
+               <li><a href="#.">Departmental Sites</a></li>
+                 
+                  <li><a href="#.">Advertisements/Public Tenders</a></li>-->
+                   
+               </ul>
+
+
+               <ul id="fc-four">
+                  <li class="icon-link row-link-1st row-double"><a href="https://www.facebook.com/India.Meteorological.Department/" id="icon-link-fb"><span>Facebook</span></a></li>
+                  <li class="icon-link row-link-2nd"><a id="icon-link-tw" href="https://twitter.com/Indiametdept"><span>Twitter</span></a></li>
+                  <!--<li class="icon-link row-link-1st"><a href="#." id="icon-link-yt"><span>Youtube</span></a></li>-->
+                  <li><h3>Contact us</h3>
+                  <div style="font-size:7px; text-align:center">
+                      <p style="color:#000">Office of Director General of Meteorology</p>  
+                      <p style="color:#000">INDIA METEOROLOGICAL DEPARTMENT</p>  
+                      <div>Mausam Bhawan, Lodi Road</div>  
+                      <div>New Delhi - 110003</div>   
+                 <!-- <p style="color:#000">Web Information Manager</p>
+                  <div>(Smt. Samanti Sarkar, Scientist E)</div> -->
+                  </div>
+                  
+                  
+                  
+                  
+                  </li>
+
+               </ul>
+               
+               <p id="copyright">© Copyright <a href="https://moes.gov.in/" target="_blank"> Ministry of Earth Sciences</a>, New Delhi, India <br>
+                Designed &amp; Developed by <a href="https://www.tropmet.res.in/" target="_blank"> Indian Institute of Tropical Meteorology</a> , Pune, India  </p>
+
+            </div>
+         </footer>
+         
+    </div>
+        
+       
+        
+        
+        
+      </div>
+
+
+<script type="text/javascript" src="./indiadistrictforecast.php_files/materialize.min.js.download"></script>
+
+      <script type="text/javascript">
+
+        $(document).ready(function(){
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('.collapsible');
+                var instances = M.Collapsible.init(elems, options);
+            });
+
+            // Or with jQuery
+
+            $(document).ready(function(){
+               $('.collapsible').collapsible();
+            });
+        });
+
+        function toggleFn(id){
+            
+            $("#"+id).toggleClass("fa-plus");
+            $("#"+id).toggleClass("fa-minus");
+        }
+
+
+      </script>
+<script type="text/javascript">
+      $(".myselect").select2();
+</script>
+
+<script type="text/javascript">
+      $(".myselect1").select2();
+</script>
+
+
+
+</body></html>

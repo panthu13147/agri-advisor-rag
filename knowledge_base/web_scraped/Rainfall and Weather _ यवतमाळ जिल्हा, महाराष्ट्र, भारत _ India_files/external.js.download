@@ -1,0 +1,515 @@
+jQuery(document).ready(function ($) {
+  // adding status to gallery caption
+  jQuery(".flexslider .slide-caption").attr("role", "status");
+
+  // Adding aria-current to pegination active a
+  jQuery(".pegination ul li.current a").attr({ "aria-current": "page", "tabindex": "-1", "aria-disabled": "true" });
+  jQuery(".pegination ul li a").attr({ "tabindex": "0", "aria-disabled": "false" });
+
+
+  //Adding span to sitemap menu
+  jQuery(".sitemap-menu ul > li").append('<span aria-hidden="true"></span>');
+
+  //Breadcrumb add attribute current page
+  jQuery("#breadcam").find("li").append('<em class="fa fa-angle-right" aria-hidden="true"></em>');
+  jQuery("#breadcam").find("li.current em").remove();
+  jQuery("#breadcam").find("li.current").attr("aria-current", "page");
+
+  jQuery(".printShare ol li").attr("aria-hidden", "true");
+  jQuery(".vc_tta-panel-body .tableWrapperResponsive").attr("tabindex", "0");
+});
+
+// Public Utility Tabs js starts
+
+(function () {
+  'use strict';
+
+  let initialized = false;
+  const mq = window.matchMedia('(min-width: 640px)');
+  const FOCUSABLE = 'a, button, input, select, textarea';
+  //Adding role="none" on Tabs <li>
+  function normalizeLiRoles(container) {
+    container.querySelectorAll('.resp-tabs-list li').forEach(li => {
+      if (li.getAttribute('role') !== 'none') {
+        li.setAttribute('role', 'none');
+      }
+    });
+  }
+  // Set tab-content container focusable elements tabindex="0"
+  function restoreActivePanelTabindex(container) {
+    const panel = container.querySelector(
+      '.resp-tab-content.resp-tab-content-active'
+    );
+    if (!panel) return;
+
+    panel.querySelectorAll(FOCUSABLE).forEach(el => {
+      el.setAttribute('tabindex', '0');
+    });
+  }
+
+  function applyPatch(container) {
+    setTimeout(() => {
+      normalizeLiRoles(container);
+      restoreActivePanelTabindex(container);
+    }, 0);
+  }
+
+  function attachPatchHandlers(container) {
+    const tablist = container.querySelector('.resp-tabs-list');
+    if (!tablist) return;
+
+    const delayedPatch = () => applyPatch(container);
+
+    tablist.addEventListener('focusin', delayedPatch);
+    tablist.addEventListener('click', delayedPatch);
+    tablist.addEventListener('keydown', delayedPatch);
+  }
+
+  function init() {
+    if (initialized) return;
+    initialized = true;
+
+    document.querySelectorAll('.utilityTabContainer').forEach(container => {
+      attachPatchHandlers(container);
+      setTimeout(() => applyPatch(container), 50);
+    });
+  }
+
+  function destroy() {
+    initialized = false;
+
+  }
+
+  function check() {
+    mq.matches ? init() : destroy();
+  }
+
+  window.addEventListener('load', check);
+  mq.addEventListener('change', check);
+
+})();
+
+
+(function () {
+  'use strict';
+
+  let initialized = false;
+  const mq = window.matchMedia('(min-width: 640px)');
+  const FOCUSABLE = 'a, button, input, select, textarea';
+  let syncScheduled = false;
+
+  function normalizeStructure(container) {
+    container.querySelectorAll('.resp-tabs-list li').forEach(li => {
+      li.setAttribute('role', 'none');
+      li.removeAttribute('tabindex');
+      li.removeAttribute('aria-selected');
+      li.removeAttribute('aria-controls');
+    });
+
+    container.querySelectorAll('.resp-tabs-list li > button').forEach(btn => {
+      btn.setAttribute('role', 'tab');
+    });
+  }
+
+  function syncState(container) {
+    syncScheduled = false;
+
+    const tabs = container.querySelectorAll('.resp-tabs-list button[role="tab"]');
+    const panels = container.querySelectorAll('.resp-tab-content');
+
+    tabs.forEach(tab => {
+      const isActive = tab.closest('li')?.classList.contains('resp-tab-active');
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      tab.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
+
+    panels.forEach(panel => {
+      const isActive = panel.classList.contains('resp-tab-content-active');
+      //   panel.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+
+      panel.querySelectorAll(FOCUSABLE).forEach(el => {
+        el.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+    });
+  }
+
+  function scheduleSync(container) {
+    if (syncScheduled) return;
+    syncScheduled = true;
+    requestAnimationFrame(() => syncState(container));
+  }
+
+  function initKeyboard(container) {
+    const tabs = Array.from(
+      container.querySelectorAll('.resp-tabs-list button[role="tab"]')
+    );
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('keydown', e => {
+        let i = null;
+
+        switch (e.key) {
+          case 'ArrowRight':
+          case 'ArrowDown': i = (index + 1) % tabs.length; break;
+          case 'ArrowLeft':
+          case 'ArrowUp': i = (index - 1 + tabs.length) % tabs.length; break;
+          case 'Home': i = 0; break;
+          case 'End': i = tabs.length - 1; break;
+
+          case 'Enter':
+          case ' ':
+            e.preventDefault();
+            tab.click();
+            scheduleSync(container);
+            return;
+
+          default:
+            return;
+        }
+
+        e.preventDefault();
+        tabs[i].focus();
+      });
+
+      tab.addEventListener('click', () => scheduleSync(container));
+    });
+  }
+
+  function enableTabIntoPanel(container) {
+    const tablist = container.querySelector('.resp-tabs-list');
+    if (!tablist) return;
+
+    tablist.addEventListener('keydown', e => {
+      if (e.key !== 'Tab' || e.shiftKey) return;
+
+      const activeTab = document.activeElement;
+      if (!activeTab.matches('[role="tab"][tabindex="0"]')) return;
+
+      const panel = container.querySelector('.resp-tab-content-active');
+      const first = panel?.querySelector(FOCUSABLE);
+      if (!first) return;
+
+      e.preventDefault();
+      first.focus();
+    });
+  }
+
+  function stabilize(container) {
+    setTimeout(() => scheduleSync(container), 0);
+  }
+
+  function attachStabilizers(container) {
+    const tablist = container.querySelector('.resp-tabs-list');
+    if (!tablist) return;
+
+    ['focusin', 'click', 'keydown'].forEach(evt =>
+      tablist.addEventListener(evt, () => stabilize(container))
+    );
+  }
+
+  function init() {
+    if (initialized) return;
+    initialized = true;
+
+    document.querySelectorAll('.utilityTabContainer').forEach(container => {
+      normalizeStructure(container);
+      initKeyboard(container);
+      enableTabIntoPanel(container);
+      stabilize(container);
+      attachStabilizers(container);
+    });
+  }
+
+  function destroy() {
+    initialized = false;
+  }
+
+  function check() {
+    mq.matches ? init() : destroy();
+  }
+
+  document.addEventListener('DOMContentLoaded', check);
+  mq.addEventListener('change', check);
+
+})();
+
+
+//  Public Utility Tabs js ends //
+
+jQuery(document).ready(function ($) {
+  $('ul.sub-menu ').each(function () {
+    if ($(this).children('li').length > 15) {
+      $(this).addClass('megamenu');
+    }
+  });
+
+  $('.icon-pdf.pdf-icon').attr('aria-hidden', 'true');
+});
+
+jQuery(document).ready(function ($) {
+  document.onkeydown = function (evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 27) {
+      jQuery(":focus").each(function () {
+        if (jQuery(this).parents('.wpb_column').next('div').length === 1) {
+          jQuery(this).parents('.wpb_column').next().find('a:first').focus();
+        }
+
+        if (jQuery(this).parents('.wpb_column').next('div').length === 0) {
+          // if (jQuery(this).parents('.vc_row').next('div').length === 0) {
+          //     jQuery('.footerMenu').find(':focusable').eq(0).focus();
+          // }
+          if (jQuery(this).parents('.vc_row').next('div').length === 1) {
+            jQuery(this).parents('.vc_row').next('div').find('a:first').focus();
+          }
+
+        }
+      });
+    }
+  };
+
+  //jQuery('body').addClass('show-focus-outlines');
+  document.addEventListener('keydown', function (e) {
+    if (e.keyCode === 9) {
+
+      jQuery('body').addClass('show-focus-outlines');
+
+    }
+
+  });
+
+  //jQuery('body').addClass('show-focus-outlines');
+  document.addEventListener('keydown', function (e) {
+    if (e.keyCode === 9) {
+      jQuery('body').addClass('show-focus-outlines');
+
+    }
+
+  });
+
+
+  document.addEventListener('mousedown', function (e) {
+    //e.preventDefault();
+    jQuery('body').removeClass('show-focus-outlines');
+  });
+
+  //header accessibility search show hide (safari)
+  jQuery("#accessibilityMenu li.searchbox a").click(function (e) {
+        e.preventDefault();
+        jQuery('.goiSearch').css("visibility", "visible");
+    });
+    jQuery('html').click(function (e) {
+        if (e.target.id == 'accessibilityMenu' || jQuery(e.target).parents('#accessibilityMenu').length > 0) { } else {
+            jQuery('.goiSearch').css("visibility", "hidden");
+        }
+    });
+
+  //search end
+
+  jQuery(".skip-to-content").click(function (e) {
+    e.preventDefault();
+    jQuery('#SkipContent').focus();
+  });
+
+  jQuery(".read-text").click(function (t) {
+    t.preventDefault();
+    jQuery('#show-description').focus();
+  });
+
+  //code for collaps/expand start
+  jQuery(".colspexp_header").click(function () {
+    jQuerycolspexp_header = jQuery(this);
+    jQuerycolspexp_content = jQuerycolspexp_header.next();
+    jQuerycolspexp_content.slideToggle(500, function () {
+      jQuerycolspexp_header.text(function () {
+        return jQuerycolspexp_content.is(":visible") ? "Hide Code" : "Show Code";
+      });
+    });
+
+  });
+  //code for collaps/expand end
+  //less than 4 column table layout fixed start
+  jQuery('table').each(function () {
+    var numCols = jQuery(this).find('tr')[0].cells.length
+    if (numCols < 4) {
+      jQuery(this).css('table-layout', 'fixed');
+    }
+  });
+  //less than 4 column table layout fixed end
+
+  //VC Tabs keyboard accessibility start
+  jQuery('.vc_tta-tabs-list').attr('role', 'tablist');
+  jQuery('.vc_tta-panel').attr('role', 'tabpanel');
+  jQuery('.vc_tta-tab a').attr('role', 'tab');
+
+  //Parmod code start
+  jQuery(".vc_tta-panels .vc_active").siblings().attr("hidden", true);
+  jQuery("li a[role='tab']").click(function () {
+    jQuery("li a[role='tab']").attr("hidden", false);
+    var tabpanid = jQuery(this).attr("aria-controls");
+    var tabpan = jQuery("#" + tabpanid);
+    jQuery("div[role='tabpanel']").attr("hidden", true);
+    tabpan.attr("hidden", false);
+  });
+
+  jQuery('[data-vc-tabs]').each(function () {
+    var id = jQuery(this).attr('href');
+    id = id.replace('#', '');
+    jQuery(this).attr('aria-controls', id);
+    if (jQuery(this).parent().hasClass('vc_active')) {
+      jQuery(this).attr('aria-selected', true)
+    } else {
+      jQuery(this).attr('aria-selected', false)
+    }
+  });
+  jQuery('[data-vc-tabs]').click(function () {
+    jQuery(this).parent().siblings().find('a').attr('aria-selected', false);
+    jQuery(this).attr('aria-selected', true);
+  });
+
+
+  $('ul.vc_tta-tabs-list li.vc_tta-tab').not(".vc_active").each(function () {
+    let jQueryToggleButtons = $(this).find('a');
+
+    jQueryToggleButtons.on('click.flexSetup', function () {
+
+      let flex = $(this).parents('.vc_tta-tabs-container')
+        .next('.vc_tta-panels-container').find('.vc_tta-panel' + jQueryToggleButtons.attr('href'))
+        .find('.flexslider');
+      if (flex.length > 0) {
+        flex.data('flexslider').setup();
+      }
+    });
+  });
+
+  let $tabAtags = null;
+  let $thisTab = null;
+
+  $('ul.vc_tta-tabs-list li.vc_tta-tab a').on('keyup', function (event) {
+
+    $thisTab = $(this);
+    let $thisTabParent = $thisTab.parent();
+    let $tabId = $thisTab.attr('href');
+    $tabAtags = $($tabId).find('.vc_tta-panel-body a');
+    let $tabsListATags = $thisTab.parents('.vc_tta-tabs-list').find('a');
+
+    $($tabId).find('a').removeAttr('tabindex');
+    $thisTab.removeAttr('tabindex');
+    $($tabId).find('a:last').off('focusout');
+    $thisTabParent.nextAll().find('a').attr('tabindex', -1);
+    $thisTabParent.prevAll().find('a').removeAttr('tabindex');
+
+    if ($tabsListATags.length == $tabsListATags.index($thisTab) + 1) {
+      let $activePrevSibling = $thisTabParent.siblings('li.vc_active');
+      if ($activePrevSibling.length > 0) {
+        let $visibleTab = $activePrevSibling.find('a').attr('href');
+        $($visibleTab).find('a').attr('tabindex', -1);
+      }
+    }
+
+    if ($tabAtags.length == 0 || !$($tabId).find('.vc_tta-panel-body').is(':visible')) {
+      $thisTab.parent().next('li').find('a').removeAttr('tabindex')
+    }
+
+  });
+  $('div.vc_tta-panel-body').on('keydown', 'a', function (event) {
+
+    let itemIndex = $tabAtags.index($(this)) + 1;
+    if ($tabAtags.length === itemIndex && event.key === 'Tab' && event.shiftKey === false) {
+      $(this).focusout(function () {
+        $thisTab.parent().next('li').find('a').focus();
+      })
+    }
+  })
+
+  $('div.vc_tta-panel-body').on('keyup', 'ul.flex-direction-nav a', function (event) {
+    if (event.key === 'Tab' && event.shiftKey === false) {
+      if ($(this).hasClass('flex-next')) {
+        $(this).css({ 'opacity': '0.7', 'right': '10px', 'text-align': 'center' });
+      } else if ($(this).hasClass('flex-prev')) {
+        $(this).removeClass('flex-disabled').css({ 'opacity': '0.7', 'left': '10px', 'text-align': 'center' });
+      }
+    }
+  })
+  $('div.vc_tta-panel-body').on('keydown', 'ul.flex-direction-nav a', function (event) {
+    if (event.key === 'Tab' && event.shiftKey === false) {
+      $(this).removeAttr('style');
+    }
+  })
+
+  //Code for Public Utilities keyboard tab accessible
+
+  let $thisUtilityTab = null;
+  let $thisTabContentId = null;
+
+  $('ul.resp-tabs-list li').on('keyup', function (event) {
+
+    $thisUtilityTab = $(this);
+    let $thisTabParent = $thisUtilityTab.parent();
+    $thisTabContentId = $thisTabParent.attr('data');
+    let $tabAtags = $thisUtilityTab.parents('ul').find('a');
+    let $tabUtilityAtags = $('#' + $thisTabContentId).find('a:visible');
+
+    $thisTabParent.nextAll().find('a').attr('tabindex', -1);
+    $thisTabParent.prevAll().find('a').removeAttr('tabindex');
+
+    $('#' + $thisTabContentId).find('a:last').off('focusout');
+    $tabUtilityAtags.removeAttr('tabindex');
+    $thisUtilityTab.removeAttr('tabindex');
+
+    if ($tabAtags.length == $tabAtags.index($thisUtilityTab) + 1) {
+      let $activePrevSibling = $thisTabParent.siblings('li.resp-tab-active');
+
+      if ($activePrevSibling.length > 0) {
+        let $visibleTab = $activePrevSibling.attr('data');
+        $('#' + $visibleTab).find('a').attr('tabindex', -1);
+      }
+    }
+
+    if ($tabUtilityAtags.length == 0 || !$('#' + $thisTabContentId).is(':visible')) {
+      $thisTabParent.next('li').find('a').removeAttr('tabindex');
+    }
+
+  })
+  jQuery("ul.resp-tabs-list li").attr("role", "none");
+  $('div.resp-tabs-container').on('keydown', 'a:visible', function (event) {
+
+    let $thiATag = $(this);
+    let $tabUtilityAtags = $thiATag.parents('#' + $thisTabContentId).find('a:visible');
+    let itemIndex = $tabUtilityAtags.index($thiATag) + 1;
+    if ($tabUtilityAtags.length === itemIndex && event.key === 'Tab' && event.shiftKey === false) {
+      $(this).focusout(function () {
+        $thisUtilityTab.parent().next('li').find('a').focus();
+      })
+    }
+  })
+  //VC Tabs keyboard accessibility end
+
+});
+
+
+
+// Scroll back to top start
+jQuery(document).ready(function ($) {
+  var gototop = $("#gototop-btn");
+
+  $(window).scroll(function () {
+    if ($(window).scrollTop() > 200) {
+      gototop.addClass("show");
+    } else {
+      gototop.removeClass("show");
+    }
+  });
+
+  gototop.on("click", function (e) {
+    e.preventDefault();
+    $("html, body").animate({
+      scrollTop: 0
+    }, "300");
+  });
+});
+
+// Scroll back to top end
+
+
+

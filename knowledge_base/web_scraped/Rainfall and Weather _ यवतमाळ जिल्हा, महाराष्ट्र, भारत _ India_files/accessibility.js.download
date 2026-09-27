@@ -1,0 +1,869 @@
+// Grid/List view accessibility start
+jQuery(document).ready(function ($) {
+    const viewSwitchButtons = document.querySelectorAll(".viewSwicther a");
+
+    viewSwitchButtons.forEach((button) => {
+        button.setAttribute("role", "button");
+
+        // Set initial aria-pressed
+        if (button.classList.contains("thumbs-view-btn")) {
+            button.setAttribute("aria-pressed", "true");
+        } else {
+            button.setAttribute("aria-pressed", "false");
+        }
+
+        // Add click event
+        button.addEventListener("click", () => {
+            viewSwitchButtons.forEach((btn) => {
+                btn.setAttribute("aria-pressed", "false");
+            });
+
+            button.setAttribute("aria-pressed", "true");
+        });
+    });
+});
+
+
+jQuery(document).ready(function ($) {
+
+    let excludeExternalLinks = S3WaaSAccessibilityParams.excludeExternalLinks.split(',').filter(n => n);
+
+    if (!String.prototype.startsWith) {
+        String.prototype.startsWith = function (searchString, position) {
+            position = position || 0;
+            return this.substr(position, searchString.length) === searchString;
+        };
+    }
+
+    $('body').on('targetExternalLinks', function () {
+
+        var isExternal = function (url) {
+            if (!url.match('^(https?:)?(\\/\\/).*$')) return false;
+            return !(location.href.replace("http://", "").replace("https://", "").split("/")[0] === url.replace("http://", "").replace("https://", "").split("/")[0]);
+        }
+        var isExternalExcluded = function (url) {
+            if (!url.match('^(https?:)?(\\/\\/).*$')) return false;
+            let excludeThisLink = false;
+            return excludeExternalLinks.some(function (item, index) {
+                console.log(item);
+                if (url.indexOf(item) > -1) {
+                    excludeThisLink = true;
+                    return true;
+                }
+            });
+        }
+
+        $('a').each(function () {
+            var href = $(this).attr('href');
+            if (typeof href == 'undefined') {
+                $(this).attr('href', 'javascript:void(0)');
+                href = '#';
+            }
+
+            if ($(this).attr('hreflang') !== undefined) {
+                if ($(this).attr('hreflang') == 'od') {
+                    $(this).attr({ hreflang: 'or', lang: 'or' });
+                }
+                if ($(this).attr('aria-label') !== typeof undefined) {
+                    $(this).attr('aria-label', $(this).text()).attr('title', $(this).text());
+                }
+            } else if (isExternal(href)) {
+
+                if (
+                    href.indexOf('cdn.s3waas.gov.in') == -1
+                    && href.indexOf('auth.s3waas.gov.in') == -1
+                    && href.indexOf('cdnbbsr.s3waas.gov.in') == -1
+                    && href.indexOf('parichay') == -1
+                    && !$(this).hasClass('fancybox.iframe')
+                    && !$(this).hasClass('fancybox')
+                ) {
+                    if (typeof $(this).attr('onclick') === "undefined" && !isExternalExcluded(href)) {
+                        $(this).attr("onclick", "return confirm('You are being redirected to an external website. Please note that " + S3WaaSAccessibilityParams.blogInfoName + " cannot be held responsible for external websites content & privacy policies.');");
+                    }
+                }
+
+                if (typeof $(this).attr('aria-label') === "undefined" || typeof $(this).attr('title') === "undefined") {
+                    var text = '';
+                    if ($(this).text().trim() !== '') {
+                        text = $(this).text().trim() + ' - ';
+                    } else {
+                        text = $(this).attr('href') + ' - ';
+                    }
+
+                    if (
+                        href.indexOf('cdn.s3waas.gov.in') == -1
+                        && href.indexOf('auth.s3waas.gov.in') == -1
+                        && href.indexOf('cdnbbsr.s3waas.gov.in') == -1
+                        && href.indexOf('parichay') == -1
+                        && !$(this).hasClass('fancybox.iframe')
+                        && !$(this).hasClass('fancybox')
+                    ) {
+
+                        // if(typeof $(this).attr('aria-label') === "undefined"){
+                        //     $(this).attr('aria-label', text + S3WaaSAccessibilityParams.defaultLinkAriaLabel);
+                        // }
+                        // if(typeof $(this).attr('title') === "undefined"){
+                        //     $(this).attr('title', text + S3WaaSAccessibilityParams.defaultLinkTitle);
+                        // }
+                    }
+                }
+
+                if (href.indexOf('auth.s3waas.gov.in') == -1 && href.indexOf('parichay') == -1) {
+                    $(this).prop({ target: '_blank', rel: 'noopener noreferrer' });
+                }
+            }
+        });
+
+    })
+    $('body').trigger('targetExternalLinks');
+    $('.flex-direction-nav a.flex-prev').attr({ 'title': S3WaaSAccessibilityParams.flexNavPrevTitle, 'aria-label': S3WaaSAccessibilityParams.flexNavPrevTitle });
+    $('.flex-pauseplay a.flex-pause').attr({ 'title': S3WaaSAccessibilityParams.flexNavPlayPauseTitle, 'aria-label': S3WaaSAccessibilityParams.flexNavPlayPauseTitle });
+    $('.flex-direction-nav a.flex-next').attr({ 'title': S3WaaSAccessibilityParams.flexNavNextTitle, 'aria-label': S3WaaSAccessibilityParams.flexNavNextTitle });
+
+    $('a[download]').each(function () {
+        var ariaLabelPrevious = $(this).prev().attr('aria-label');
+        if (typeof ariaLabelPrevious !== typeof undefined && typeof $(this).attr('aria-label') == typeof undefined) {
+            var ariaLabel = $(this).prev().attr('aria-label').split('-')[0];
+            ariaLabel = S3WaaSAccessibilityParams.ariaLabelDownload + ' ' + ariaLabel;
+            $(this).attr('aria-label', ariaLabel).removeAttr('aria-hidden');
+        }
+    });
+});
+
+
+//Footer menu Accessibility
+jQuery(document).ready(function ($) {
+    jQuery('.footerMenu > ul').attr({ "role": "menubar", "aria-label": "Footer menu" })
+    jQuery('.footerMenu > ul > li').attr('role', 'none')
+    jQuery('.footerMenu > ul > li > a').attr('role', 'menuitem').attr('tabindex', '0')
+
+    const menufooter = document.querySelector('.footerMenu [role="menubar"]');
+    const items = Array.from(menufooter.querySelectorAll('[role="menuitem"]'));
+
+    function getFocusableElements() {
+        return Array.from(document.querySelectorAll(`
+        a[href]:not([disabled]),
+        button:not([disabled]),
+        input:not([disabled]),
+        select:not([disabled]),
+        textarea:not([disabled]),
+        [tabindex]:not([tabindex="-1"])
+        `)).filter(el => el.offsetParent !== null || el instanceof SVGElement);
+    }
+
+    // Move focus to first focusable element after footerMenu
+    function focusAfterFooterMenu() {
+        const footerMenu = document.querySelector('.footerMenu');
+        const focusable = getFocusableElements();
+        let found = false;
+
+        for (let i = 0; i < focusable.length; i++) {
+            if (footerMenu.contains(focusable[i])) {
+                found = true;
+            } else if (found) {
+                focusable[i].focus();
+                break;
+            }
+        }
+    }
+
+    items.forEach((item, index) => {
+        item.addEventListener('keydown', function (e) {
+            let newIndex;
+
+            switch (e.key) {
+                case 'ArrowRight':
+                    newIndex = (index + 1) % items.length;
+                    items[newIndex].focus();
+                    e.preventDefault();
+                    break;
+
+                case 'ArrowLeft':
+                    newIndex = (index - 1 + items.length) % items.length;
+                    items[newIndex].focus();
+                    e.preventDefault();
+                    break;
+
+                case 'Home':
+                    items[0].focus();
+                    e.preventDefault();
+                    break;
+
+                case 'End':
+                    items[items.length - 1].focus();
+                    e.preventDefault();
+                    break;
+
+                case 'Escape':
+                    focusAfterFooterMenu();
+                    e.preventDefault();
+                    break;
+
+                case 'Tab':
+                    const isFirst = index === 0;
+                    const isLast = index === items.length - 1;
+
+                    // if (!e.shiftKey && isLast) {
+                    //     // Trap Tab on last item
+                    //     e.preventDefault();
+                    //     items[0].focus();
+                    // } else if (e.shiftKey && isFirst) {
+                    //     // Trap Shift+Tab on first item
+                    //     e.preventDefault();
+                    //     items[items.length - 1].focus();
+                    // }
+                    break;
+            }
+        }); 
+    });
+
+});
+
+
+// home slider aria label added
+jQuery(document).ready(function () {
+    const $slides = jQuery('#slide .slides > li').not('.clone');
+    const totalSlides = $slides.length;
+    $slides.each(function (index) {
+        jQuery(this).attr('aria-label', `Slide ${index + 1} of ${totalSlides}`);
+    });
+});
+
+// Footer slider aria label added
+jQuery(document).ready(function () {
+    const $slides = jQuery('#footerScrollbar .slides > li').not('.clone');
+    const totalSlides = $slides.length;
+    $slides.each(function (index) {
+        jQuery(this).attr('aria-label', `Slide ${index + 1} of ${totalSlides}`);
+    });
+});
+
+// accessible tabs js start
+jQuery(document).ready(function () {
+    jQuery(".vc_tta-tabs-list").attr('aria-label', 'Tabs Group');
+
+    const tabInstances = [];
+
+    jQuery('.vc_tta-tabs-container').each(function (index) {
+        const $tabContainer = jQuery(this);
+        const $tabsList = $tabContainer.find('.vc_tta-tabs-list');
+        const $tabItems = $tabsList.find('li');
+
+        $tabItems.each(function () {
+            const $li = jQuery(this).attr('role', 'none'); // role moved to li
+            const $anchor = $li.find('a');
+            // const spanText = $anchor.find('.vc_tta-title-text').text().trim().replace(/\s+/g, '-').toLowerCase();
+            const arialabelText = $anchor.find('.vc_tta-title-text').text().trim();
+            const panelId = $anchor.attr('aria-controls');
+            // const anchorId = spanText + '-tab';
+
+            // Move all aria and tab roles to <a>
+            $anchor.attr({
+                // id: anchorId,
+                role: 'tab',
+                'aria-controls': panelId,
+                'aria-selected': 'false',
+                tabindex: '-1',
+                'aria-label': arialabelText
+
+            });
+
+            $anchor.on('click', function (e) {
+                e.preventDefault();
+            });
+
+            $anchor.on('click keydown', function (e) {
+                if (e.type === 'click') {
+                    tabInstances[index].setSelectedTab(this);
+                }
+            });
+
+            $anchor.on('keydown', function (e) {
+                tabInstances[index].onKeydown.call(tabInstances[index], e);
+            });
+        });
+
+        const tablistEl = $tabsList.get(0);
+        const instance = new TabsManual(tablistEl);
+        tabInstances.push(instance);
+    });
+
+    setTimeout(function () {
+        jQuery('.vc_tta-panel').each(function () {
+            const $panel = jQuery(this);
+            if (!$panel.attr('role')) {
+                const panelId = $panel.attr('id');
+                const $tab = jQuery('[aria-controls="' + panelId + '"]');
+                const tabId = $tab.attr('id');
+
+                if (panelId && tabId) {
+                    $panel.attr({
+                        role: 'tabpanel',
+                        'aria-labelledby': tabId
+                    });
+                }
+            }
+        });
+    }, 500);
+});
+
+
+
+'use strict';
+
+class TabsManual {
+    constructor(groupNode) {
+        this.tablistNode = groupNode;
+        this.tabs = Array.from(this.tablistNode.querySelectorAll('[role=tab]'));
+        this.tabpanels = [];
+
+        this.firstTab = this.tabs[0];
+        this.lastTab = this.tabs[this.tabs.length - 1];
+
+        for (let i = 0; i < this.tabs.length; i++) {
+            const tab = this.tabs[i];
+            const tabpanel = document.getElementById(tab.getAttribute('aria-controls'));
+            tab.setAttribute('tabindex', '-1');
+            tab.setAttribute('aria-selected', 'false');
+            this.tabpanels.push(tabpanel);
+        }
+
+        this.setSelectedTab(this.firstTab);
+
+        // responsive handler on resize of window added 
+        jQuery(window).on('resize', () => this.handleResponsiveDisplay());
+    }
+
+    setSelectedTab(currentTab) {
+        const windowWidth = jQuery(window).width();
+
+        this.tabs.forEach((tab, i) => {
+            const panel = this.tabpanels[i];
+            const isCurrent = currentTab === tab;
+
+            tab.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+            tab.setAttribute('tabindex', isCurrent ? '0' : '-1');
+
+            if (isCurrent) {
+                panel.classList.remove('is-hidden');
+                jQuery(panel).addClass('vc_active');
+                jQuery(tab).closest('li').addClass('vc_active');
+
+                //  Apply inline style only when width > 767px
+                if (windowWidth > 767) {
+                    jQuery(panel).find('.vc_tta-panel-body').css('display', 'block');
+                } else {
+                    jQuery(panel).find('.vc_tta-panel-body').css('display', '');
+                }
+
+            } else {
+                panel.classList.add('is-hidden');
+                jQuery(panel).removeClass('vc_active');
+                jQuery(tab).closest('li').removeClass('vc_active');
+
+                // Apply inline style only when width > 767px
+                if (windowWidth > 767) {
+                    jQuery(panel).find('.vc_tta-panel-body').css('display', 'none');
+                } else {
+                    jQuery(panel).find('.vc_tta-panel-body').css('display', '');
+                }
+            }
+        });
+    }
+
+    //  Handle clearing inline display styles on resize
+    handleResponsiveDisplay() {
+        const windowWidth = jQuery(window).width();
+
+        if (windowWidth <= 767) {
+            // Remove inline display from all panels when below 768px
+            jQuery('.vc_tta-panel-body').css('display', '');
+        } else {
+            // Restore correct state for current active tab
+            const $activeTab = jQuery(this.tablistNode).find('li.vc_active a[role="tab"]');
+            if ($activeTab.length) {
+                this.setSelectedTab($activeTab[0]);
+            }
+        }
+    }
+
+    moveFocusToTab(tab) {
+        tab.focus();
+    }
+
+    moveFocusToPreviousTab(currentTab) {
+        const index = this.tabs.indexOf(currentTab);
+        const target = index === 0 ? this.lastTab : this.tabs[index - 1];
+        this.moveFocusToTab(target);
+    }
+
+    moveFocusToNextTab(currentTab) {
+        const index = this.tabs.indexOf(currentTab);
+        const target = index === this.tabs.length - 1 ? this.firstTab : this.tabs[index + 1];
+        this.moveFocusToTab(target);
+    }
+
+    // Moves focus outside the tab group when ESC pressed
+    focusNextOutsideContainer(currentTab) {
+        const container = jQuery(currentTab).closest('.vc_tta-container');
+        const allFocusable = jQuery('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])')
+            .filter(':visible');
+
+        let foundContainer = false;
+        allFocusable.each(function () {
+            if (foundContainer && !jQuery.contains(container[0], this)) {
+                jQuery(this).focus();
+                foundContainer = null;
+                return false;
+            }
+
+            if (this === container[0] || jQuery.contains(container[0], this)) {
+                foundContainer = true;
+            }
+        });
+
+        // If no next element found, focus first on page
+        if (foundContainer !== null) {
+            allFocusable.first().focus();
+        }
+    }
+
+    onKeydown(event) {
+        const currentTab = event.currentTarget;
+        let handled = false;
+
+        switch (event.key) {
+            case 'ArrowLeft':
+                this.moveFocusToPreviousTab(currentTab);
+                handled = true;
+                break;
+            case 'ArrowRight':
+                this.moveFocusToNextTab(currentTab);
+                handled = true;
+                break;
+            case 'Home':
+                this.moveFocusToTab(this.firstTab);
+                handled = true;
+                break;
+            case 'End':
+                this.moveFocusToTab(this.lastTab);
+                handled = true;
+                break;
+            case 'Enter':
+            case ' ':
+                this.setSelectedTab(currentTab);
+                handled = true;
+                break;
+            case 'Escape':
+            case 'Esc':
+                this.focusNextOutsideContainer(currentTab);
+                handled = true;
+                break;
+        }
+
+        if (handled) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }
+}
+
+
+// accessible tabs js ends
+
+// Tab aria label added for read more button
+jQuery(document).ready(function ($) {
+    function updateAriaLabel() {
+        jQuery('.vc_tta-panel.vc_active').each(function () {
+            var activeTabTitle = jQuery(this).find('.vc_tta-title-text').first().text().trim();
+            var $btn = jQuery(this).find('.vc_tta-panel-body .btn');
+            var btnText = $btn.text().trim();
+            $btn.attr('aria-label', btnText + ' ' + activeTabTitle);
+        });
+    }
+    updateAriaLabel();
+    jQuery('.vc_tta-tabs-list a').on('click', function () {
+        setTimeout(updateAriaLabel, 100);
+    });
+});
+
+// Tab heading level change from h4 to h3
+jQuery(document).ready(function ($) {
+    $('.vc_tta-panels-container .vc_tta-panel-heading h4').each(function () {
+        var $newHeading3 = $('<h3>').html($(this).html());
+
+        // Copy all attributes
+        $.each(this.attributes, function () {
+            $newHeading3.attr(this.name, this.value);
+        });
+
+        $(this).replaceWith($newHeading3);
+    });
+});
+
+// photo/vide gallery aria-label
+jQuery(document).ready(function () {
+    var photoGalleryTitle = jQuery(".photo-glry-cntr .gallery-heading h2").text().trim();
+    var photoGalleryTitleTwo = jQuery(".gallery-layout-two .photo-glry-title h2").text().trim();
+    var viewAllPhotoButtonText = jQuery(".photo-glry-cntr .bttn-more span").text().trim();
+    var viewAllPhotoButtonTextTwo = jQuery(".gallery-layout-two .photo-glry-viewall a.btn").text().trim();
+
+    if (photoGalleryTitle) {
+        jQuery(".photo-glry-cntr .bttn-more").removeAttr("title").attr("aria-label", viewAllPhotoButtonText + ", " + photoGalleryTitle);
+    }
+    if (photoGalleryTitleTwo) {
+        jQuery(".gallery-layout-two .photo-glry-viewall a.btn").removeAttr("title").attr("aria-label", viewAllPhotoButtonTextTwo + ", " + photoGalleryTitleTwo);
+    }
+
+    var videoGalleryTitle = jQuery(".video_gallery h2").text().trim();
+    var viewAllVideoButtonText = jQuery(".video_gallery .gallery-links a.btn").text().trim();
+
+    if (videoGalleryTitle) {
+        jQuery(".video_gallery .gallery-links a.btn").removeAttr("title").attr("aria-label", viewAllVideoButtonText + ", " + videoGalleryTitle);
+    }
+});
+
+// Additional Attributes for header parts 
+jQuery(document).ready(function ($) {
+    // jQuery('nav.menu').attr('aria-label','secondary')
+    jQuery('.menuToggle').attr('aria-expanded', 'false');
+    jQuery('.menuToggle').on('click', function () {
+        const isExpanded = jQuery(this).attr('aria-expanded') === 'true';
+        jQuery(this).attr('aria-expanded', isExpanded ? 'false' : 'true');
+    });
+});
+
+//  accordian Accessibility aria-expanded attributes
+jQuery(document).ready(function ($) {
+    // Remove unwanted attributes from panels
+    $('.vc_tta-panel').each(function () {
+        $(this).removeAttr('role').removeAttr('hidden');
+    });
+
+    // Loop through each panel
+    $('.vc_tta-panel').each(function () {
+        var $panel = $(this);
+        var $pannelTitleTExt = $panel.find('.vc_tta-title-text');
+        var $pannelAnchor = $panel.find('.vc_tta-panel-heading a[data-vc-accordion]');
+        var $panelBody = $panel.find('.vc_tta-panel-body');
+        var rawText = $pannelTitleTExt.text().trim();
+        var slug = rawText.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-_]/g, '');
+
+        var anchorID = slug + '-heading';
+        var bodyID = slug + '-content';
+        $pannelAnchor.attr({
+            'id': anchorID,
+            'aria-controls': bodyID,
+            'role': 'button',
+            'aria-expanded': 'false'
+        });
+
+        $panelBody.attr({
+            'id': bodyID,
+            'role': 'region',
+            'aria-labelledby': anchorID
+        });
+    });
+
+    // Set aria-expanded="true" for active panel
+    $('.vc_tta-panel.vc_active .vc_tta-panel-heading a[data-vc-accordion]').attr('aria-expanded', 'true');
+
+    // Toggle aria-expanded on click
+    $('.vc_tta-panel-heading a[data-vc-accordion]').on('click', function () {
+        setTimeout(function () {
+            $('.vc_tta-panel').each(function () {
+                var $panel = $(this);
+                var $link = $panel.find('.vc_tta-panel-heading a[data-vc-accordion]');
+                if ($panel.hasClass('vc_active')) {
+                    $link.attr('aria-expanded', 'true');
+                } else {
+                    $link.attr('aria-expanded', 'false');
+                }
+            });
+        }, 100);
+    });
+});
+
+//aria-current page attribute for current menu links
+
+jQuery(document).ready(function ($) {
+    $(".menu ul li.active a").attr("aria-current", "page");
+});
+
+// slider managing tabindex for clone and active slides
+jQuery(document).ready(function ($) {
+    function updateSlideTabindex() {
+        // $('.flexslider .slides li a').attr('tabindex', '-1');
+        $('.flexslider .slides li.flex-active-slide a').attr('tabindex', '0');
+        $('.flexslider .slides li.clone').attr('tabindex', '-1');
+    }
+
+    setTimeout(updateSlideTabindex, 500);
+    const target = document.querySelector('.home-slider.flexslider .slides');
+    if (target) {
+        const observer = new MutationObserver(function (mutationsList) {
+            for (const mutation of mutationsList) {
+                if (mutation.type === "attributes" && mutation.attributeName === "class") {
+                    updateSlideTabindex();
+                }
+            }
+        });
+        observer.observe(target, {
+            attributes: true,
+            subtree: true,
+            attributeFilter: ["class"]
+        });
+    }
+
+});
+
+
+// Flexslider keyborad accessibility features JS starts
+jQuery(document).ready(function ($) {
+
+    // NVDA Focus Mode Support
+    // $('.home-slider.flexslider')
+    //     .on('focusin', function () {
+    //         $(this).flexslider('pause');
+    //     })
+    //     .on('focusout', function () {
+    //         $(this).flexslider('play');
+    //     });
+
+    function moveFocusToActiveSlide(slider) {
+        const $activeSlide = slider.find('.flex-active-slide');
+        const $link = $activeSlide.find('a').first();
+
+        if ($link.length) {
+            $link.focus();
+        } else {
+            $activeSlide.attr('tabindex', '-1').focus();
+        }
+    }
+
+    $('.home-slider.flexslider').on('keydown', function (e) {
+        const key = e.which;
+        const slider = $(this);
+        const activeEl = document.activeElement;
+        const isPrevBtn = $(activeEl).hasClass('flex-prev');
+        const isNextBtn = $(activeEl).hasClass('flex-next');
+
+        // ENTER on Prev/Next Buttons
+        if (key === 13 && isPrevBtn) {
+            slider.flexslider('prev');
+            e.preventDefault();
+            return;
+        }
+        if (key === 13 && isNextBtn) {
+            slider.flexslider('next');
+            e.preventDefault();
+            return;
+        }
+
+        // LEFT arrow
+        if (key === 37) {
+            slider.flexslider('prev');
+            setTimeout(() => moveFocusToActiveSlide(slider), 220);
+            e.preventDefault();
+        }
+
+        // RIGHT arrow
+        if (key === 39) {
+            slider.flexslider('next');
+            setTimeout(() => moveFocusToActiveSlide(slider), 220);
+            e.preventDefault();
+        }
+
+        // HOME - first slide
+        if (key === 36) {
+            slider.flexslider(0);
+            setTimeout(() => moveFocusToActiveSlide(slider), 220);
+            e.preventDefault();
+        }
+
+        // END - last slide
+        if (key === 35) {
+            const lastIndex = slider.find('.slides > li').length - 1;
+            slider.flexslider(lastIndex);
+            setTimeout(() => moveFocusToActiveSlide(slider), 220);
+            e.preventDefault();
+        }
+
+        // ENTER or SPACE on the SLIDER ITSELF - open link manually
+        if ((key === 13 || key === 32) && $(activeEl).hasClass('flexslider')) {
+            const $activeSlide = slider.find('.flex-active-slide');
+            const $link = $activeSlide.find('a').first();
+
+            if ($link.length) {
+                e.preventDefault();
+                $link[0].click();
+            }
+        }
+    });
+});
+// Flexslider keyborad accessibility features JS ends
+
+
+
+// Add toggle button status pressed/not pressed on accessibility menu buttons starts
+jQuery(document).ready(function ($) {
+
+    // Aria-pressed attr to be added on toggle buttons
+    //  Mapping each button id to its corresponding body class
+    const buttonClassMap = {
+        'highlightLinks': 'highlightLinks',
+        'invert': 'invert',
+        'saturation': 'saturation',
+        'addletterspacing': 'addletterspacing',
+        'addlineheight': 'addlineheight',
+        'hideimage': 'hideimage',
+        'big_cursor': 'big_cursor'
+    };
+
+    // Update aria-pressed for body-class based buttons
+    function updateAriaPressed() {
+        $.each(buttonClassMap, function (buttonId, bodyClass) {
+            const $btn = $('#' + buttonId);
+            if ($('body').hasClass(bodyClass)) {
+                $btn.attr('aria-pressed', 'true');
+            } else {
+                $btn.attr('aria-pressed', 'false');
+            }
+        });
+    }
+
+    // Update aria-pressed for bhashini-tts button
+    function updateBhashiniAria() {
+        const $bhashini = $('#bhashini-tts-play');
+        if ($bhashini.length) {
+            const state = $bhashini.attr('data-state');
+            if (state === 'pause') {
+                $bhashini.attr('aria-pressed', 'true');
+            } else {
+                $bhashini.attr('aria-pressed', 'false'); // includes 'play' and initial
+            }
+        }
+    }
+
+    // Toggle aria-pressed for Screen Reader button
+    const $screenReaderBtn = $('a[data-label="Screen Reader"]');
+    if ($screenReaderBtn.length) {
+        $screenReaderBtn.attr('aria-pressed', 'false');
+
+        $screenReaderBtn.on('click keydown', function (e) {
+            if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const $btn = $(this);
+                const current = $btn.attr('aria-pressed') === 'true';
+                $btn.attr('aria-pressed', current ? 'false' : 'true');
+            }
+        });
+    }
+
+    // Initial checks
+    updateAriaPressed();
+    updateBhashiniAria();
+
+    // Observe body class changes dynamically (for body-class buttons)
+    const observerBody = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            if (mutation.attributeName === 'class') {
+                updateAriaPressed();
+            }
+        });
+    });
+    observerBody.observe(document.body, { attributes: true });
+
+    // Observe data-state changes for bhashini button
+    const $bhashini = $('#bhashini-tts-play');
+    if ($bhashini.length) {
+        const observerBhashini = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                if (mutation.attributeName === 'data-state') {
+                    updateBhashiniAria();
+                }
+            });
+        });
+        observerBhashini.observe($bhashini[0], { attributes: true, attributeFilter: ['data-state'] });
+    }
+
+});
+
+// Add toggle button status pressed/not pressed on accessibility menu buttons ends
+
+jQuery(document).ready(function ($) {
+    setTimeout(function () {
+        $('.whosWhoPhoneNumber span, .whosWhoEmailId span, .startDate span, .endDate span').attr('lang', 'en');
+    }, 2000);
+});
+
+// Tabs aria-selected addedd
+jQuery(document).ready(function ($) {
+    const viewSwitchButtons = document.querySelectorAll(".tabassign1 .resp-tabs-list li a");
+
+    viewSwitchButtons.forEach((button) => {
+
+        // Set initial aria-selected
+        if (button.classList.contains("resp-tab-item")) {
+            button.setAttribute("aria-selected", "true");
+        } else {
+            button.setAttribute("aria-selected", "false");
+        }
+
+        // Add click event
+        button.addEventListener("click", () => {
+            viewSwitchButtons.forEach((btn) => {
+                btn.setAttribute("aria-selected", "false");
+            });
+
+            button.setAttribute("aria-selected", "true");
+        });
+    }); 
+    
+});
+
+//Play pause button in mobile
+(function ($) {
+    var isPaused = true;
+    var firstInteraction = true; 
+    $(document).on('touchstart', '.flex-pauseplay a', function (e) {
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var $btn = $(this);
+        var $slider = $btn.closest('.flexslider');
+
+         if (firstInteraction) {
+            $slider.flexslider('pause');
+            firstInteraction = false;
+        }
+		if (!isPaused) {
+            $slider.flexslider('pause');
+
+            $btn.removeClass('flex-pause').addClass('flex-play');
+            isPaused = true;
+
+        } else {
+            $slider.flexslider('play');
+
+            $btn.removeClass('flex-play').addClass('flex-pause');
+            isPaused = false;
+        }
+    });
+})(jQuery);
+
+
+
+// js to close submenu on ESC key press if submenu is already opened using mouse
+jQuery(function ($) {
+
+    $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') {
+
+            const $nav = $('.menuWrapper nav, #accessibilityMenu').addClass('esc-off');
+            setTimeout(() => $nav.removeClass('esc-off'), 200);
+        }
+    });
+
+});

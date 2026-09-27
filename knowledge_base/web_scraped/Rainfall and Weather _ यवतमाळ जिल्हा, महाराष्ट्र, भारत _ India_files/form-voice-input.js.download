@@ -1,0 +1,248 @@
+jQuery(document).ready(function($) {
+    const fields = [
+        { id: 'your-name', selector: 'input[name="your-name"]', label: bhashiniAjax.nameFieldError },
+        { id: 'your-message', selector: 'textarea[name="your-message"]', label: bhashiniAjax.messageFieldError }
+    ];
+
+    fields.forEach(field => {
+        const $input = $(field.selector);
+        if ($input.length) {
+            $input.wrap('<div class="form-group" style="position: relative; margin-bottom: 15px;"></div>');
+            $input.after(`
+                <button type="button" 
+                    title="${field.label}" 
+                    aria-label="${field.label}" 
+                    class="mic-button" 
+                    data-target="${field.id}" 
+                    style="position: absolute; right: 0px; top: 0; padding: 0; width: 32px; height: 30px; line-height: 32px; background: none; border: none; cursor: pointer; font-size: 16px;">
+                    <i class="fa fa-microphone"></i>
+                </button>
+            `);
+        }
+    });
+
+    const overlay = $('#voice-fullscreen-overlay');
+    const voiceMsg = $('.voice-message');
+    const voiceClose = $('.voice-close');
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let recordingTimeout = null;
+    let targetInput = null;
+    let mediaStream = null;
+
+    function trapFocus(element) {
+        const focusableEls = element.find('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        const firstFocusableEl = focusableEls[0];
+        const lastFocusableEl = focusableEls[focusableEls.length - 1];
+
+        element.off('keydown.trapFocus').on('keydown.trapFocus', function(e) {
+            if (e.key === 'Tab' || e.keyCode === 9) {
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusableEl) {
+                        e.preventDefault();
+                        lastFocusableEl && lastFocusableEl.focus();
+                    }
+                } else {
+                    if (document.activeElement === lastFocusableEl) {
+                        e.preventDefault();
+                        firstFocusableEl && firstFocusableEl.focus();
+                    }
+                }
+            }
+        });
+
+        if (firstFocusableEl) {
+            setTimeout(() => firstFocusableEl.focus(), 100);
+        }
+    }
+
+    $('.mic-button').on('click', function() {
+        const targetId = $(this).data('target');
+        const field = fields.find(f => f.id === targetId);
+        targetInput = field ? $(field.selector) : null;
+
+        if (!targetInput || !targetInput.length) {
+            console.error('Target input not found for ID:', targetId);
+            return;
+        }
+
+        overlay.fadeIn(200, function() {
+            // overlay.attr('tabindex', '0');
+            // overlay.attr({
+            //     'role': 'dialog',
+            //     'aria-modal': 'true',
+            //     'tabindex': '0'
+            // });            
+            trapFocus(overlay);
+        });
+
+        voiceMsg.text(bhashiniAjax.speak_now_text);
+        startRecording();
+    });
+
+    voiceClose.on('click', function() {
+        stopRecording(true);
+        overlay.fadeOut(200);
+        if (targetInput) targetInput.focus();
+        targetInput = null;
+    });
+    $(document).on('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.is(':visible')) {
+            voiceClose.trigger('click');
+        }
+    });
+
+    function startRecording() {
+        let mimeType = 'audio/webm';
+        if (MediaRecorder.isTypeSupported('audio/wav')) {
+            mimeType = 'audio/wav';
+        } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+            mimeType = 'audio/webm';
+        } else {
+            console.error('No supported audio format (WAV or WebM) found.');
+            voiceMsg.text('Your browser does not support required audio formats.');
+            setTimeout(() => {
+                overlay.fadeOut(300);
+                targetInput = null;
+            }, 2000);
+            return;
+        }
+
+        const language = localStorage.getItem('preferredLanguage') || 'en';
+        // console.log('Selected language:', language);
+
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+            mediaStream = stream;
+            mediaRecorder = new MediaRecorder(stream, { mimeType: mimeType });
+            audioChunks = [];
+
+            setTimeout(() => {
+                voiceMsg.text(bhashiniAjax.listening_text);
+            }, 1000);
+
+            mediaRecorder.ondataavailable = e => {
+                audioChunks.push(e.data);
+            };
+
+            mediaRecorder.onstop = () => {
+                clearTimeout(recordingTimeout);
+                stopMediaStream();
+
+                const audioBlob = new Blob(audioChunks, { type: mimeType });
+                const reader = new FileReader();
+                reader.readAsDataURL(audioBlob);
+
+                reader.onloadend = () => {
+                    const base64Audio = reader.result.split(',')[1];
+                    const audioFormat = mimeType.includes('wav') ? 'wav' : 'webm';
+
+                    $.ajax({
+                        url: bhashiniAjax.ajaxurl,
+                        type: 'POST',
+                        data: {
+                            action: 'bhashini_asr',
+                            audio_content: base64Audio,
+                            language: language,
+                            audio_format: audioFormat
+                        },
+                        success: (response) => {
+                            let text = response?.data?.text?.trim()?.toLowerCase();
+                            const excludePhrases = [
+                                "close voice search dialogue button listening",
+                                "this page is accessing your microphone change the setting",
+                                "this page is accessing your microphone change this",
+                                "listening",
+                                "speak now",
+                                "search my voice button, dialogue speak now, listening",
+                                "firefox sharing indicator alert",
+                                "dialogue box",
+                                "dialogue speed now listening okay query",
+                                "you",
+                                "firebox sharing educator alert",
+                                "close button",
+                                "dialogue speed now listening",
+                                "dialogue speed, listen",
+                                "dialogue's too pale listen",
+                                "dialogue speak"
+                            ];
+
+                            const isExcluded = excludePhrases.some(phrase => text.includes(phrase));
+
+                            if (response.success && text && !isExcluded) {
+                                if (targetInput.attr('name') === 'your-name') {
+                                    text = text.replace(/\./g, '');
+                                    targetInput.val(text).focus();
+                                } else if (targetInput.attr('name') === 'your-message') {
+                                    const currentText = targetInput.val();
+                                    const newText = currentText ? currentText + ' ' + text : text;
+                                    targetInput.val(newText).focus();
+                                }
+                                setTimeout(() => {
+                                    overlay.fadeOut(1000);
+                                    targetInput = null;
+                                }, 1000);
+                            } else {
+                                console.warn('Text excluded (screen reader or invalid):', text);
+                                voiceMsg.text(bhashiniAjax.client_error);
+                                setTimeout(() => {
+                                    overlay.fadeOut(300);
+                                    targetInput = null;
+                                }, 2000);
+                            }
+                        },
+                        error: (xhr, status, error) => {
+                            console.error('AJAX error details:', {
+                                status: status,
+                                error: error,
+                                responseText: xhr.responseText,
+                                statusCode: xhr.status,
+                                url: bhashiniAjax.ajaxurl,
+                                headers: xhr.getAllResponseHeaders()
+                            });
+                            voiceMsg.text(bhashiniAjax.server_error_text);
+                            setTimeout(() => {
+                                overlay.fadeOut(300);
+                                targetInput = null;
+                            }, 2000);
+                        }
+                    });
+                };
+            };
+
+            mediaRecorder.start();
+            const timeoutDuration = targetInput.attr('name') === 'your-name' ? 2000 : 5000;
+            recordingTimeout = setTimeout(() => {
+                if (mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                }
+            }, timeoutDuration);
+        }).catch((err) => {
+            console.error('Microphone error:', err);
+            voiceMsg.text(bhashiniAjax.no_mic_detected);
+            setTimeout(() => {
+                overlay.fadeOut(300);
+                targetInput = null;
+            }, 2000);
+        });
+    }
+
+    function stopRecording(cancel = false) {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
+        }
+        if (cancel) {
+            audioChunks = [];
+            clearTimeout(recordingTimeout);
+        }
+        stopMediaStream();
+    }
+
+    function stopMediaStream() {
+        if (mediaStream) {
+            mediaStream.getTracks().forEach(track => {
+                track.stop();
+            });
+            mediaStream = null;
+        }
+    }
+});

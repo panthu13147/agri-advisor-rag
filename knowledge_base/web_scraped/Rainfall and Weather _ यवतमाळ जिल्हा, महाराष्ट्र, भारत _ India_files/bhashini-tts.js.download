@@ -1,0 +1,299 @@
+jQuery(document).ready(function($) {
+    const $playButton = $('#bhashini-tts-play');
+    const $audioPlayer = $('#bhashini-tts-audio');
+    let audioChunks = [];
+    let currentChunk = 0;
+    let isProcessing = false;
+
+    if (!$playButton.length || !$audioPlayer.length) {
+        return;
+    }
+    function getCurrentLanguage() {
+        const preferredLanguage = localStorage.getItem('preferredLanguage');
+        if (preferredLanguage) {
+            console.log('Using preferredLanguage for TTS:', preferredLanguage);
+            return preferredLanguage;
+        }
+
+        const pllLanguage = document.cookie.match(/pll_language=([^;]+)/)?.[1];
+        if (pllLanguage) {
+            console.log('Using pll_language cookie for TTS:', pllLanguage);
+            return pllLanguage;
+        }
+
+        const htmlLang = document.documentElement.getAttribute('lang') || 'en';
+        console.log('Using default language for TTS:', htmlLang.split('-')[0]);
+        return htmlLang.split('-')[0];
+    }
+    $playButton.on('click', function(e) {
+        e.preventDefault();
+        if (isProcessing) return;
+        const state = $playButton.attr('data-state');
+
+        if (state === 'pause') {
+            $audioPlayer[0].pause();
+            $playButton.attr('data-state', 'play');
+            $playButton.find('.acces-icon').removeClass('fa-pause').addClass('fa-bullhorn');
+            $playButton.find('div').text('Resume');
+        } else {
+            if ($audioPlayer[0].src && $audioPlayer[0].paused && audioChunks.length > 0) {
+                $audioPlayer[0].play().catch(error => {
+                    console.error('Audio playback error:', error);
+                    alert('Failed to play audio.');
+                });
+                $playButton.attr('data-state', 'pause');
+                $playButton.find('.acces-icon').removeClass('fa-bullhorn').addClass('fa-pause');
+                $playButton.find('div').text('Pause');
+                return;
+            }
+
+            isProcessing = true;
+            $playButton.prop('disabled', true);
+            $playButton.find('div').text('Processing');
+            $playButton.find('.acces-icon').removeClass('fa-bullhorn fa-pause').addClass('fa-spinner fa-spin');
+
+            const ttsMode = bhashiniAjax?.tts_page_reading || 'tts_content_only';
+            const contentSelectors = ttsMode === 'tts_full_page' ?
+                ['header', 'main', 'footer'] :
+                ['.entry-content', '.post-content', 'article', '.content-area', '#content', 'main'];
+
+            audioChunks = new Array(contentSelectors.length).fill(null);
+            currentChunk = 0;
+            let completedRequests = 0;
+
+            contentSelectors.forEach((selector, index) => {
+                const $content = $(selector).clone();
+                if (!$content.length) {
+                    completedRequests++;
+                    return;
+                }
+
+                $content.find('script, style, noscript, #breadcrumb, .breadcrumbs, .printShare, .carousel, .owl-carousel, .flex-control-nav, .flex-direction-nav, .flex-pauseplay, .carousel-control-prev, .carousel-control-next, .carousel-indicators').remove();
+
+                $content.find('table').each(function() {
+                    const $table = $(this);
+                    $table.find('td').each(function() {
+                        const $td = $(this);
+                        const text = $td.text().trim();
+                        if (text) {
+                            $td.text(text + ' ');
+                        }
+                    });
+                    $table.find('tr').after(' | ');
+                });
+
+                let sectionText = $content.text().trim();
+                sectionText = preprocessText(sectionText);
+
+                if (!sectionText) {
+                    console.warn(`No valid text found for selector: ${selector}`);
+                    completedRequests++;
+                    return;
+                }
+
+                // Send AJAX request to TTS API
+                $.ajax({
+                    url: bhashiniAjax.ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'bhashini_tts',
+                        // nonce: bhashiniAjax.nonce,
+                        text: sectionText,
+                        language: getCurrentLanguage()
+                    },
+                    success: function(response) {
+                        // console.log(`AJAX Response for ${selector}:`, response);
+                        if (response?.success && response?.data?.audio) {
+                            audioChunks[index] = response.data.audio;
+                        } else {
+                            console.error(`TTS API error for ${selector}:`, response?.data || 'No data');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(`AJAX failure for ${selector}: Status=${status}, Error=${error}, Response=`, xhr.responseText);
+                    },
+                    complete: function() {
+                        completedRequests++;
+                        if (completedRequests === contentSelectors.length) {
+                            const validChunks = audioChunks.filter(chunk => chunk !== null);
+                            isProcessing = false;
+                            $playButton.prop('disabled', false);
+
+                            if (validChunks.length > 0) {
+                                audioChunks = validChunks;
+                                playAudioChunks();
+                            } else {
+                                $playButton.attr('data-state', 'play');
+                                $playButton.find('.acces-icon').removeClass('fa-spinner fa-spin fa-pause').addClass('fa-bullhorn');
+                                $playButton.find('div').text('Text to Speech');
+                                console.error('No audio generated:', {
+                                    emptyText: contentSelectors.every(sel => !$(sel).text().trim()),
+                                    selectorsFound: contentSelectors.map(sel => ({ selector: sel, found: !!$(sel).length }))
+                                });
+                                alert('Failed to generate audio.');
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    });
+
+    // Handle audio end event
+    $audioPlayer.on('ended', function() {
+        if (currentChunk < audioChunks.length) {
+            playAudioChunks();
+        } else {
+            resetPlayer();
+        }
+    });
+
+    $audioPlayer.on('playing', function() {
+        $playButton.attr('data-state', 'pause');
+        $playButton.find('.acces-icon').removeClass('fa-spinner fa-spin fa-bullhorn').addClass('fa-pause');
+        $playButton.find('div').text('Pause');
+    });
+
+    function playAudioChunks() {
+        if (currentChunk >= audioChunks.length) {
+            resetPlayer();
+            return;
+        }
+
+        try {
+            const audioBlob = base64ToBlob(audioChunks[currentChunk], 'audio/wav');
+            const audioUrl = URL.createObjectURL(audioBlob);
+            $audioPlayer[0].src = audioUrl;
+            $audioPlayer[0].play().catch(error => {
+                console.error('Audio playback error:', error);
+                resetPlayer();
+                alert('Failed to play audio.');
+            });
+            currentChunk++;
+        } catch (error) {
+            console.error('Error creating audio blob:', error);
+            resetPlayer();
+            alert('Failed to process audio.');
+        }
+    }
+
+    function resetPlayer() {
+        if ($audioPlayer[0].src) {
+            URL.revokeObjectURL($audioPlayer[0].src);
+            $audioPlayer[0].src = '';
+        }
+        $playButton.prop('disabled', false);
+        $playButton.attr('data-state', 'play');
+        $playButton.find('.acces-icon').removeClass('fa-pause fa-spinner fa-spin').addClass('fa-bullhorn');
+        $playButton.find('div').text('Text to Speech');
+        audioChunks = [];
+        currentChunk = 0;
+    }
+
+    // Convert base64 to Blob
+    function base64ToBlob(base64, mimeType) {
+        const byteCharacters = atob(base64);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        return new Blob([byteArray], { type: mimeType });
+    }
+
+    function preprocessText(text) {
+        if (!text) return '';
+
+        try {
+            // Replace common tokens
+            text = text.replace(/\(…\)/g, '.');
+            text = text.replace(/\[dot\]/g, '.');
+            text = text.replace(/\[at\]/g, '@');
+
+            text = text.replace(/([a-zA-Z0-9])([\u0900-\u097F\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7F\u0A00-\u0A7F\u0980-\u09FF])/g, '$1 $2');
+            text = text.replace(/([\u0900-\u097F\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7F\u0A00-\u0A7F\u0980-\u09FF])([a-zA-Z0-9])/g, '$1 $2');
+
+            text = text.replace(/([\u0900-\u097F])([\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7F\u0A00-\u0A7F\u0980-\u09FF])/g, '$1 $2');
+            text = text.replace(/([\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7F\u0A00-\u0A7F\u0980-\u09FF])([\u0900-\u097F])/g, '$1 $2');
+
+            text = text.replace(/\s+/g, ' ').trim();
+            text = text.replace(/\|\s*/g, ' ');
+
+            text = text.replace(/[^a-zA-Z0-9\u0900-\u097F\u0A80-\u0AFF\u0B00-\u0B7F\u0B80-\u0BFF\u0C00-\u0C7F\u0C80-\u0CFF\u0D00-\u0D7F\u0A00-\u0A7F\u0980-\u09FF\s.,!?@\/':&\-\u2022]/g, '');
+
+            if (!text) {
+                console.warn('Text is empty after preprocessing');
+                return '';
+            }
+
+            return text;
+        } catch (error) {
+            console.error('Text preprocessing error:', error);
+            return '';
+        }
+    }
+});
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     const languageOptions = document.querySelectorAll('.language-option');
+//     languageOptions.forEach(option => {
+//         option.addEventListener('click', function () {
+//             const selectedLanguage = this.getAttribute('data-value');
+//             document.cookie = `bhashini_language=${selectedLanguage}; path=/;`;
+//         });
+//     });
+// });
+
+jQuery(document).ready(function($) {
+
+    function getPllLanguage() {
+        const match = document.cookie.match(/pll_language=([^;]+)/);
+        return match ? match[1] : bhashiniAjax.defaultLanguage || 'en';
+    }
+    var preferredLanguage = localStorage.getItem('preferredLanguage');
+    var currentLanguage = bhashiniAjax.currentLanguage || getPllLanguage();
+    var availableLanguages = bhashiniAjax.availableLanguages || [getPllLanguage()];
+    var currentUrl = window.location.href;
+
+    if (preferredLanguage && availableLanguages.includes(preferredLanguage) && preferredLanguage !== currentLanguage) {
+        // Prevent infinite loop using sessionStorage
+        if (!sessionStorage.getItem('bhashiniRedirected')) {
+            sessionStorage.setItem('bhashiniRedirected', 'true');
+            var currentPostId = bhashiniAjax.postId || 0;
+
+            if (currentPostId) {
+                $.ajax({
+                    url: bhashiniAjax.ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'get_translated_page_url',
+                        post_id: currentPostId,
+                        target_language: preferredLanguage,
+                        //nonce: bhashiniAjax.nonce
+                    },
+                    success: function(response) {
+                        //console.log('AJAX Response:', response);
+                        if (response.success && response.data.url) {
+                            window.location.href = response.data.url;
+                        } else {
+                            // Fallback: Construct URL with language slug
+                            var translatedUrl = currentUrl.replace(/\/[a-z]{2}\//, '/' + preferredLanguage + '/');
+                            window.location.href = translatedUrl;
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        var translatedUrl = currentUrl.replace(/\/[a-z]{2}\//, '/' + preferredLanguage + '/');
+                        window.location.href = translatedUrl;
+                    }
+                });
+            } else {
+                var translatedUrl = currentUrl.replace(/\/[a-z]{2}\//, '/' + preferredLanguage + '/');
+                window.location.href = translatedUrl;
+            }
+        } else {
+            sessionStorage.removeItem('bhashiniRedirected');
+        }
+    } else {
+        sessionStorage.removeItem('bhashiniRedirected');
+    }
+});

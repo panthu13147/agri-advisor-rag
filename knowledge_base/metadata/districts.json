@@ -1,0 +1,19 @@
+{
+  "state": "Maharashtra",
+  "regions": {
+    "Marathwada": {
+      "university": "Vasantrao Naik Marathwada Krishi Vidyapeeth (VNMKV), Parbhani",
+      "representative_districts": [
+        "Beed",
+        "Latur"
+      ]
+    },
+    "Vidarbha": {
+      "university": "Dr. Panjabrao Deshmukh Krishi Vidyapeeth (PDKV), Akola",
+      "representative_districts": [
+        "Yavatmal",
+        "Amravati"
+      ]
+    }
+  }
+}

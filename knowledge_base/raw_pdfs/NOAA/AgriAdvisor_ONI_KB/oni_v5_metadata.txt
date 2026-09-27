@@ -1,0 +1,10 @@
+doc_type: oni
+source: NOAA Climate Prediction Center
+dataset: Oceanic Niño Index (ONI) v5
+region: Niño 3.4 (5°N–5°S, 120°–170°W)
+value_unit: °C
+season_type: 3-month running mean / overlapping seasons
+coverage_in_supplied_data: 1950–2026
+latest_supplied_year: 2026
+latest_supplied_data: DJF=-0.4, JFM=-0.1, FMA=0.1, MAM=0.5, AMJ=1.0; later 2026 seasons blank
+threshold_note: warm +0.5°C; cold -0.5°C; historical persistence minimum 5 consecutive overlapping seasons

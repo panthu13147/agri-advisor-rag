@@ -1,0 +1,15 @@
+{
+  "primary_crops": [
+    "Cotton",
+    "Soybean",
+    "Pigeonpea (Tur)",
+    "Gram (Chana)",
+    "Sorghum (Jowar)"
+  ],
+  "contingency_categories": [
+    "Normal Sowing",
+    "Delayed Sowing (2-4 wks)",
+    "Delayed Sowing (>4 wks)",
+    "Severe Drought / Mid-season Dry Spells"
+  ]
+}

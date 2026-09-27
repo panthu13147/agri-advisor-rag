@@ -1,0 +1,29 @@
+{
+  "authorities": [
+    {
+      "id": "ICAR-CRIDA",
+      "name": "Central Research Institute for Dryland Agriculture",
+      "type": "National Institute"
+    },
+    {
+      "id": "IMD",
+      "name": "India Meteorological Department",
+      "type": "National Met Office"
+    },
+    {
+      "id": "VNMKV",
+      "name": "Vasantrao Naik Marathwada Krishi Vidyapeeth, Parbhani",
+      "type": "State Ag University"
+    },
+    {
+      "id": "PDKV",
+      "name": "Dr. Panjabrao Deshmukh Krishi Vidyapeeth, Akola",
+      "type": "State Ag University"
+    },
+    {
+      "id": "CGWB",
+      "name": "Central Ground Water Board, Govt of India",
+      "type": "Hydrogeology Board"
+    }
+  ]
+}
