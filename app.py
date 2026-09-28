@@ -21,6 +21,7 @@ st.markdown("""
     .sub-header { font-size: 18px !important; color: #4B5563; margin-top: 0px; margin-bottom: 30px;}
     .status-badge { padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold; }
     .status-ok { background-color: #D1FAE5; color: #065F46; }
+    .baseline-warning { color: #991B1B; font-weight: bold; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -37,13 +38,19 @@ def load_retriever():
 
 @st.cache_resource
 def load_llm():
-    return OllamaLLM(model="llama3.1:8b", temperature=0.5)
+    return OllamaLLM(model="llama3.1:8b", temperature=0.3)
 
-# --- SIDEBAR: System Status ---
+# --- SIDEBAR: System Status & Language ---
 with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/2674/2674486.png", width=100) # Simple generic farm icon
-    st.title("System Status")
+    st.image("https://cdn-icons-png.flaticon.com/512/2674/2674486.png", width=100)
+    st.title("Settings & Status")
     
+    # NEW FEATURE: Language Selection
+    st.subheader("🌐 Language")
+    language = st.radio("Output Language:", ["English", "Marathi (मराठी)"])
+    st.markdown("---")
+    
+    st.subheader("🖥️ System Status")
     try:
         retriever = load_retriever()
         st.markdown('**Vector DB:** <span class="status-badge status-ok">✅ Connected (3,556 chunks)</span>', unsafe_allow_html=True)
@@ -74,22 +81,24 @@ with col4:
     scenario = st.selectbox("🌊 El Niño Scenario", ["Strong", "Moderate", "Weak", "Neutral"])
 
 st.write("")
-generate_btn = st.button("🚀 Generate Precision Advisory", use_container_width=True, type="primary")
+generate_btn = st.button("🚀 Generate Precision Advisory & Accuracy Comparison", use_container_width=True, type="primary")
 st.markdown("---")
 
-# Define the Prompt Template
-template = """
+# Define the RAG Prompt Template (With Context)
+rag_template = """
 You are an expert Chief Agricultural Extension Officer advising farmers.
 Using the provided context from ICAR, IMD, and NOAA, you must generate a HIGHLY DETAILED and COMPREHENSIVE agricultural advisory report.
 
+You MUST write the entire response in this language: {language_instruction}
+
 Do not give a short summary. Your response must be lengthy, professional, and broken down into the following detailed sections:
-1. 🌩️ Weather & El Niño Context (Explain the scenario)
-2. 🌱 Sowing & Crop Management (Detailed steps based on the crop/stage)
+1. 🌩️ Weather & El Niño Context
+2. 🌱 Sowing & Crop Management
 3. 💧 Irrigation & Moisture Management
 4. 🐛 Pest & Disease Control (if applicable)
 
 If the context does not contain relevant information for a section, synthesize the best general agricultural advice for that specific district and crop, but explicitly state that you are generalizing.
-Do not hallucinate specific statistics. Make the report look extremely thorough.
+Do not hallucinate specific statistics. Structure your response with clear bullet points.
 
 Context:
 {context}
@@ -98,14 +107,33 @@ Question: {question}
 
 Detailed Actionable Advisory Report:
 """
-prompt = PromptTemplate.from_template(template)
+rag_prompt = PromptTemplate.from_template(rag_template)
+
+# Define the Baseline Prompt Template (NO Context - for Before RAG accuracy testing)
+baseline_template = """
+You are an AI assistant. Please answer the following question to the best of your knowledge.
+You MUST write the entire response in this language: {language_instruction}
+
+Question: {question}
+
+Answer:
+"""
+baseline_prompt = PromptTemplate.from_template(baseline_template)
+
 
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
 rag_chain = (
-    {"context": retriever | format_docs, "question": RunnablePassthrough()}
-    | prompt
+    {"context": retriever | format_docs, "question": RunnablePassthrough(), "language_instruction": RunnablePassthrough()}
+    | rag_prompt
+    | llm
+    | StrOutputParser()
+)
+
+baseline_chain = (
+    {"question": RunnablePassthrough(), "language_instruction": RunnablePassthrough()}
+    | baseline_prompt
     | llm
     | StrOutputParser()
 )
@@ -114,23 +142,40 @@ rag_chain = (
 if generate_btn:
     query_text = f"What is the agricultural contingency plan and advisory for {crop} in {district} district during the {month} stage under a {scenario} El Niño scenario?"
     
-    with st.spinner("🔍 Scanning Vector DB & Generating Advisory..."):
+    # Determine language injection string
+    lang_instruction = "MARATHI (मराठी). Provide the output exclusively in Marathi script." if "Marathi" in language else "ENGLISH."
+    
+    with st.spinner(f"🔍 Generating Comparison: Standard LLM vs. AgriAdvisor RAG ({language})..."):
         try:
             start_time = time.time()
-            retrieved_docs = retriever.invoke(query_text)
-            result = rag_chain.invoke(query_text)
-            elapsed_time = time.time() - start_time
             
-            # Use Tabs for a clean presentation look
-            tab1, tab2 = st.tabs(["📝 Generated Advisory", "🔎 Evidence & Sources"])
+            # Fetch retrieved documents for RAG
+            retrieved_docs = retriever.invoke(query_text)
+            
+            # 1. Run Baseline (No RAG)
+            baseline_result = baseline_chain.invoke({"question": query_text, "language_instruction": lang_instruction})
+            
+            # 2. Run RAG (With Context)
+            rag_result = rag_chain.invoke({"question": query_text, "language_instruction": lang_instruction})
+            
+            elapsed_time = time.time() - start_time
+            st.success(f"Generation & Comparison complete in {elapsed_time:.1f} seconds")
+            st.markdown(f"**Target Analysis:** {district} | {crop} | {month} | {scenario} El Niño")
+            
+            # NEW FEATURE: Accuracy / A/B Testing Tabs
+            tab1, tab2, tab3 = st.tabs(["🟢 AFTER RAG (AgriAdvisor)", "🔴 BEFORE RAG (Standard AI)", "🔎 Retrieved Evidence"])
             
             with tab1:
-                st.success(f"Advisory generated in {elapsed_time:.1f} seconds")
-                st.markdown(f"**Target:** {district} | {crop} | {month} | {scenario} El Niño")
-                st.info(result)
+                st.subheader("Grounded & Context-Aware Advisory")
+                st.info(rag_result)
                 
             with tab2:
-                st.write("The AI synthesized its answer directly from the following official chunks:")
+                st.subheader("Standard LLM Hallucination Test")
+                st.markdown('<p class="baseline-warning">⚠️ Notice how the standard AI often lacks specific district data, invents statistics, or misses official ICAR guidelines without RAG.</p>', unsafe_allow_html=True)
+                st.warning(baseline_result)
+                
+            with tab3:
+                st.write("AgriAdvisor synthesized its answer directly from the following official chunks:")
                 for i, doc in enumerate(retrieved_docs):
                     with st.expander(f"Source {i+1}: {doc.metadata.get('source_file', 'Unknown')}"):
                         st.text(doc.page_content)
