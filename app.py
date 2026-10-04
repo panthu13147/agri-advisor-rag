@@ -94,20 +94,27 @@ t = {
     "tab3_h": "#### 📚 Official Source Chunks Used by RAG" if language == "English" else "#### 📚 RAG द्वारे वापरलेले अधिकृत स्रोत",
 }
 
+# Dictionary for option translations
+district_map = {"Latur": "लातूर", "Beed": "बीड", "Yavatmal": "यवतमाळ", "Amravati": "अमरावती"}
+crop_map = {"Cotton": "कापूस", "Soybean": "सोयाबीन", "Tur": "तूर", "Jowar": "ज्वारी"}
+stage_map = {"Pre-sowing": "पेरणीपूर्व", "Sowing": "पेरणी", "Vegetative": "वाढीचा टप्पा", "Flowering": "फुलोरा", "Harvest": "काढणी"}
+scenario_map = {"Strong": "तीव्र (Strong)", "Moderate": "मध्यम (Moderate)", "Weak": "सौम्य (Weak)", "Neutral": "तटस्थ (Neutral)"}
+
+def translate_opt(val, mapping):
+    return mapping.get(val, val) if language == "Marathi (मराठी)" else val
+
 # --- MAIN UI: Query Parameters ---
 st.markdown(t["config_title"])
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    district = st.selectbox(t["district"], ["Latur", "Beed", "Yavatmal", "Amravati"])
+    district = st.selectbox(t["district"], ["Latur", "Beed", "Yavatmal", "Amravati"], format_func=lambda x: translate_opt(x, district_map))
 with col2:
-    crop = st.selectbox(t["crop"], ["Cotton", "Soybean", "Tur", "Jowar"])
+    crop = st.selectbox(t["crop"], ["Cotton", "Soybean", "Tur", "Jowar"], format_func=lambda x: translate_opt(x, crop_map))
 with col3:
-    month_en = st.selectbox(t["stage"], ["Pre-sowing", "Sowing", "Vegetative", "Flowering", "Harvest"])
-    month = month_en # Keep English internally for DB querying
+    month = st.selectbox(t["stage"], ["Pre-sowing", "Sowing", "Vegetative", "Flowering", "Harvest"], format_func=lambda x: translate_opt(x, stage_map))
 with col4:
-    scenario_en = st.selectbox(t["enso"], ["Strong", "Moderate", "Weak", "Neutral"])
-    scenario = scenario_en # Keep English internally for DB querying
+    scenario = st.selectbox(t["enso"], ["Strong", "Moderate", "Weak", "Neutral"], format_func=lambda x: translate_opt(x, scenario_map))
 
 st.write("")
 generate_btn = st.button(t["btn"], use_container_width=True, type="primary")
