@@ -1,11 +1,11 @@
 import streamlit as st
 import os
+import json
 from pathlib import Path
 import time
 from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings, OllamaLLM
 from langchain_core.prompts import PromptTemplate
-from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 
 # Set up paths
@@ -14,14 +14,18 @@ DB_DIR = BASE_DIR / 'chroma_db'
 
 st.set_page_config(page_title="AgriAdvisor Dashboard", page_icon="🌾", layout="wide")
 
-# Custom CSS for better styling
+# Custom CSS
 st.markdown("""
 <style>
     .main-header { font-size: 42px !important; font-weight: 700 !important; color: #1E3A8A; margin-bottom: 0px; }
     .sub-header { font-size: 18px !important; color: #4B5563; margin-top: 0px; margin-bottom: 30px;}
     .status-badge { padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold; }
     .status-ok { background-color: #D1FAE5; color: #065F46; }
-    .baseline-warning { color: #991B1B; font-weight: bold; }
+    .param-box { background-color: #1E293B; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid; }
+    .param-district { border-color: #3B82F6; }
+    .param-crop { border-color: #22C55E; }
+    .param-stage { border-color: #F59E0B; }
+    .param-enso { border-color: #EF4444; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -29,41 +33,40 @@ st.markdown('<p class="main-header">🌾 AgriAdvisor</p>', unsafe_allow_html=Tru
 st.markdown('<p class="sub-header">El Niño-Aware Agricultural Advisory System • Powered by Local RAG</p>', unsafe_allow_html=True)
 
 @st.cache_resource
-def load_retriever():
+def load_vectorstore():
     if not DB_DIR.exists():
         raise FileNotFoundError(f"ChromaDB not found at {DB_DIR}. Run 07_build_vector_db.py first.")
     embeddings = OllamaEmbeddings(model="nomic-embed-text:v1.5")
-    vectorstore = Chroma(persist_directory=str(DB_DIR), embedding_function=embeddings)
-    return vectorstore.as_retriever(search_kwargs={"k": 5})
+    return Chroma(persist_directory=str(DB_DIR), embedding_function=embeddings)
 
 @st.cache_resource
 def load_llm():
     return OllamaLLM(model="llama3.1:8b", temperature=0.3)
 
-# --- SIDEBAR: System Status & Language ---
+# --- SIDEBAR ---
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/2674/2674486.png", width=100)
     st.title("Settings & Status")
-    
-    # NEW FEATURE: Language Selection
+
     st.subheader("🌐 Language")
     language = st.radio("Output Language:", ["English", "Marathi (मराठी)"])
     st.markdown("---")
-    
+
     st.subheader("🖥️ System Status")
     try:
-        retriever = load_retriever()
+        vectorstore = load_vectorstore()
+        retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
         st.markdown('**Vector DB:** <span class="status-badge status-ok">✅ Connected (3,556 chunks)</span>', unsafe_allow_html=True)
     except Exception as e:
-        st.error("Vector DB: Offline")
+        st.error(f"Vector DB: Offline — {e}")
         st.stop()
-        
+
     try:
         llm = load_llm()
         st.markdown('**Local LLM:** <span class="status-badge status-ok">✅ Llama 3.1:8b Ready</span>', unsafe_allow_html=True)
     except:
         st.error("Local LLM: Offline")
-        
+
     st.markdown("---")
     st.caption("Data Sources: ICAR Contingency Plans, IMD Bulletins, NOAA ONI Index")
 
@@ -84,37 +87,50 @@ st.write("")
 generate_btn = st.button("🚀 Generate Precision Advisory & Accuracy Comparison", use_container_width=True, type="primary")
 st.markdown("---")
 
-# Define the RAG Prompt Template (With Context)
-rag_template = """
-You are an expert Chief Agricultural Extension Officer advising farmers.
-Using the provided context from ICAR, IMD, and NOAA, you must generate a HIGHLY DETAILED and COMPREHENSIVE agricultural advisory report.
+# Language instruction
+lang_instruction = "MARATHI (मराठी). Provide the output exclusively in Marathi script." if "Marathi" in language else "ENGLISH."
 
-You MUST write the entire response in this language: {language_instruction}
+# --- STRUCTURED RAG PROMPT ---
+rag_template = """You are an expert Chief Agricultural Extension Officer advising farmers.
+You MUST write the entire response in this language: {lang}
 
-Do not give a short summary. Your response must be lengthy, professional, and broken down into the following detailed sections:
-1. 🌩️ Weather & El Niño Context
-2. 🌱 Sowing & Crop Management
-3. 💧 Irrigation & Moisture Management
-4. 🐛 Pest & Disease Control (if applicable)
+Using the provided context from ICAR, IMD, and NOAA, generate a DETAILED advisory.
+Structure your response STRICTLY in the following 4 parameter-wise sections.
+Each section MUST correspond to one of the user's input parameters and explain what specific insights were derived from the knowledge base for that parameter.
 
-If the context does not contain relevant information for a section, synthesize the best general agricultural advice for that specific district and crop, but explicitly state that you are generalizing.
-Do not hallucinate specific statistics. Structure your response with clear bullet points.
+## 📍 District Analysis: {district}
+(What does the ICAR contingency plan say specifically about this district? Soil type, agro-climatic zone, historical drought patterns, district-specific recommendations from the knowledge base.)
 
-Context:
+## 🌱 Crop-Specific Guidance: {crop}
+(What varieties are recommended? What are the sowing windows? Seed rate, spacing, fertilizer dose specific to this crop from the retrieved ICAR/IMD data.)
+
+## 📅 Stage-Specific Actions: {stage}
+(What actions should be taken at this particular crop stage? Irrigation scheduling, nutrient management, weed control relevant to this growth phase.)
+
+## 🌊 El Niño Impact Assessment: {scenario} El Niño
+(What does the ONI data show? How does a {scenario} El Niño historically affect monsoon rainfall in Maharashtra? What contingency measures does ICAR recommend for this scenario?)
+
+If the context does not contain relevant information for a section, explicitly state: "Note: Generalizing beyond retrieved data for this parameter."
+Do not hallucinate specific statistics.
+
+Context from Knowledge Base:
 {context}
 
-Question: {question}
-
-Detailed Actionable Advisory Report:
+Detailed Parameter-Wise Advisory:
 """
 rag_prompt = PromptTemplate.from_template(rag_template)
 
-# Define the Baseline Prompt Template (NO Context - for Before RAG accuracy testing)
-baseline_template = """
-You are an AI assistant. Please answer the following question to the best of your knowledge.
-You MUST write the entire response in this language: {language_instruction}
+# --- BASELINE PROMPT (No RAG) ---
+baseline_template = """You are an AI assistant. Answer the following agricultural question.
+You MUST write the entire response in this language: {lang}
 
-Question: {question}
+Structure your response in the following 4 sections:
+## 📍 District Analysis: {district}
+## 🌱 Crop-Specific Guidance: {crop}
+## 📅 Stage-Specific Actions: {stage}
+## 🌊 El Niño Impact Assessment: {scenario} El Niño
+
+Question: What is the agricultural advisory for {crop} in {district} district during the {stage} stage under a {scenario} El Niño scenario?
 
 Answer:
 """
@@ -122,63 +138,70 @@ baseline_prompt = PromptTemplate.from_template(baseline_template)
 
 
 def format_docs(docs):
-    return "\n\n".join(doc.page_content for doc in docs)
+    return "\n\n---\n\n".join(doc.page_content for doc in docs)
 
-rag_chain = (
-    {"context": retriever | format_docs, "question": RunnablePassthrough(), "language_instruction": RunnablePassthrough()}
-    | rag_prompt
-    | llm
-    | StrOutputParser()
-)
 
-baseline_chain = (
-    {"question": RunnablePassthrough(), "language_instruction": RunnablePassthrough()}
-    | baseline_prompt
-    | llm
-    | StrOutputParser()
-)
-
-# --- MAIN UI: Generation ---
+# --- GENERATION ---
 if generate_btn:
     query_text = f"What is the agricultural contingency plan and advisory for {crop} in {district} district during the {month} stage under a {scenario} El Niño scenario?"
-    
-    # Determine language injection string
-    lang_instruction = "MARATHI (मराठी). Provide the output exclusively in Marathi script." if "Marathi" in language else "ENGLISH."
-    
-    with st.spinner(f"🔍 Generating Comparison: Standard LLM vs. AgriAdvisor RAG ({language})..."):
+
+    with st.spinner(f"🔍 Generating: Standard LLM vs. AgriAdvisor RAG ({language})..."):
         try:
             start_time = time.time()
-            
-            # Fetch retrieved documents for RAG
+
+            # 1. Retrieve relevant chunks (pass a plain string!)
             retrieved_docs = retriever.invoke(query_text)
-            
-            # 1. Run Baseline (No RAG)
-            baseline_result = baseline_chain.invoke({"question": query_text, "language_instruction": lang_instruction})
-            
-            # 2. Run RAG (With Context)
-            rag_result = rag_chain.invoke({"question": query_text, "language_instruction": lang_instruction})
-            
+            context_str = format_docs(retrieved_docs)
+
+            # 2. Run BASELINE (no context)
+            baseline_result = (baseline_prompt | llm | StrOutputParser()).invoke({
+                "lang": lang_instruction,
+                "district": district,
+                "crop": crop,
+                "stage": month,
+                "scenario": scenario,
+            })
+
+            # 3. Run RAG (with context)
+            rag_result = (rag_prompt | llm | StrOutputParser()).invoke({
+                "lang": lang_instruction,
+                "district": district,
+                "crop": crop,
+                "stage": month,
+                "scenario": scenario,
+                "context": context_str,
+            })
+
             elapsed_time = time.time() - start_time
-            st.success(f"Generation & Comparison complete in {elapsed_time:.1f} seconds")
-            st.markdown(f"**Target Analysis:** {district} | {crop} | {month} | {scenario} El Niño")
-            
-            # NEW FEATURE: Accuracy / A/B Testing Tabs
-            tab1, tab2, tab3 = st.tabs(["🟢 AFTER RAG (AgriAdvisor)", "🔴 BEFORE RAG (Standard AI)", "🔎 Retrieved Evidence"])
-            
+            st.success(f"✅ Generation & Comparison complete in {elapsed_time:.1f} seconds")
+            st.markdown(f"**Target:** `{district}` | `{crop}` | `{month}` | `{scenario} El Niño`")
+
+            # --- TABS ---
+            tab1, tab2, tab3 = st.tabs([
+                "🟢 AFTER RAG (AgriAdvisor)",
+                "🔴 BEFORE RAG (Standard AI)",
+                "🔎 Retrieved Evidence"
+            ])
+
             with tab1:
-                st.subheader("Grounded & Context-Aware Advisory")
-                st.info(rag_result)
-                
+                st.markdown("#### ✅ Grounded & Parameter-Wise Advisory")
+                st.markdown(rag_result)
+
             with tab2:
-                st.subheader("Standard LLM Hallucination Test")
-                st.markdown('<p class="baseline-warning">⚠️ Notice how the standard AI often lacks specific district data, invents statistics, or misses official ICAR guidelines without RAG.</p>', unsafe_allow_html=True)
-                st.warning(baseline_result)
-                
+                st.markdown("#### ⚠️ Standard LLM (No Knowledge Base)")
+                st.warning("Notice how the standard AI lacks specific district data, invents statistics, or misses official ICAR/IMD guidelines without RAG.")
+                st.markdown(baseline_result)
+
             with tab3:
-                st.write("AgriAdvisor synthesized its answer directly from the following official chunks:")
+                st.markdown("#### 📚 Official Source Chunks Used by RAG")
                 for i, doc in enumerate(retrieved_docs):
-                    with st.expander(f"Source {i+1}: {doc.metadata.get('source_file', 'Unknown')}"):
-                        st.text(doc.page_content)
-                        
+                    src = doc.metadata.get("source_file", "Unknown")
+                    doc_type = doc.metadata.get("doc_type", "")
+                    label = f"Source {i+1}: {src}"
+                    if doc_type:
+                        label += f" [{doc_type}]"
+                    with st.expander(label):
+                        st.code(doc.page_content, language=None)
+
         except Exception as e:
             st.error(f"An error occurred during generation: {e}")

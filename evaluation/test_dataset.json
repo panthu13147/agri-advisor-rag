@@ -1,0 +1,112 @@
+[
+    {
+        "id": 1,
+        "district": "Latur",
+        "crop": "Soybean",
+        "stage": "Sowing",
+        "scenario": "Strong",
+        "query": "What is the agricultural contingency plan for Soybean in Latur during Sowing under Strong El Niño?",
+        "expected_keywords": ["JS-335", "JS-9305", "MAUS", "contingency", "delayed sowing", "short duration", "Latur"],
+        "expected_source": "ICAR_Latur_Contingency.md",
+        "ground_truth": "ICAR Latur contingency plan recommends short-duration soybean varieties like JS-335, JS-9305, MAUS-71 during delayed sowing under drought conditions. Protective irrigation during critical stages."
+    },
+    {
+        "id": 2,
+        "district": "Beed",
+        "crop": "Cotton",
+        "stage": "Vegetative",
+        "scenario": "Moderate",
+        "query": "What is the agricultural contingency plan for Cotton in Beed during Vegetative stage under Moderate El Niño?",
+        "expected_keywords": ["Bt cotton", "moisture stress", "Beed", "contingency", "irrigation", "thinning"],
+        "expected_source": "ICAR_Beed_Contingency.md",
+        "ground_truth": "ICAR Beed contingency plan covers moisture stress management for cotton during vegetative stage including thinning, protective irrigation, and mulching."
+    },
+    {
+        "id": 3,
+        "district": "Yavatmal",
+        "crop": "Tur",
+        "stage": "Flowering",
+        "scenario": "Weak",
+        "query": "What is the agricultural contingency plan for Tur in Yavatmal during Flowering under Weak El Niño?",
+        "expected_keywords": ["Yavatmal", "pigeon pea", "Tur", "flowering", "pod borer", "spray", "contingency"],
+        "expected_source": "ICAR_Yavatmal_Contingency.md",
+        "ground_truth": "ICAR Yavatmal contingency plan recommends pest management for tur at flowering stage including Helicoverpa pod borer control via neem-based sprays and recommended insecticides."
+    },
+    {
+        "id": 4,
+        "district": "Amravati",
+        "crop": "Jowar",
+        "stage": "Pre-sowing",
+        "scenario": "Strong",
+        "query": "What is the agricultural contingency plan for Jowar in Amravati during Pre-sowing under Strong El Niño?",
+        "expected_keywords": ["Amravati", "sorghum", "Jowar", "seed treatment", "land preparation", "drought"],
+        "expected_source": "ICAR_Amravati_Contingency.md",
+        "ground_truth": "ICAR Amravati contingency plan recommends drought-tolerant jowar varieties, proper seed treatment, and contingency land preparation during pre-sowing under El Niño conditions."
+    },
+    {
+        "id": 5,
+        "district": "Latur",
+        "crop": "Soybean",
+        "stage": "Harvest",
+        "scenario": "Neutral",
+        "query": "What is the agricultural contingency plan for Soybean in Latur during Harvest under Neutral El Niño?",
+        "expected_keywords": ["Latur", "soybean", "harvest", "post-harvest", "storage", "moisture"],
+        "expected_source": "ICAR_Latur_Contingency.md",
+        "ground_truth": "ICAR Latur plan advises timely harvesting of soybean to avoid seed quality deterioration, proper drying, and storage management."
+    },
+    {
+        "id": 6,
+        "district": "Latur",
+        "crop": "Cotton",
+        "stage": "Sowing",
+        "scenario": "Strong",
+        "query": "What was the ONI value in JAS 2023 and how does Strong El Niño affect Latur?",
+        "expected_keywords": ["2023", "JAS", "1.4", "ONI", "El Niño", "Latur"],
+        "expected_source": "oni_v5.md",
+        "ground_truth": "The ONI value for JAS 2023 was 1.4°C indicating El Niño conditions. Strong El Niño historically causes below-normal monsoon rainfall affecting kharif crops in Marathwada."
+    },
+    {
+        "id": 7,
+        "district": "Amravati",
+        "crop": "Cotton",
+        "stage": "Sowing",
+        "scenario": "Moderate",
+        "query": "What is the agricultural contingency plan for Cotton in Amravati during Sowing under Moderate El Niño?",
+        "expected_keywords": ["Amravati", "cotton", "Bt", "sowing", "contingency", "monsoon"],
+        "expected_source": "ICAR_Amravati_Contingency.md",
+        "ground_truth": "ICAR Amravati contingency plan recommends timely sowing of Bt cotton with recommended varieties, proper seed rate and spacing during normal onset of monsoon."
+    },
+    {
+        "id": 8,
+        "district": "Yavatmal",
+        "crop": "Soybean",
+        "stage": "Vegetative",
+        "scenario": "Strong",
+        "query": "What is the agricultural contingency plan for Soybean in Yavatmal during Vegetative stage under Strong El Niño?",
+        "expected_keywords": ["Yavatmal", "soybean", "vegetative", "weed", "drought", "intercultivation"],
+        "expected_source": "ICAR_Yavatmal_Contingency.md",
+        "ground_truth": "ICAR Yavatmal plan recommends intercultivation, weed management, and moisture conservation for soybean during vegetative growth under drought-prone El Niño conditions."
+    },
+    {
+        "id": 9,
+        "district": "Beed",
+        "crop": "Jowar",
+        "stage": "Sowing",
+        "scenario": "Weak",
+        "query": "What is the agricultural contingency plan for Jowar in Beed during Sowing under Weak El Niño?",
+        "expected_keywords": ["Beed", "Jowar", "sorghum", "sowing", "variety", "contingency"],
+        "expected_source": "ICAR_Beed_Contingency.md",
+        "ground_truth": "ICAR Beed contingency plan recommends drought-tolerant jowar/sorghum varieties suitable for the district during normal to slightly delayed sowing window."
+    },
+    {
+        "id": 10,
+        "district": "Latur",
+        "crop": "Tur",
+        "stage": "Vegetative",
+        "scenario": "Moderate",
+        "query": "What is the agricultural contingency plan for Tur in Latur during Vegetative stage under Moderate El Niño?",
+        "expected_keywords": ["Latur", "Tur", "pigeon pea", "vegetative", "wilt", "nutrient"],
+        "expected_source": "ICAR_Latur_Contingency.md",
+        "ground_truth": "ICAR Latur plan advises nutrient management and wilt disease monitoring for tur during vegetative stage with protective irrigation during mid-season drought."
+    }
+]
