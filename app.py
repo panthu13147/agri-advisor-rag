@@ -177,10 +177,11 @@ if generate_btn:
             st.markdown(f"**Target:** `{district}` | `{crop}` | `{month}` | `{scenario} El Niño`")
 
             # --- TABS ---
-            tab1, tab2, tab3 = st.tabs([
+            tab1, tab2, tab3, tab4 = st.tabs([
                 "🟢 AFTER RAG (AgriAdvisor)",
                 "🔴 BEFORE RAG (Standard AI)",
-                "🔎 Retrieved Evidence"
+                "🔎 Retrieved Evidence",
+                "📊 System Accuracy"
             ])
 
             with tab1:
@@ -202,6 +203,23 @@ if generate_btn:
                         label += f" [{doc_type}]"
                     with st.expander(label):
                         st.code(doc.page_content, language=None)
+                        
+            with tab4:
+                st.markdown("#### 📊 Accuracy Metrics (Before vs After RAG)")
+                results_file = BASE_DIR / 'evaluation' / 'accuracy_results.json'
+                if results_file.exists():
+                    with open(results_file, 'r', encoding='utf-8') as f:
+                        acc_data = json.load(f)
+                    summary = acc_data.get("summary", {})
+                    
+                    c1, c2, c3 = st.columns(3)
+                    c1.metric("Baseline Specific Detail Recall", f"{summary.get('avg_baseline_specific_recall_pct', 0)}%")
+                    c2.metric("AgriAdvisor Specific Detail Recall", f"{summary.get('avg_rag_specific_recall_pct', 0)}%", delta=f"{summary.get('improvement_pct', 0)}%")
+                    c3.metric("Hallucinations Prevented", f"{summary.get('total_baseline_hallucinations', 0) - summary.get('total_rag_hallucinations', 0)}")
+                    
+                    st.info("Metrics are calculated dynamically against the real Marathwada Kharif 2023 El Niño drought dataset. 'Specific Detail Recall' measures how often the model correctly states exact ICAR varieties, fertilizer doses, and techniques. 'Hallucinations' measures how often the model invents fake brand names or generic non-regional advice.")
+                else:
+                    st.info("System evaluation is currently running. Please refresh in a minute to see the accuracy metrics.")
 
         except Exception as e:
             st.error(f"An error occurred during generation: {e}")
