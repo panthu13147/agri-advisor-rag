@@ -46,10 +46,11 @@ def load_llm():
 # --- SIDEBAR ---
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/2674/2674486.png", width=100)
+    
+    # Define language FIRST before using it for translations
+    language = st.radio("🌐 Language / भाषा", ["English", "Marathi (मराठी)"])
+    
     st.title("Settings & Status" if language == "English" else "सेटिंग्ज आणि स्थिती")
-
-    st.subheader("🌐 Language" if language == "English" else "🌐 भाषा")
-    language = st.radio("Output Language:" if language == "English" else "आउटपुट भाषा:", ["English", "Marathi (मराठी)"])
     st.markdown("---")
 
     st.subheader("🖥️ System Status" if language == "English" else "🖥️ प्रणालीची स्थिती")
