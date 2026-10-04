@@ -218,6 +218,58 @@ if generate_btn:
                     c3.metric("Hallucinations Prevented", f"{summary.get('total_baseline_hallucinations', 0) - summary.get('total_rag_hallucinations', 0)}")
                     
                     st.info("Metrics are calculated dynamically against the real Marathwada Kharif 2023 El Niño drought dataset. 'Specific Detail Recall' measures how often the model correctly states exact ICAR varieties, fertilizer doses, and techniques. 'Hallucinations' measures how often the model invents fake brand names or generic non-regional advice.")
+
+                    st.markdown("---")
+                    st.markdown("#### 🧩 Confusion Matrix (Generative RAG Adaptation)")
+                    
+                    cm_rag = summary.get("confusion_matrix_rag", {"TP": 0, "FP": 0, "FN": 0, "TN": 0})
+                    cm_baseline = summary.get("confusion_matrix_baseline", {"TP": 0, "FP": 0, "FN": 0, "TN": 0})
+                    
+                    colA, colB = st.columns(2)
+                    with colA:
+                        st.markdown("**🟢 AgriAdvisor (With Context)**")
+                        st.markdown(f"""
+                        <table style="width:100%; text-align:center; border:1px solid white;">
+                            <tr>
+                                <th></th>
+                                <th>Relevant (Ground Truth)</th>
+                                <th>Irrelevant (Hallucinations)</th>
+                            </tr>
+                            <tr>
+                                <th>Model Mentions</th>
+                                <td style="background-color:#065F46; color:white;"><b>True Positives (TP)</b><br>{cm_rag['TP']}</td>
+                                <td style="background-color:#991B1B; color:white;"><b>False Positives (FP)</b><br>{cm_rag['FP']}</td>
+                            </tr>
+                            <tr>
+                                <th>Model Omits</th>
+                                <td style="background-color:#92400E; color:white;"><b>False Negatives (FN)</b><br>{cm_rag['FN']}</td>
+                                <td style="background-color:#1E3A8A; color:white;"><b>True Negatives (TN)</b><br>{cm_rag['TN']}</td>
+                            </tr>
+                        </table>
+                        """, unsafe_allow_html=True)
+                        
+                    with colB:
+                        st.markdown("**🔴 Baseline (No Context)**")
+                        st.markdown(f"""
+                        <table style="width:100%; text-align:center; border:1px solid white; opacity: 0.7;">
+                            <tr>
+                                <th></th>
+                                <th>Relevant (Ground Truth)</th>
+                                <th>Irrelevant (Hallucinations)</th>
+                            </tr>
+                            <tr>
+                                <th>Model Mentions</th>
+                                <td style="background-color:#065F46; color:white;"><b>TP</b><br>{cm_baseline['TP']}</td>
+                                <td style="background-color:#991B1B; color:white;"><b>FP</b><br>{cm_baseline['FP']}</td>
+                            </tr>
+                            <tr>
+                                <th>Model Omits</th>
+                                <td style="background-color:#92400E; color:white;"><b>FN</b><br>{cm_baseline['FN']}</td>
+                                <td style="background-color:#1E3A8A; color:white;"><b>TN</b><br>{cm_baseline['TN']}</td>
+                            </tr>
+                        </table>
+                        """, unsafe_allow_html=True)
+
                 else:
                     st.info("System evaluation is currently running. Please refresh in a minute to see the accuracy metrics.")
 

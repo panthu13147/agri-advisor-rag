@@ -6,19 +6,18 @@
         "crop": "Soybean",
         "stage": "Sowing",
         "scenario": "Strong",
-        "oni_value": "JAS 2023 = 1.4°C (Strong El Niño)",
-        "actual_conditions": "Marathwada received 40-50% rainfall deficit during June-September 2023. Latur faced severe drought. 265 of 358 Maharashtra talukas declared drought-affected. Crops wilted in fields. Late rains could not recover standing crops.",
-        "actual_outcome": "Soybean yield loss of 70-90% across Marathwada. State government initiated GPS-tagged panchnamas for crop damage assessment. Massive farmer distress reported.",
-        "what_icar_actually_recommended": "ICAR Latur contingency plan recommended: short-duration soybean varieties (JS-335, JS-9305, MAUS-71), delayed sowing contingency with alternate crops, protective irrigation during critical flowering stage, raising seedlings in polythene bags for transplanting when moisture available.",
-        "validation_criteria": [
-            "Did it recommend short-duration / drought-tolerant soybean varieties?",
-            "Did it warn about delayed/reduced monsoon rainfall under Strong El Niño?",
-            "Did it suggest protective irrigation or moisture conservation?",
-            "Did it recommend contingency crops if sowing window is missed?",
-            "Did it mention Latur-specific soil or agro-climatic data?",
-            "Did it reference actual ONI / El Niño data?"
-        ],
-        "expected_keywords": ["short duration", "drought", "contingency", "irrigation", "moisture", "JS-335", "MAUS", "Latur", "El Niño", "rainfall deficit"]
+        "oni_value": "JAS 2023 = 1.4 C (Strong El Nino)",
+        "actual_outcome": "Soybean yield loss 70-90% across Marathwada. 265/358 talukas drought-affected. Late rains could not recover standing crops.",
+        "generic_keywords": ["drought", "irrigation", "moisture", "soybean", "El Nino", "rainfall"],
+        "specific_keywords": ["JS-335", "JS-9305", "MAUS", "25KgN", "polythene bags", "Latur", "contingency plan", "agro-climatic zone", "Marathwada", "black cotton soil", "short duration"],
+        "hallucination_traps": ["Liberty Link", "Roundup Ready", "Green Revolution", "GMO certification", "USDA"],
+        "validation_questions": [
+            {"question": "Does it name a specific ICAR-recommended soybean variety for Latur?", "rag_expected": true},
+            {"question": "Does it give a specific fertilizer dose in Kg/Ha?", "rag_expected": true},
+            {"question": "Does it reference the actual ICAR Latur contingency plan?", "rag_expected": true},
+            {"question": "Does it mention specific ONI values?", "rag_expected": true},
+            {"question": "Does it suggest a generic soil test without district-specific soil data?", "rag_expected": false}
+        ]
     },
     {
         "id": 2,
@@ -27,19 +26,18 @@
         "crop": "Cotton",
         "stage": "Vegetative",
         "scenario": "Strong",
-        "oni_value": "JAS 2023 = 1.4°C (Strong El Niño)",
-        "actual_conditions": "Beed district: approximately 4.84 lakh hectares of crop area damaged due to prolonged dry spells. Local committees estimated 70-100% loss for standing kharif crops. Severe moisture stress during vegetative growth.",
-        "actual_outcome": "Cotton crop failed across large areas of Beed. Farmers reported near-total loss in rainfed areas. Heat stress caused flower shedding and boll drop.",
-        "what_icar_actually_recommended": "ICAR Beed contingency plan: moisture stress management during vegetative stage — thinning, protective irrigation, mulching, interculture to conserve soil moisture, gap filling with same cultivar or pigeonpea.",
-        "validation_criteria": [
-            "Did it recommend moisture conservation techniques (mulching, interculture)?",
-            "Did it warn about drought/dry spell impact on cotton at vegetative stage?",
-            "Did it suggest protective irrigation?",
-            "Did it mention thinning or gap filling?",
-            "Did it reference Beed-specific contingency data?",
-            "Did it connect El Niño to monsoon failure?"
-        ],
-        "expected_keywords": ["moisture", "drought", "Beed", "cotton", "irrigation", "mulching", "interculture", "El Niño", "contingency", "vegetative"]
+        "oni_value": "JAS 2023 = 1.4 C (Strong El Nino)",
+        "actual_outcome": "4.84 lakh hectares damaged in Beed. 70-100% loss for standing kharif crops. Heat stress caused flower shedding.",
+        "generic_keywords": ["cotton", "drought", "moisture", "irrigation", "Beed", "El Nino"],
+        "specific_keywords": ["interculture", "gap filling", "pigeonpea", "75% plant population", "Balaram plough", "alternate furrows", "harrows", "contingency plan", "thinning", "mulching"],
+        "hallucination_traps": ["Liberty Link", "Monsanto", "precision agriculture", "satellite monitoring", "IoT sensors"],
+        "validation_questions": [
+            {"question": "Does it mention gap filling with pigeonpea from ICAR plan?", "rag_expected": true},
+            {"question": "Does it reference interculture with harrows?", "rag_expected": true},
+            {"question": "Does it mention Beed-specific contingency data?", "rag_expected": true},
+            {"question": "Does it suggest modern tech solutions not in ICAR plan?", "rag_expected": false},
+            {"question": "Does it give specific plant population targets?", "rag_expected": true}
+        ]
     },
     {
         "id": 3,
@@ -48,19 +46,18 @@
         "crop": "Cotton",
         "stage": "Sowing",
         "scenario": "Strong",
-        "oni_value": "JAS 2023 = 1.4°C (Strong El Niño)",
-        "actual_conditions": "Vidarbha region including Yavatmal experienced 40%+ rainfall deficit. Delayed monsoon onset disrupted sowing schedules. Farmers who sowed early without sufficient moisture faced germination failure.",
-        "actual_outcome": "Significant re-sowing was required in cotton areas. Yield losses of 50-80% reported in rainfed cotton. Pest incidence (pink bollworm) increased due to crop stress.",
-        "what_icar_actually_recommended": "ICAR Yavatmal contingency plan: delay sowing until adequate moisture, use recommended Bt cotton varieties, seed treatment, avoid early sowing without sufficient rainfall, pest management protocols for stressed crops.",
-        "validation_criteria": [
-            "Did it warn against sowing without sufficient moisture?",
-            "Did it recommend waiting for adequate rainfall?",
-            "Did it suggest specific cotton varieties for Yavatmal?",
-            "Did it mention seed treatment?",
-            "Did it reference El Niño impact on monsoon timing?",
-            "Did it warn about pest risk under stress conditions?"
-        ],
-        "expected_keywords": ["Yavatmal", "sowing", "moisture", "Bt cotton", "drought", "seed treatment", "El Niño", "contingency", "delayed", "rainfall"]
+        "oni_value": "JAS 2023 = 1.4 C (Strong El Nino)",
+        "actual_outcome": "Significant re-sowing required. Yield losses 50-80%. Pink bollworm increased due to crop stress.",
+        "generic_keywords": ["cotton", "sowing", "drought", "monsoon", "Yavatmal", "El Nino"],
+        "specific_keywords": ["Bt cotton", "seed treatment", "pink bollworm", "Helicoverpa", "neem", "contingency plan", "Vidarbha", "re-sowing", "germination failure"],
+        "hallucination_traps": ["AI-based pest detection", "drone spraying", "blockchain traceability"],
+        "validation_questions": [
+            {"question": "Does it warn about specific pest risks under stress?", "rag_expected": true},
+            {"question": "Does it mention seed treatment protocol?", "rag_expected": true},
+            {"question": "Does it reference Yavatmal-specific ICAR contingency?", "rag_expected": true},
+            {"question": "Does it recommend waiting for adequate moisture before sowing?", "rag_expected": true},
+            {"question": "Does it suggest high-tech solutions not available to KVK officers?", "rag_expected": false}
+        ]
     },
     {
         "id": 4,
@@ -69,19 +66,18 @@
         "crop": "Soybean",
         "stage": "Flowering",
         "scenario": "Strong",
-        "oni_value": "JAS 2023 = 1.4°C (Strong El Niño)",
-        "actual_conditions": "Amravati district in Vidarbha experienced severe mid-season drought during the critical flowering stage of soybean. Prolonged dry spells of 15-20 days during July-August devastated flowering and pod formation.",
-        "actual_outcome": "Soybean yields dropped 60-80% in rainfed areas. Flower dropping and pod abortion due to moisture stress. Farmers who applied protective irrigation had 30-40% better yields than those who didn't.",
-        "what_icar_actually_recommended": "ICAR Amravati contingency: protective irrigation during flowering, foliar spray of 2% urea or KNO3 to reduce flower drop, avoid top dressing fertilizer without soil moisture, hormonal spray NAA 20ppm to prevent flower drop.",
-        "validation_criteria": [
-            "Did it recommend protective irrigation during flowering?",
-            "Did it suggest foliar sprays to reduce flower drop?",
-            "Did it warn about mid-season drought impact on soybean?",
-            "Did it mention specific fertilizer management under moisture stress?",
-            "Did it reference Amravati-specific ICAR data?",
-            "Did it link El Niño to mid-season drought risk?"
-        ],
-        "expected_keywords": ["Amravati", "flowering", "irrigation", "soybean", "drought", "spray", "moisture", "El Niño", "contingency", "flower drop"]
+        "oni_value": "JAS 2023 = 1.4 C (Strong El Nino)",
+        "actual_outcome": "Soybean yields dropped 60-80%. Flower dropping and pod abortion. Protective irrigation gave 30-40% better yields.",
+        "generic_keywords": ["soybean", "flowering", "drought", "irrigation", "Amravati", "El Nino"],
+        "specific_keywords": ["NAA 20ppm", "flower drop", "foliar spray", "2% urea", "KNO3", "hormonal spray", "contingency plan", "pod abortion", "protective irrigation"],
+        "hallucination_traps": ["genetic engineering", "CRISPR", "growth regulators patent"],
+        "validation_questions": [
+            {"question": "Does it recommend NAA 20ppm hormonal spray from ICAR plan?", "rag_expected": true},
+            {"question": "Does it mention foliar spray of 2% urea or KNO3?", "rag_expected": true},
+            {"question": "Does it specifically address flower drop prevention?", "rag_expected": true},
+            {"question": "Does it reference Amravati ICAR contingency plan?", "rag_expected": true},
+            {"question": "Does it mention protective irrigation at flowering?", "rag_expected": true}
+        ]
     },
     {
         "id": 5,
@@ -90,18 +86,17 @@
         "crop": "Tur",
         "stage": "Vegetative",
         "scenario": "Moderate",
-        "oni_value": "DJF 2024 = 1.9°C (Strong → transitioning)",
-        "actual_conditions": "Post-El Niño transition period. Residual moisture deficit from 2023 drought affected rabi and early kharif 2024 crops. Groundwater levels significantly depleted in Latur.",
-        "actual_outcome": "Tur (pigeon pea) showed moderate recovery due to better late-season rains. However, wilt disease incidence was higher due to weakened plants from previous season's drought stress.",
-        "what_icar_actually_recommended": "ICAR Latur contingency: intercultivation for moisture conservation, wilt-resistant tur varieties, protective irrigation during dry spells, nutrient management adjusted for soil moisture availability.",
-        "validation_criteria": [
-            "Did it recommend wilt-resistant varieties?",
-            "Did it suggest moisture conservation techniques?",
-            "Did it warn about residual drought effects?",
-            "Did it mention disease management for tur?",
-            "Did it reference Latur-specific data?",
-            "Did it consider the transitioning El Niño scenario?"
-        ],
-        "expected_keywords": ["Latur", "tur", "pigeon pea", "wilt", "irrigation", "moisture", "contingency", "El Niño", "drought", "nutrient"]
+        "oni_value": "DJF 2024 = 1.9 C",
+        "actual_outcome": "Tur showed moderate recovery. Wilt disease incidence higher due to weakened plants from 2023 drought stress.",
+        "generic_keywords": ["tur", "pigeon pea", "vegetative", "Latur", "drought", "El Nino"],
+        "specific_keywords": ["wilt", "intercultivation", "nutrient management", "contingency plan", "Fusarium", "resistant varieties", "Marathwada"],
+        "hallucination_traps": ["machine learning disease detection", "nano-fertilizer", "autonomous farming"],
+        "validation_questions": [
+            {"question": "Does it mention wilt disease management for tur?", "rag_expected": true},
+            {"question": "Does it recommend intercultivation for moisture conservation?", "rag_expected": true},
+            {"question": "Does it reference Latur ICAR contingency data?", "rag_expected": true},
+            {"question": "Does it suggest solutions requiring expensive technology?", "rag_expected": false},
+            {"question": "Does it connect El Nino to monsoon impact on tur?", "rag_expected": true}
+        ]
     }
 ]
