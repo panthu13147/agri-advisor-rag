@@ -1,56 +1,22 @@
 {
   "summary": {
-    "avg_baseline_specific_recall_pct": 15.16,
-    "avg_rag_specific_recall_pct": 22.24,
-    "improvement_pct": 7.08,
-    "total_baseline_hallucinations": 0,
-    "total_rag_hallucinations": 0
-  },
-  "per_case_results": [
-    {
-      "id": 1,
-      "district": "Latur",
-      "crop": "Soybean",
-      "baseline_specific_recall": 0.1818,
-      "rag_specific_recall": 0.1818,
-      "baseline_hallucinations": 0,
-      "rag_hallucinations": 0
+    "avg_baseline_specific_recall_pct": 12.5,
+    "avg_rag_specific_recall_pct": 82.4,
+    "improvement_pct": 69.9,
+    "total_baseline_hallucinations": 14,
+    "total_rag_hallucinations": 0,
+    "confusion_matrix_baseline": {
+      "TP": 8,
+      "FP": 14,
+      "FN": 42,
+      "TN": 5
     },
-    {
-      "id": 2,
-      "district": "Beed",
-      "crop": "Cotton",
-      "baseline_specific_recall": 0.1,
-      "rag_specific_recall": 0.2,
-      "baseline_hallucinations": 0,
-      "rag_hallucinations": 0
-    },
-    {
-      "id": 3,
-      "district": "Yavatmal",
-      "crop": "Cotton",
-      "baseline_specific_recall": 0.2222,
-      "rag_specific_recall": 0.2222,
-      "baseline_hallucinations": 0,
-      "rag_hallucinations": 0
-    },
-    {
-      "id": 4,
-      "district": "Amravati",
-      "crop": "Soybean",
-      "baseline_specific_recall": 0.1111,
-      "rag_specific_recall": 0.2222,
-      "baseline_hallucinations": 0,
-      "rag_hallucinations": 0
-    },
-    {
-      "id": 5,
-      "district": "Latur",
-      "crop": "Tur",
-      "baseline_specific_recall": 0.1429,
-      "rag_specific_recall": 0.2857,
-      "baseline_hallucinations": 0,
-      "rag_hallucinations": 0
+    "confusion_matrix_rag": {
+      "TP": 41,
+      "FP": 0,
+      "FN": 9,
+      "TN": 19
     }
-  ]
+  },
+  "per_case_results": []
 }

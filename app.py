@@ -46,13 +46,13 @@ def load_llm():
 # --- SIDEBAR ---
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/2674/2674486.png", width=100)
-    st.title("Settings & Status")
+    st.title("Settings & Status" if language == "English" else "सेटिंग्ज आणि स्थिती")
 
-    st.subheader("🌐 Language")
-    language = st.radio("Output Language:", ["English", "Marathi (मराठी)"])
+    st.subheader("🌐 Language" if language == "English" else "🌐 भाषा")
+    language = st.radio("Output Language:" if language == "English" else "आउटपुट भाषा:", ["English", "Marathi (मराठी)"])
     st.markdown("---")
 
-    st.subheader("🖥️ System Status")
+    st.subheader("🖥️ System Status" if language == "English" else "🖥️ प्रणालीची स्थिती")
     try:
         vectorstore = load_vectorstore()
         retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
@@ -68,23 +68,46 @@ with st.sidebar:
         st.error("Local LLM: Offline")
 
     st.markdown("---")
-    st.caption("Data Sources: ICAR Contingency Plans, IMD Bulletins, NOAA ONI Index")
+    st.caption("Data Sources: ICAR Contingency Plans, IMD Bulletins, NOAA ONI Index" if language == "English" else "डेटा स्रोत: ICAR आकस्मिक योजना, IMD बुलेटिन, NOAA ONI इंडेक्स")
+
+# Dictionary for translations
+t = {
+    "config_title": "### 📋 Configure Advisory Parameters" if language == "English" else "### 📋 सल्लागार मापदंड कॉन्फिगर करा",
+    "district": "📍 District" if language == "English" else "📍 जिल्हा",
+    "crop": "🌱 Crop" if language == "English" else "🌱 पीक",
+    "stage": "📅 Sowing Stage" if language == "English" else "📅 पेरणीचा टप्पा",
+    "enso": "🌊 El Niño Scenario" if language == "English" else "🌊 एल निनो परिस्थिती",
+    "btn": "🚀 Generate Precision Advisory & Accuracy Comparison" if language == "English" else "🚀 अचूक कृषी सल्ला आणि अचूकता तुलना व्युत्पन्न करा",
+    "gen_msg": "🔍 Generating: Standard LLM vs. AgriAdvisor RAG..." if language == "English" else "🔍 व्युत्पन्न करत आहे: मानक AI विरुद्ध कृषी-सल्लागार RAG...",
+    "success": "✅ Generation & Comparison complete in" if language == "English" else "✅ निर्मिती आणि तुलना पूर्ण झाली वेळ:",
+    "target": "**Target:**" if language == "English" else "**लक्ष्य:**",
+    "tab1": "🟢 AFTER RAG (AgriAdvisor)" if language == "English" else "🟢 RAG नंतर (AgriAdvisor)",
+    "tab2": "🔴 BEFORE RAG (Standard AI)" if language == "English" else "🔴 RAG पूर्वी (मानक AI)",
+    "tab3": "🔎 Retrieved Evidence" if language == "English" else "🔎 प्राप्त केलेले पुरावे",
+    "tab4": "📊 System Accuracy" if language == "English" else "📊 प्रणाली अचूकता",
+    "tab1_h": "#### ✅ Grounded & Parameter-Wise Advisory" if language == "English" else "#### ✅ सविस्तर आणि मापदंडानुसार कृषी सल्ला",
+    "tab2_h": "#### ⚠️ Standard LLM (No Knowledge Base)" if language == "English" else "#### ⚠️ मानक AI (कोणताही डेटाबेस नाही)",
+    "tab2_w": "Notice how the standard AI lacks specific district data, invents statistics, or misses official ICAR/IMD guidelines without RAG." if language == "English" else "लक्षात घ्या की मानक AI कडे विशिष्ट जिल्ह्याचा डेटा कसा नाही, आकडेवारीचा शोध लावते किंवा RAG शिवाय अधिकृत ICAR/IMD मार्गदर्शक तत्त्वे गमावते.",
+    "tab3_h": "#### 📚 Official Source Chunks Used by RAG" if language == "English" else "#### 📚 RAG द्वारे वापरलेले अधिकृत स्रोत",
+}
 
 # --- MAIN UI: Query Parameters ---
-st.markdown("### 📋 Configure Advisory Parameters")
+st.markdown(t["config_title"])
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    district = st.selectbox("📍 District", ["Latur", "Beed", "Yavatmal", "Amravati"])
+    district = st.selectbox(t["district"], ["Latur", "Beed", "Yavatmal", "Amravati"])
 with col2:
-    crop = st.selectbox("🌱 Crop", ["Cotton", "Soybean", "Tur", "Jowar"])
+    crop = st.selectbox(t["crop"], ["Cotton", "Soybean", "Tur", "Jowar"])
 with col3:
-    month = st.selectbox("📅 Sowing Stage", ["Pre-sowing", "Sowing", "Vegetative", "Flowering", "Harvest"])
+    month_en = st.selectbox(t["stage"], ["Pre-sowing", "Sowing", "Vegetative", "Flowering", "Harvest"])
+    month = month_en # Keep English internally for DB querying
 with col4:
-    scenario = st.selectbox("🌊 El Niño Scenario", ["Strong", "Moderate", "Weak", "Neutral"])
+    scenario_en = st.selectbox(t["enso"], ["Strong", "Moderate", "Weak", "Neutral"])
+    scenario = scenario_en # Keep English internally for DB querying
 
 st.write("")
-generate_btn = st.button("🚀 Generate Precision Advisory & Accuracy Comparison", use_container_width=True, type="primary")
+generate_btn = st.button(t["btn"], use_container_width=True, type="primary")
 st.markdown("---")
 
 # Language instruction
@@ -145,7 +168,7 @@ def format_docs(docs):
 if generate_btn:
     query_text = f"What is the agricultural contingency plan and advisory for {crop} in {district} district during the {month} stage under a {scenario} El Niño scenario?"
 
-    with st.spinner(f"🔍 Generating: Standard LLM vs. AgriAdvisor RAG ({language})..."):
+    with st.spinner(t["gen_msg"]):
         try:
             start_time = time.time()
 
@@ -173,28 +196,23 @@ if generate_btn:
             })
 
             elapsed_time = time.time() - start_time
-            st.success(f"✅ Generation & Comparison complete in {elapsed_time:.1f} seconds")
-            st.markdown(f"**Target:** `{district}` | `{crop}` | `{month}` | `{scenario} El Niño`")
+            st.success(f"{t['success']} {elapsed_time:.1f}s")
+            st.markdown(f"{t['target']} `{district}` | `{crop}` | `{month}` | `{scenario} El Niño`")
 
             # --- TABS ---
-            tab1, tab2, tab3, tab4 = st.tabs([
-                "🟢 AFTER RAG (AgriAdvisor)",
-                "🔴 BEFORE RAG (Standard AI)",
-                "🔎 Retrieved Evidence",
-                "📊 System Accuracy"
-            ])
+            tab1, tab2, tab3, tab4 = st.tabs([t["tab1"], t["tab2"], t["tab3"], t["tab4"]])
 
             with tab1:
-                st.markdown("#### ✅ Grounded & Parameter-Wise Advisory")
+                st.markdown(t["tab1_h"])
                 st.markdown(rag_result)
 
             with tab2:
-                st.markdown("#### ⚠️ Standard LLM (No Knowledge Base)")
-                st.warning("Notice how the standard AI lacks specific district data, invents statistics, or misses official ICAR/IMD guidelines without RAG.")
+                st.markdown(t["tab2_h"])
+                st.warning(t["tab2_w"])
                 st.markdown(baseline_result)
 
             with tab3:
-                st.markdown("#### 📚 Official Source Chunks Used by RAG")
+                st.markdown(t["tab3_h"])
                 for i, doc in enumerate(retrieved_docs):
                     src = doc.metadata.get("source_file", "Unknown")
                     doc_type = doc.metadata.get("doc_type", "")
@@ -205,7 +223,7 @@ if generate_btn:
                         st.code(doc.page_content, language=None)
                         
             with tab4:
-                st.markdown("#### 📊 Accuracy Metrics (Before vs After RAG)")
+                st.markdown(f"#### 📊 {'Accuracy Metrics (Before vs After RAG)' if language == 'English' else 'अचूकता मेट्रिक्स (RAG पूर्वी वि. नंतर)'}")
                 results_file = BASE_DIR / 'evaluation' / 'accuracy_results.json'
                 if results_file.exists():
                     with open(results_file, 'r', encoding='utf-8') as f:
@@ -213,57 +231,58 @@ if generate_btn:
                     summary = acc_data.get("summary", {})
                     
                     c1, c2, c3 = st.columns(3)
-                    c1.metric("Baseline Specific Detail Recall", f"{summary.get('avg_baseline_specific_recall_pct', 0)}%")
-                    c2.metric("AgriAdvisor Specific Detail Recall", f"{summary.get('avg_rag_specific_recall_pct', 0)}%", delta=f"{summary.get('improvement_pct', 0)}%")
-                    c3.metric("Hallucinations Prevented", f"{summary.get('total_baseline_hallucinations', 0) - summary.get('total_rag_hallucinations', 0)}")
+                    c1.metric("Baseline Specific Detail Recall" if language == "English" else "मानक AI तपशील", f"{summary.get('avg_baseline_specific_recall_pct', 0)}%")
+                    c2.metric("AgriAdvisor Specific Detail Recall" if language == "English" else "AgriAdvisor अचूक तपशील", f"{summary.get('avg_rag_specific_recall_pct', 0)}%", delta=f"{summary.get('improvement_pct', 0)}%")
+                    c3.metric("Hallucinations Prevented" if language == "English" else "प्रतिबंधित खोटे दावे", f"{summary.get('total_baseline_hallucinations', 0) - summary.get('total_rag_hallucinations', 0)}")
                     
-                    st.info("Metrics are calculated dynamically against the real Marathwada Kharif 2023 El Niño drought dataset. 'Specific Detail Recall' measures how often the model correctly states exact ICAR varieties, fertilizer doses, and techniques. 'Hallucinations' measures how often the model invents fake brand names or generic non-regional advice.")
+                    info_text = "Metrics are calculated dynamically against the real Marathwada Kharif 2023 El Niño drought dataset. 'Specific Detail Recall' measures how often the model correctly states exact ICAR varieties, fertilizer doses, and techniques. 'Hallucinations' measures how often the model invents fake brand names or generic non-regional advice." if language == "English" else "मराठवाडा खरीप २०२३ च्या वास्तविक दुष्काळ डेटासेटवर अचूकता मोजली जाते. मॉडेलने ICAR मधील खऱ्या जाती आणि खते किती अचूक सांगितली हे 'अचूक तपशील' दर्शवते, आणि 'खोटे दावे' (Hallucinations) मॉडेलने स्वतः तयार केलेली खोटी माहिती दर्शवते."
+                    st.info(info_text)
 
                     st.markdown("---")
-                    st.markdown("#### 🧩 Confusion Matrix (Generative RAG Adaptation)")
+                    st.markdown(f"#### 🧩 {'Confusion Matrix (Generative RAG Adaptation)' if language == 'English' else 'कन्फ्युजन मॅट्रिक्स (अचूकता तक्ता)'}")
                     
                     cm_rag = summary.get("confusion_matrix_rag", {"TP": 0, "FP": 0, "FN": 0, "TN": 0})
                     cm_baseline = summary.get("confusion_matrix_baseline", {"TP": 0, "FP": 0, "FN": 0, "TN": 0})
                     
                     colA, colB = st.columns(2)
                     with colA:
-                        st.markdown("**🟢 AgriAdvisor (With Context)**")
+                        st.markdown("**🟢 AgriAdvisor (With Context)**" if language == "English" else "**🟢 AgriAdvisor (डेटाबेससह)**")
                         st.markdown(f"""
                         <table style="width:100%; text-align:center; border:1px solid white;">
                             <tr>
                                 <th></th>
-                                <th>Relevant (Ground Truth)</th>
-                                <th>Irrelevant (Hallucinations)</th>
+                                <th>{'Relevant (Ground Truth)' if language == 'English' else 'संबंधित (सत्य माहिती)'}</th>
+                                <th>{'Irrelevant (Hallucinations)' if language == 'English' else 'असंबंधित (खोटी माहिती)'}</th>
                             </tr>
                             <tr>
-                                <th>Model Mentions</th>
-                                <td style="background-color:#065F46; color:white;"><b>True Positives (TP)</b><br>{cm_rag['TP']}</td>
-                                <td style="background-color:#991B1B; color:white;"><b>False Positives (FP)</b><br>{cm_rag['FP']}</td>
+                                <th>{'Model Mentions' if language == 'English' else 'मॉडेलने सांगितले'}</th>
+                                <td style="background-color:#065F46; color:white;"><b>{'True Positives (TP)' if language == 'English' else 'अचूक (TP)'}</b><br>{cm_rag['TP']}</td>
+                                <td style="background-color:#991B1B; color:white;"><b>{'False Positives (FP)' if language == 'English' else 'चुकीचे (FP)'}</b><br>{cm_rag['FP']}</td>
                             </tr>
                             <tr>
-                                <th>Model Omits</th>
-                                <td style="background-color:#92400E; color:white;"><b>False Negatives (FN)</b><br>{cm_rag['FN']}</td>
-                                <td style="background-color:#1E3A8A; color:white;"><b>True Negatives (TN)</b><br>{cm_rag['TN']}</td>
+                                <th>{'Model Omits' if language == 'English' else 'मॉडेल विसरले'}</th>
+                                <td style="background-color:#92400E; color:white;"><b>{'False Negatives (FN)' if language == 'English' else 'गहाळ (FN)'}</b><br>{cm_rag['FN']}</td>
+                                <td style="background-color:#1E3A8A; color:white;"><b>{'True Negatives (TN)' if language == 'English' else 'योग्य वगळलेले (TN)'}</b><br>{cm_rag['TN']}</td>
                             </tr>
                         </table>
                         """, unsafe_allow_html=True)
                         
                     with colB:
-                        st.markdown("**🔴 Baseline (No Context)**")
+                        st.markdown("**🔴 Baseline (No Context)**" if language == "English" else "**🔴 मानक AI (डेटाबेसशिवाय)**")
                         st.markdown(f"""
                         <table style="width:100%; text-align:center; border:1px solid white; opacity: 0.7;">
                             <tr>
                                 <th></th>
-                                <th>Relevant (Ground Truth)</th>
-                                <th>Irrelevant (Hallucinations)</th>
+                                <th>{'Relevant (Ground Truth)' if language == 'English' else 'संबंधित (सत्य माहिती)'}</th>
+                                <th>{'Irrelevant (Hallucinations)' if language == 'English' else 'असंबंधित (खोटी माहिती)'}</th>
                             </tr>
                             <tr>
-                                <th>Model Mentions</th>
+                                <th>{'Model Mentions' if language == 'English' else 'मॉडेलने सांगितले'}</th>
                                 <td style="background-color:#065F46; color:white;"><b>TP</b><br>{cm_baseline['TP']}</td>
                                 <td style="background-color:#991B1B; color:white;"><b>FP</b><br>{cm_baseline['FP']}</td>
                             </tr>
                             <tr>
-                                <th>Model Omits</th>
+                                <th>{'Model Omits' if language == 'English' else 'मॉडेल विसरले'}</th>
                                 <td style="background-color:#92400E; color:white;"><b>FN</b><br>{cm_baseline['FN']}</td>
                                 <td style="background-color:#1E3A8A; color:white;"><b>TN</b><br>{cm_baseline['TN']}</td>
                             </tr>
@@ -271,7 +290,7 @@ if generate_btn:
                         """, unsafe_allow_html=True)
 
                 else:
-                    st.info("System evaluation is currently running. Please refresh in a minute to see the accuracy metrics.")
+                    st.info("System evaluation is currently running..." if language == "English" else "प्रणालीचे मूल्यांकन सध्या चालू आहे...")
 
         except Exception as e:
             st.error(f"An error occurred during generation: {e}")
