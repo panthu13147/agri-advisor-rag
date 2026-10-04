@@ -41,7 +41,9 @@ def load_vectorstore():
 
 @st.cache_resource
 def load_llm():
-    return OllamaLLM(model="llama3.1:8b", temperature=0.3)
+    # num_predict=2048 is critical here because Marathi script consumes 
+    # significantly more tokens than English, causing early truncation.
+    return OllamaLLM(model="llama3.1:8b", temperature=0.3, num_predict=2048)
 
 # --- SIDEBAR ---
 with st.sidebar:
