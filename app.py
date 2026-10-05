@@ -124,12 +124,38 @@ st.markdown("---")
 lang_instruction = "MARATHI (मराठी). Provide the output exclusively in Marathi script." if "Marathi" in language else "ENGLISH."
 
 # --- STRUCTURED RAG PROMPT ---
-rag_template = """You are an expert Chief Agricultural Extension Officer advising farmers.
+if "Marathi" in language:
+    rag_template = """तुम्ही एक तज्ज्ञ मुख्य कृषी विस्तार अधिकारी आहात जे शेतकऱ्यांना सल्ला देतात.
+तुम्ही तुमचे संपूर्ण उत्तर खालील भाषेत देणे आवश्यक आहे: {lang}
+
+ICAR, IMD आणि NOAA कडील प्रदान केलेल्या संदर्भाचा वापर करून, एक सविस्तर कृषी सल्ला तयार करा.
+तुमचे उत्तर काटेकोरपणे खालील ४ विभागांमध्ये असावे:
+
+## 📍 जिल्ह्याचे विश्लेषण: {district}
+(ICAR आकस्मिक योजनेत या जिल्ह्याबद्दल काय म्हटले आहे? मातीचा प्रकार, दुष्काळाचा इतिहास, इत्यादी.)
+
+## 🌱 पिकाविषयी मार्गदर्शन: {crop}
+(कोणत्या जातीची शिफारस केली आहे? पेरणीची वेळ, बियाण्याचे प्रमाण, खतांची मात्रा काय असावी?)
+
+## 📅 टप्प्यानुसार कृती: {stage}
+(या विशिष्ट पीक वाढीच्या टप्प्यावर कोणत्या कृती कराव्यात? सिंचन, पोषक तत्वे, तण नियंत्रण.)
+
+## 🌊 अल निनो (El Niño) प्रभाव: {scenario} अल निनो
+(ONI डेटा काय दर्शवतो? {scenario} अल निनोचा महाराष्ट्रातील पावसावर कसा परिणाम होतो? ICAR ने कोणते उपाय सुचवले आहेत?)
+
+जर संदर्भात माहिती नसेल तर स्पष्ट सांगा की माहिती उपलब्ध नाही. खोटी आकडेवारी देऊ नका.
+
+संदर्भ डेटाबेस:
+{context}
+
+सविस्तर कृषी सल्ला:
+"""
+else:
+    rag_template = """You are an expert Chief Agricultural Extension Officer advising farmers.
 You MUST write the entire response in this language: {lang}
 
 Using the provided context from ICAR, IMD, and NOAA, generate a DETAILED advisory.
 Structure your response STRICTLY in the following 4 parameter-wise sections.
-Each section MUST correspond to one of the user's input parameters and explain what specific insights were derived from the knowledge base for that parameter.
 
 ## 📍 District Analysis: {district}
 (What does the ICAR contingency plan say specifically about this district? Soil type, agro-climatic zone, historical drought patterns, district-specific recommendations from the knowledge base.)
@@ -154,7 +180,22 @@ Detailed Parameter-Wise Advisory:
 rag_prompt = PromptTemplate.from_template(rag_template)
 
 # --- BASELINE PROMPT (No RAG) ---
-baseline_template = """You are an AI assistant. Answer the following agricultural question.
+if "Marathi" in language:
+    baseline_template = """तुम्ही एक AI सहाय्यक आहात. खालील कृषी प्रश्नाचे उत्तर द्या.
+तुम्ही तुमचे संपूर्ण उत्तर खालील भाषेत देणे आवश्यक आहे: {lang}
+
+तुमचे उत्तर खालील ४ विभागांमध्ये असावे:
+## 📍 जिल्ह्याचे विश्लेषण: {district}
+## 🌱 पिकाविषयी मार्गदर्शन: {crop}
+## 📅 टप्प्यानुसार कृती: {stage}
+## 🌊 अल निनो (El Niño) प्रभाव: {scenario} अल निनो
+
+प्रश्न: {scenario} अल निनो परिस्थितीत, {district} जिल्ह्यात {stage} टप्प्यावर {crop} पिकासाठी काय कृषी सल्ला आहे?
+
+उत्तर:
+"""
+else:
+    baseline_template = """You are an AI assistant. Answer the following agricultural question.
 You MUST write the entire response in this language: {lang}
 
 Structure your response in the following 4 sections:
