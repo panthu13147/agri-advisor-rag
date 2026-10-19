@@ -14,7 +14,7 @@ env.bak/
 venv.bak/
 
 # Project specific
-chroma_db/
+# chroma_db/ (uncomment if you want to track pre-built vector DB for teammates)
 .pytest_cache/
 .DS_Store
 
